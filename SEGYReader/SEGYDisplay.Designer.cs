@@ -48,7 +48,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panelSeismicParent = new System.Windows.Forms.Panel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tcHeader = new System.Windows.Forms.TabControl();
             this.tpTextHeader = new System.Windows.Forms.TabPage();
@@ -63,6 +63,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -73,12 +74,14 @@
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.panelSeismicParent.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tcHeader.SuspendLayout();
             this.tpTextHeader.SuspendLayout();
             this.tbBinaryHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -253,7 +256,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.panel1);
+            this.tabPage1.Controls.Add(this.panelSeismicParent);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -262,15 +265,16 @@
             this.tabPage1.Text = "Seismic";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // panel1
+            // panelSeismicParent
             // 
-            this.panel1.AutoScroll = true;
-            this.panel1.AutoSize = true;
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(772, 463);
-            this.panel1.TabIndex = 0;
+            this.panelSeismicParent.AutoScroll = true;
+            this.panelSeismicParent.AutoSize = true;
+            this.panelSeismicParent.Controls.Add(this.pictureBox1);
+            this.panelSeismicParent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelSeismicParent.Location = new System.Drawing.Point(3, 3);
+            this.panelSeismicParent.Name = "panelSeismicParent";
+            this.panelSeismicParent.Size = new System.Drawing.Size(772, 463);
+            this.panelSeismicParent.TabIndex = 0;
             // 
             // tabPage2
             // 
@@ -413,6 +417,14 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "\"SEG-Y Files\"|*.sgy";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
             // SEGYDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -438,6 +450,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.panelSeismicParent.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tcHeader.ResumeLayout(false);
             this.tpTextHeader.ResumeLayout(false);
@@ -446,6 +459,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -478,7 +492,7 @@
         private System.Windows.Forms.TabPage tbBinaryHeader;
         private System.Windows.Forms.TextBox txtHeaderText;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panelSeismicParent;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDesc;
         private System.Windows.Forms.DataGridViewTextBoxColumn colValue;
         private System.Windows.Forms.DataGridViewTextBoxColumn colBytePosition;
@@ -486,6 +500,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.PictureBox pictureBox1;
 
     }
 }
