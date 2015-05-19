@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace SegyView
 {
-    internal class NoScrollPanel : Panel
+    public class NoScrollPanel : Panel
     {
         protected override void OnMouseWheel(MouseEventArgs e)
 	    {

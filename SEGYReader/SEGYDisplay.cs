@@ -25,9 +25,12 @@ namespace SegyView
 
            // Open Dummy Image (for test purpose only)
            GamaSeismicViewer.ShowDummyImages(picBox1);
+           GamaSeismicViewer.Image_Axis_Initialize(picBox1, panelX, panelY, panelImage, panelGap);
+
+           picBox1.MouseWheel += picBox1_MouseWheel;
         }
 
-
+       
         private void openToolStripButton_Click_1(object sender, EventArgs e)
         {
             var dlgresult = openFileDialog1.ShowDialog();
@@ -97,5 +100,102 @@ namespace SegyView
         {
             picBox1.Image = SEGYView.SegyView.GetAllTracesBitmap(segy);
         }
+
+        private void panelImage_Scroll(object sender, ScrollEventArgs e)
+        {
+            GamaSeismicViewer.Image_Axis_Update(picBox1,panelX,panelY,panelImage ,panelGap);
+        }
+
+        private void picBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            picBox1.Focus();
+            GamaSeismicViewer.Image_ValueOnHover(panelGap, panelY, picBox1, MousePosition);
+
+            if (GamaSeismicViewer.FPan == true)
+            {
+                GamaSeismicViewer.Image_Pan(panelImage,MousePosition );
+                GamaSeismicViewer.Image_Axis_Update(picBox1, panelX, panelY, panelImage, panelGap);
+            }
+        }
+
+        private void picBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            // if left mouse is clicked, activate pan mode
+                if (MouseButtons == MouseButtons.Left )
+                {
+                    GamaSeismicViewer.FPan = true;
+                    GamaSeismicViewer.PanStartMouse = panelImage.PointToClient(MousePosition);
+                    Cursor.Current = Cursors.Hand;
+
+                    if (panelImage.HorizontalScroll.Visible == true)
+                        GamaSeismicViewer.PanStartHScroll = panelImage.HorizontalScroll.Value;
+                    if (panelImage.VerticalScroll.Visible == true)
+                        GamaSeismicViewer.PanStartVScroll = panelImage.VerticalScroll.Value;
+                }
+            
+        }
+
+        private void picBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            GamaSeismicViewer.FPan = false;
+            Cursor.Current = Cursors.Default ;
+        }
+
+
+        void picBox1_MouseWheel(object sender, MouseEventArgs e)
+        {
+            GamaSeismicViewer.ZoomFactor = GamaSeismicViewer.ZoomFactor + 10 * (e.Delta / 120);
+            if (GamaSeismicViewer.ZoomFactor < 10)
+                GamaSeismicViewer.ZoomFactor = 10;
+            if (GamaSeismicViewer.ZoomFactor > 500)
+                GamaSeismicViewer.ZoomFactor = 500;
+
+            GamaSeismicViewer.Image_MouseCenteredZoom(picBox1.PointToClient(MousePosition) , picBox1, panelImage );
+            GamaSeismicViewer.Image_Axis_Update(picBox1, panelX, panelY, panelImage, panelGap);
+        }
+
+        private void panelX_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (MouseButtons == MouseButtons.Left )
+            {
+                GamaSeismicViewer.FScaleX = true;
+                GamaSeismicViewer.ScaleMouse0 = panelX.PointToClient(MousePosition);
+            }
+        }
+
+        private void panelX_MouseMove(object sender, MouseEventArgs e)
+        {
+            GamaSeismicViewer.Image_Axis_StretchShrink(picBox1, panelX, panelY, panelImage, MousePosition);
+            GamaSeismicViewer.Image_Axis_Update(picBox1, panelX, panelY, panelImage, panelGap);
+        }
+
+        private void panelX_MouseUp(object sender, MouseEventArgs e)
+        {
+            GamaSeismicViewer.FScaleX = false;
+        }
+
+        private void panelY_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (MouseButtons == MouseButtons.Left)
+            {
+                GamaSeismicViewer.FScaleY = true;
+                GamaSeismicViewer.ScaleMouse0 = panelY.PointToClient(MousePosition);
+            }
+        }
+
+        private void panelY_MouseMove(object sender, MouseEventArgs e)
+        {
+            GamaSeismicViewer.Image_Axis_StretchShrink(picBox1, panelX, panelY, panelImage, MousePosition);
+            GamaSeismicViewer.Image_Axis_Update(picBox1, panelX, panelY, panelImage, panelGap);
+        }
+
+        private void panelY_MouseUp(object sender, MouseEventArgs e)
+        {
+            GamaSeismicViewer.FScaleY = false;
+        }
+
+
+
+
     }
 }
