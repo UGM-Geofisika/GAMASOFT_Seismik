@@ -352,7 +352,7 @@
     Public Sub Image_MouseCenteredZoom(ByVal zoomfactor As Integer, ByVal picbox As PictureBox, ByVal panelImage As Panel)
 
         ' save initial parameter for mouse centered zoom
-        Dim picStart As New Point(picbox.PointToClient(MousePosition))
+        'Dim picStart As New Point(picbox.PointToClient(MousePosition))
         Dim picSizeStart As New Point(picbox.Width, picbox.Height)
 
         ' zoom image

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data;
-using System.Diagnostics;
-using System.Windows.Forms; 
+﻿using System.Windows.Forms;
 
 namespace SegyView
 {
@@ -13,7 +6,7 @@ namespace SegyView
     {
         protected override void OnMouseWheel(MouseEventArgs e)
 	    {
-		    HandledMouseEventArgs mouseEvent = (HandledMouseEventArgs)e;
+		    var mouseEvent = (HandledMouseEventArgs)e;
 		    mouseEvent.Handled = true;
 	    }
     }

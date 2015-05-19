@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SEGYDisplay));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.sEGYReadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -439,8 +439,8 @@
             // colBytePosition
             // 
             this.colBytePosition.DataPropertyName = "BytePosition";
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.colBytePosition.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colBytePosition.DefaultCellStyle = dataGridViewCellStyle1;
             this.colBytePosition.HeaderText = "Byte Position";
             this.colBytePosition.Name = "colBytePosition";
             this.colBytePosition.ReadOnly = true;
@@ -519,6 +519,7 @@
             this.Name = "SEGYDisplay";
             this.Text = "SEG-Y SegyView";
             this.Load += new System.EventHandler(this.SEGYDisplay_Load);
+            this.Resize += new System.EventHandler(this.SEGYDisplay_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
