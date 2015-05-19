@@ -22,6 +22,9 @@ namespace SegyView
         {
             menuStrip1.Renderer = Windows7Renderer.Instance;
             toolStrip1.Renderer = Windows7Renderer.Instance;
+
+           // Open Dummy Image (for test purpose only)
+           GamaSeismicViewer.ShowDummyImages(picBox1);
         }
 
 
@@ -92,7 +95,7 @@ namespace SegyView
 
         private void DisplaySeismicSection(ISegyFile segy)
         {
-            pictureBox1.Image = SEGYView.SegyView.GetAllTracesBitmap(segy);
+            picBox1.Image = SEGYView.SegyView.GetAllTracesBitmap(segy);
         }
     }
 }

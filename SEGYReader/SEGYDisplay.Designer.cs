@@ -63,7 +63,13 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.Panel1 = new System.Windows.Forms.Panel();
+            this.PanelX = new System.Windows.Forms.Panel();
+            this.Panel3 = new System.Windows.Forms.Panel();
+            this.panelY = new System.Windows.Forms.Panel();
+            this.Panel7 = new System.Windows.Forms.Panel();
+            this.panelImage = new SegyView.NoScrollPanel();
+            this.picBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -81,7 +87,10 @@
             this.tbBinaryHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.Panel1.SuspendLayout();
+            this.Panel3.SuspendLayout();
+            this.panelImage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -267,9 +276,11 @@
             // 
             // panelSeismicParent
             // 
-            this.panelSeismicParent.AutoScroll = true;
             this.panelSeismicParent.AutoSize = true;
-            this.panelSeismicParent.Controls.Add(this.pictureBox1);
+            this.panelSeismicParent.Controls.Add(this.panelImage);
+            this.panelSeismicParent.Controls.Add(this.Panel7);
+            this.panelSeismicParent.Controls.Add(this.Panel3);
+            this.panelSeismicParent.Controls.Add(this.Panel1);
             this.panelSeismicParent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelSeismicParent.Location = new System.Drawing.Point(3, 3);
             this.panelSeismicParent.Name = "panelSeismicParent";
@@ -417,13 +428,75 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "\"SEG-Y Files\"|*.sgy";
             // 
-            // pictureBox1
+            // Panel1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.Panel1.BackColor = System.Drawing.Color.Blue;
+            this.Panel1.Controls.Add(this.PanelX);
+            this.Panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Panel1.Location = new System.Drawing.Point(0, 0);
+            this.Panel1.Name = "Panel1";
+            this.Panel1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 1);
+            this.Panel1.Size = new System.Drawing.Size(772, 35);
+            this.Panel1.TabIndex = 1;
+            // 
+            // PanelX
+            // 
+            this.PanelX.BackColor = System.Drawing.SystemColors.Control;
+            this.PanelX.Cursor = System.Windows.Forms.Cursors.SizeWE;
+            this.PanelX.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PanelX.Location = new System.Drawing.Point(0, 0);
+            this.PanelX.Name = "PanelX";
+            this.PanelX.Size = new System.Drawing.Size(772, 34);
+            this.PanelX.TabIndex = 1;
+            // 
+            // Panel3
+            // 
+            this.Panel3.BackColor = System.Drawing.Color.Blue;
+            this.Panel3.Controls.Add(this.panelY);
+            this.Panel3.Dock = System.Windows.Forms.DockStyle.Left;
+            this.Panel3.Location = new System.Drawing.Point(0, 35);
+            this.Panel3.Name = "Panel3";
+            this.Panel3.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
+            this.Panel3.Size = new System.Drawing.Size(54, 428);
+            this.Panel3.TabIndex = 4;
+            // 
+            // panelY
+            // 
+            this.panelY.AutoSize = true;
+            this.panelY.BackColor = System.Drawing.SystemColors.Control;
+            this.panelY.Cursor = System.Windows.Forms.Cursors.SizeNS;
+            this.panelY.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelY.Location = new System.Drawing.Point(0, 0);
+            this.panelY.Name = "panelY";
+            this.panelY.Size = new System.Drawing.Size(53, 428);
+            this.panelY.TabIndex = 1;
+            // 
+            // Panel7
+            // 
+            this.Panel7.BackColor = System.Drawing.Color.White;
+            this.Panel7.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Panel7.Location = new System.Drawing.Point(54, 35);
+            this.Panel7.Name = "Panel7";
+            this.Panel7.Size = new System.Drawing.Size(718, 10);
+            this.Panel7.TabIndex = 6;
+            // 
+            // panelImage
+            // 
+            this.panelImage.AutoScroll = true;
+            this.panelImage.Controls.Add(this.picBox1);
+            this.panelImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelImage.Location = new System.Drawing.Point(54, 45);
+            this.panelImage.Name = "panelImage";
+            this.panelImage.Size = new System.Drawing.Size(718, 418);
+            this.panelImage.TabIndex = 7;
+            // 
+            // picBox1
+            // 
+            this.picBox1.Location = new System.Drawing.Point(0, 0);
+            this.picBox1.Name = "picBox1";
+            this.picBox1.Size = new System.Drawing.Size(161, 120);
+            this.picBox1.TabIndex = 0;
+            this.picBox1.TabStop = false;
             // 
             // SEGYDisplay
             // 
@@ -459,7 +532,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.Panel1.ResumeLayout(false);
+            this.Panel3.ResumeLayout(false);
+            this.Panel3.PerformLayout();
+            this.panelImage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -500,7 +577,13 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TreeView treeView1;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox picBox1;
+        internal System.Windows.Forms.Panel Panel1;
+        internal System.Windows.Forms.Panel PanelX;
+        internal System.Windows.Forms.Panel Panel3;
+        internal System.Windows.Forms.Panel panelY;
+        internal System.Windows.Forms.Panel Panel7;
+        private NoScrollPanel panelImage;
 
     }
 }
