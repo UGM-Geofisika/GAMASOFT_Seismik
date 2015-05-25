@@ -25,6 +25,7 @@ namespace SegyView
             // Open Dummy Image (for test purpose only)
             GamaSeismicViewer.ShowDummyImages(picBox1);
             GamaSeismicViewer.Image_Axis_Initialize(picBox1, panelX, panelY, panelImage, panelGap);
+            GamaSeismicViewer.Image_Axis_Update(picBox1, panelX, panelY, panelImage, panelGap);
 
             picBox1.MouseWheel += picBox1_MouseWheel;
         }
@@ -115,6 +116,8 @@ namespace SegyView
         private void picBox1_MouseMove(object sender, MouseEventArgs e)
         {
             picBox1.Focus();
+            //GamaSeismicViewer.Image_Axis_Update(picBox1, panelX, panelY, panelImage, panelGap);
+
             GamaSeismicViewer.Image_ValueOnHover(panelGap, panelY, picBox1, MousePosition);
 
             if (GamaSeismicViewer.FPan)
@@ -157,6 +160,8 @@ namespace SegyView
             GamaSeismicViewer.PicStart = picBox1.PointToClient(MousePosition);
             GamaSeismicViewer.Image_MouseCenteredZoom((int)GamaSeismicViewer.ZoomFactor, picBox1, panelImage, MousePosition);
             GamaSeismicViewer.Image_Axis_Update(picBox1, panelX, panelY, panelImage, panelGap);
+
+            lblZoom.Text = String.Concat(GamaSeismicViewer.ZoomFactor.ToString(), " %"); lblZoom.Update();
         }
 
         private void panelX_MouseDown(object sender, MouseEventArgs e)
@@ -172,6 +177,8 @@ namespace SegyView
         {
             GamaSeismicViewer.Image_Axis_StretchShrink(picBox1, panelX, panelY, panelImage, MousePosition);
             GamaSeismicViewer.Image_Axis_Update(picBox1, panelX, panelY, panelImage, panelGap);
+
+            lblXAxisScale.Text = String.Concat(Math.Round(((double)GamaSeismicViewer.ImgOriginalSize[0] / (double)picBox1.Image.Width) * 100), " %"); lblXAxisScale.Update();
         }
 
         private void panelX_MouseUp(object sender, MouseEventArgs e)
@@ -192,6 +199,8 @@ namespace SegyView
         {
             GamaSeismicViewer.Image_Axis_StretchShrink(picBox1, panelX, panelY, panelImage, MousePosition);
             GamaSeismicViewer.Image_Axis_Update(picBox1, panelX, panelY, panelImage, panelGap);
+
+            lblYAxisScale.Text = String.Concat(Math.Round(((double)GamaSeismicViewer.ImgOriginalSize[1] / (double)picBox1.Image.Height) * 100), " %"); lblYAxisScale.Update();
         }
 
         private void panelY_MouseUp(object sender, MouseEventArgs e)
@@ -203,5 +212,30 @@ namespace SegyView
         {
             GamaSeismicViewer.Image_Axis_Update(picBox1, panelX, panelY, panelImage, panelGap);
         }
+
+        private void butSeismicZoom_Click(object sender, EventArgs e)
+        {
+            GamaSeismicViewer.Image_ZoomByValue(100, picBox1, panelImage);
+            GamaSeismicViewer.Image_Axis_Update(picBox1, panelX, panelY, panelImage, panelGap);
+
+            lblZoom.Text = String.Concat(GamaSeismicViewer.ZoomFactor, " %"); lblZoom.Update();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            GamaSeismicViewer.Image_Axis_StretchShrink(picBox1, panelImage, picBox1.Image.Width, GamaSeismicViewer.ImgOriginalSize[1]);
+            GamaSeismicViewer.Image_Axis_Update(picBox1, panelX, panelY, panelImage, panelGap);
+
+            lblXAxisScale.Text = String.Concat(Math.Round(((double)GamaSeismicViewer.ImgOriginalSize[0]/(double)picBox1.Image.Width)*100), " %"); lblXAxisScale.Update();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            GamaSeismicViewer.Image_Axis_StretchShrink(picBox1, panelImage, GamaSeismicViewer.ImgOriginalSize[0], picBox1.Image.Height);
+            GamaSeismicViewer.Image_Axis_Update(picBox1, panelX, panelY, panelImage, panelGap);
+
+            lblYAxisScale.Text = String.Concat(Math.Round(((double)GamaSeismicViewer.ImgOriginalSize[1] / (double)picBox1.Image.Height) * 100), " %"); lblYAxisScale.Update();
+        }
+       
     }
 }

@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SEGYDisplay));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.sEGYReadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,6 +44,8 @@
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -54,6 +56,14 @@
             this.panelY = new System.Windows.Forms.Panel();
             this.Panel1 = new System.Windows.Forms.Panel();
             this.panelX = new System.Windows.Forms.Panel();
+            this.panSeismicMenu = new System.Windows.Forms.Panel();
+            this.panSeismicZoom = new System.Windows.Forms.Panel();
+            this.butSeismicZoom = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tcHeader = new System.Windows.Forms.TabControl();
             this.tpTextHeader = new System.Windows.Forms.TabPage();
@@ -65,9 +75,10 @@
             this.colBytePosition = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.lblZoom = new System.Windows.Forms.Label();
+            this.lblXAxisScale = new System.Windows.Forms.Label();
+            this.lblYAxisScale = new System.Windows.Forms.Label();
             this.panelImage = new SegyView.NoScrollPanel();
             this.picBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
@@ -77,18 +88,20 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panelSeismicParent.SuspendLayout();
             this.Panel3.SuspendLayout();
             this.Panel1.SuspendLayout();
+            this.panSeismicMenu.SuspendLayout();
+            this.panSeismicZoom.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tcHeader.SuspendLayout();
             this.tpTextHeader.SuspendLayout();
             this.tbBinaryHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.toolStrip1.SuspendLayout();
             this.panelImage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox1)).BeginInit();
             this.SuspendLayout();
@@ -182,7 +195,6 @@
             // 
             this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer1);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.statusStrip1);
-            this.toolStripContainer1.ContentPanel.Controls.Add(this.toolStrip1);
             this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1037, 542);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 24);
@@ -200,19 +212,20 @@
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.IsSplitterFixed = true;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 25);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.treeView1);
+            this.splitContainer1.Panel1.Controls.Add(this.toolStrip1);
             this.splitContainer1.Panel1.Controls.Add(this.panel2);
             this.splitContainer1.Panel1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 1);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer1.Size = new System.Drawing.Size(1037, 495);
+            this.splitContainer1.Size = new System.Drawing.Size(1037, 520);
             this.splitContainer1.SplitterDistance = 250;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 9;
@@ -222,10 +235,29 @@
             this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.FullRowSelect = true;
-            this.treeView1.Location = new System.Drawing.Point(0, 20);
+            this.treeView1.Location = new System.Drawing.Point(0, 45);
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(250, 474);
             this.treeView1.TabIndex = 1;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripButton});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 20);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(250, 25);
+            this.toolStrip1.TabIndex = 0;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // openToolStripButton
+            // 
+            this.openToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripButton.Image")));
+            this.openToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openToolStripButton.Name = "openToolStripButton";
+            this.openToolStripButton.Size = new System.Drawing.Size(70, 22);
+            this.openToolStripButton.Text = "&Add File";
+            this.openToolStripButton.Click += new System.EventHandler(this.openToolStripButton_Click_1);
             // 
             // panel2
             // 
@@ -259,17 +291,18 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(786, 495);
+            this.tabControl1.Size = new System.Drawing.Size(786, 520);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 8;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.panelSeismicParent);
+            this.tabPage1.Controls.Add(this.panSeismicMenu);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(778, 469);
+            this.tabPage1.Size = new System.Drawing.Size(778, 494);
             this.tabPage1.TabIndex = 3;
             this.tabPage1.Text = "Seismic";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -282,9 +315,9 @@
             this.panelSeismicParent.Controls.Add(this.Panel3);
             this.panelSeismicParent.Controls.Add(this.Panel1);
             this.panelSeismicParent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelSeismicParent.Location = new System.Drawing.Point(3, 3);
+            this.panelSeismicParent.Location = new System.Drawing.Point(3, 84);
             this.panelSeismicParent.Name = "panelSeismicParent";
-            this.panelSeismicParent.Size = new System.Drawing.Size(772, 463);
+            this.panelSeismicParent.Size = new System.Drawing.Size(772, 407);
             this.panelSeismicParent.TabIndex = 0;
             // 
             // panelGap
@@ -304,7 +337,7 @@
             this.Panel3.Location = new System.Drawing.Point(0, 35);
             this.Panel3.Name = "Panel3";
             this.Panel3.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
-            this.Panel3.Size = new System.Drawing.Size(54, 428);
+            this.Panel3.Size = new System.Drawing.Size(54, 372);
             this.Panel3.TabIndex = 4;
             // 
             // panelY
@@ -315,7 +348,7 @@
             this.panelY.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelY.Location = new System.Drawing.Point(0, 0);
             this.panelY.Name = "panelY";
-            this.panelY.Size = new System.Drawing.Size(53, 428);
+            this.panelY.Size = new System.Drawing.Size(53, 372);
             this.panelY.TabIndex = 1;
             this.panelY.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelY_MouseDown);
             this.panelY.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelY_MouseMove);
@@ -345,13 +378,96 @@
             this.panelX.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelX_MouseMove);
             this.panelX.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panelX_MouseUp);
             // 
+            // panSeismicMenu
+            // 
+            this.panSeismicMenu.Controls.Add(this.panSeismicZoom);
+            this.panSeismicMenu.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panSeismicMenu.Location = new System.Drawing.Point(3, 3);
+            this.panSeismicMenu.Name = "panSeismicMenu";
+            this.panSeismicMenu.Size = new System.Drawing.Size(772, 81);
+            this.panSeismicMenu.TabIndex = 4;
+            // 
+            // panSeismicZoom
+            // 
+            this.panSeismicZoom.Controls.Add(this.lblYAxisScale);
+            this.panSeismicZoom.Controls.Add(this.lblXAxisScale);
+            this.panSeismicZoom.Controls.Add(this.lblZoom);
+            this.panSeismicZoom.Controls.Add(this.butSeismicZoom);
+            this.panSeismicZoom.Controls.Add(this.label4);
+            this.panSeismicZoom.Controls.Add(this.button3);
+            this.panSeismicZoom.Controls.Add(this.button2);
+            this.panSeismicZoom.Controls.Add(this.label3);
+            this.panSeismicZoom.Controls.Add(this.label2);
+            this.panSeismicZoom.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panSeismicZoom.Location = new System.Drawing.Point(0, 0);
+            this.panSeismicZoom.Name = "panSeismicZoom";
+            this.panSeismicZoom.Size = new System.Drawing.Size(129, 81);
+            this.panSeismicZoom.TabIndex = 1;
+            // 
+            // butSeismicZoom
+            // 
+            this.butSeismicZoom.Location = new System.Drawing.Point(43, 2);
+            this.butSeismicZoom.Name = "butSeismicZoom";
+            this.butSeismicZoom.Size = new System.Drawing.Size(31, 20);
+            this.butSeismicZoom.TabIndex = 1;
+            this.butSeismicZoom.Text = "1:1";
+            this.butSeismicZoom.UseVisualStyleBackColor = true;
+            this.butSeismicZoom.Click += new System.EventHandler(this.butSeismicZoom_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 52);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(36, 13);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "Y-Axis";
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(43, 48);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(31, 20);
+            this.button3.TabIndex = 16;
+            this.button3.Text = "1:1";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(43, 25);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(31, 20);
+            this.button2.TabIndex = 15;
+            this.button2.Text = "1:1";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 30);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(36, 13);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "X-Axis";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 7);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(34, 13);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "Zoom";
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.tcHeader);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(778, 469);
+            this.tabPage2.Size = new System.Drawing.Size(778, 494);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Header";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -364,7 +480,7 @@
             this.tcHeader.Location = new System.Drawing.Point(3, 3);
             this.tcHeader.Name = "tcHeader";
             this.tcHeader.SelectedIndex = 0;
-            this.tcHeader.Size = new System.Drawing.Size(772, 463);
+            this.tcHeader.Size = new System.Drawing.Size(772, 488);
             this.tcHeader.TabIndex = 0;
             // 
             // tpTextHeader
@@ -373,7 +489,7 @@
             this.tpTextHeader.Location = new System.Drawing.Point(4, 22);
             this.tpTextHeader.Name = "tpTextHeader";
             this.tpTextHeader.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTextHeader.Size = new System.Drawing.Size(764, 437);
+            this.tpTextHeader.Size = new System.Drawing.Size(764, 462);
             this.tpTextHeader.TabIndex = 0;
             this.tpTextHeader.Text = "Text Header";
             this.tpTextHeader.UseVisualStyleBackColor = true;
@@ -386,7 +502,7 @@
             this.txtHeaderText.Multiline = true;
             this.txtHeaderText.Name = "txtHeaderText";
             this.txtHeaderText.ReadOnly = true;
-            this.txtHeaderText.Size = new System.Drawing.Size(758, 431);
+            this.txtHeaderText.Size = new System.Drawing.Size(758, 456);
             this.txtHeaderText.TabIndex = 0;
             // 
             // tbBinaryHeader
@@ -395,7 +511,7 @@
             this.tbBinaryHeader.Location = new System.Drawing.Point(4, 22);
             this.tbBinaryHeader.Name = "tbBinaryHeader";
             this.tbBinaryHeader.Padding = new System.Windows.Forms.Padding(3);
-            this.tbBinaryHeader.Size = new System.Drawing.Size(764, 437);
+            this.tbBinaryHeader.Size = new System.Drawing.Size(764, 462);
             this.tbBinaryHeader.TabIndex = 1;
             this.tbBinaryHeader.Text = "Binary Header";
             this.tbBinaryHeader.UseVisualStyleBackColor = true;
@@ -449,7 +565,7 @@
             // 
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(778, 469);
+            this.tabPage3.Size = new System.Drawing.Size(778, 494);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Trace";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -462,29 +578,40 @@
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripButton});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1037, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // openToolStripButton
-            // 
-            this.openToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripButton.Image")));
-            this.openToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.openToolStripButton.Name = "openToolStripButton";
-            this.openToolStripButton.Size = new System.Drawing.Size(70, 22);
-            this.openToolStripButton.Text = "&Add File";
-            this.openToolStripButton.Click += new System.EventHandler(this.openToolStripButton_Click_1);
-            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "\"SEG-Y Files\"|*.sgy";
+            // 
+            // lblZoom
+            // 
+            this.lblZoom.AutoSize = true;
+            this.lblZoom.Location = new System.Drawing.Point(80, 7);
+            this.lblZoom.Name = "lblZoom";
+            this.lblZoom.Size = new System.Drawing.Size(36, 13);
+            this.lblZoom.TabIndex = 20;
+            this.lblZoom.Text = "100 %";
+            this.lblZoom.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblXAxisScale
+            // 
+            this.lblXAxisScale.AutoSize = true;
+            this.lblXAxisScale.Location = new System.Drawing.Point(80, 30);
+            this.lblXAxisScale.Name = "lblXAxisScale";
+            this.lblXAxisScale.Size = new System.Drawing.Size(36, 13);
+            this.lblXAxisScale.TabIndex = 21;
+            this.lblXAxisScale.Text = "100 %";
+            this.lblXAxisScale.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblYAxisScale
+            // 
+            this.lblYAxisScale.AutoSize = true;
+            this.lblYAxisScale.Location = new System.Drawing.Point(80, 52);
+            this.lblYAxisScale.Name = "lblYAxisScale";
+            this.lblYAxisScale.Size = new System.Drawing.Size(36, 13);
+            this.lblYAxisScale.TabIndex = 22;
+            this.lblYAxisScale.Text = "100 %";
+            this.lblYAxisScale.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panelImage
             // 
@@ -493,7 +620,7 @@
             this.panelImage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelImage.Location = new System.Drawing.Point(54, 45);
             this.panelImage.Name = "panelImage";
-            this.panelImage.Size = new System.Drawing.Size(718, 418);
+            this.panelImage.Size = new System.Drawing.Size(718, 362);
             this.panelImage.TabIndex = 7;
             this.panelImage.Scroll += new System.Windows.Forms.ScrollEventHandler(this.panelImage_Scroll);
             // 
@@ -527,9 +654,12 @@
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -538,14 +668,15 @@
             this.Panel3.ResumeLayout(false);
             this.Panel3.PerformLayout();
             this.Panel1.ResumeLayout(false);
+            this.panSeismicMenu.ResumeLayout(false);
+            this.panSeismicZoom.ResumeLayout(false);
+            this.panSeismicZoom.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tcHeader.ResumeLayout(false);
             this.tpTextHeader.ResumeLayout(false);
             this.tpTextHeader.PerformLayout();
             this.tbBinaryHeader.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             this.panelImage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picBox1)).EndInit();
             this.ResumeLayout(false);
@@ -595,6 +726,17 @@
         internal System.Windows.Forms.Panel panelY;
         internal System.Windows.Forms.Panel panelGap;
         private NoScrollPanel panelImage;
+        private System.Windows.Forms.Panel panSeismicMenu;
+        private System.Windows.Forms.Panel panSeismicZoom;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button butSeismicZoom;
+        private System.Windows.Forms.Label lblZoom;
+        private System.Windows.Forms.Label lblYAxisScale;
+        private System.Windows.Forms.Label lblXAxisScale;
 
     }
 }

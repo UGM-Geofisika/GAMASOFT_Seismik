@@ -21,8 +21,10 @@ namespace SegyView
         public static PictureBox PicHoverY = new PictureBox();
         public static Label LblHoverX = new Label();
         public static Label LblHoverY = new Label();
+        public static int Dx = 1;
         public static double Dy = 0.033;
         public static double MinX = 15;
+        public static double MaxX = 1000 + Dx;
         public static double MinY = 0;
         public static double MaxY = 5;
         public static int DLabelX = 50;
@@ -370,6 +372,23 @@ namespace SegyView
             panelImage.Update();
         }
 
+        public static void Image_ZoomByValue(int zoomfactor, PictureBox picbox, Panel panelImage)
+        {
+            // zoom image
+            var newWidth = Math.Round(ImgOriginalSize[0] * (double)zoomfactor / 100);
+            var newHeight = Math.Round(ImgOriginalSize[1] * (double)zoomfactor / 100);
+            var picNewSize = new Point((int)newWidth, (int)newHeight);
+
+            picbox.SizeMode = PictureBoxSizeMode.StretchImage;
+            picbox.Width = picNewSize.X;
+            picbox.Height = picNewSize.Y;
+
+            ZoomFactor = zoomfactor;
+            
+            panelImage.Invalidate();
+            panelImage.Update();
+        }
+
         public static void Image_MouseCenteredZoom(int zoomfactor, PictureBox picbox, Panel panelImage, Point mouse)
         {
             // save initial parameter for mouse centered zoom
@@ -384,7 +403,7 @@ namespace SegyView
             picbox.SizeMode = PictureBoxSizeMode.StretchImage;
             picbox.Width = picNewSize.X;
             picbox.Height = picNewSize.Y;
-            
+
             panelImage.Invalidate();
             
             // mouse centered zoom
@@ -409,6 +428,25 @@ namespace SegyView
             panelImage.HorizontalScroll.Value = panEndHScroll;
             panelImage.VerticalScroll.Value = panEndVScroll;
             
+            panelImage.Update();
+        }
+
+        public static void Image_Axis_StretchShrink(PictureBox picbox, Panel panelImage, int newWidth, int newHeight)
+        {
+            // for X-axis stretch/shrink
+            ImgOriginalSize[0] = newWidth;
+
+            picbox.Width = ImgOriginalSize[0];
+            picbox.Update();
+
+            // for Y-axis stretch/shrink
+            ImgOriginalSize[1] = newHeight;
+
+            picbox.Height = ImgOriginalSize[1];
+            picbox.Update();
+
+            // redraw seismic view
+            panelImage.Invalidate();
             panelImage.Update();
         }
 
@@ -451,7 +489,6 @@ namespace SegyView
             panelImage.Update();
         }
 
-        public static int Dx = 1;
-        public static double MaxX = 1000 + Dx;
+        
     }
 }
