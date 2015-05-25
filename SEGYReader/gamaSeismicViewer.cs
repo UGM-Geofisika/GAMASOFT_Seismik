@@ -43,6 +43,9 @@ namespace SegyView
             var bmp0 =
                 new Bitmap(
                     "C:/Users/Geoseismal/Documents/GitHub/GAMASOFT_Seismik/TestVBAxis2Bitmap/TestVBAxis2Bitmap/bin/Debug/segybitmap.bmp");
+                    //"D:/Semester X2/Geoseismal - Spectragama 2/TestVBAxis2Bitmap/TestVBAxis2Bitmap/bin/Debug/segybitmap.bmp");
+                    
+
             ImgOriginalSize[0] = bmp0.Width;
             ImgOriginalSize[1] = bmp0.Height;
             picbox.SizeMode = PictureBoxSizeMode.AutoSize;
@@ -99,8 +102,7 @@ namespace SegyView
             for (var i = 0; i < ListLabelX.Count; i++)
             {
                 var val0 = MinX + ((i*DLabelX)*((MaxX - MinX)/picbox.Width));
-                Debug.WriteLine(picbox.Width);
-
+              
                 var with1 = ListTickV[i];
                 with1.Parent = panelX;
                 with1.BringToFront();
@@ -368,46 +370,45 @@ namespace SegyView
             panelImage.Update();
         }
 
-        public static void Image_MouseCenteredZoom(PictureBox picbox, Panel panelImage)
+        public static void Image_MouseCenteredZoom(int zoomfactor, PictureBox picbox, Panel panelImage, Point mouse)
         {
             // save initial parameter for mouse centered zoom
-            //var picStart = new Point(picbox.PointToClient(mouse).X, picbox.PointToClient(mouse).Y);
-            
+            var picStart = new Point(picbox.PointToClient(mouse).X, picbox.PointToClient(mouse).Y);
             var picSizeStart = new Point(picbox.Width, picbox.Height);
-            
+
             // zoom image
-            var picNewSize = new Point((int) Math.Round(ImgOriginalSize[0]*(ZoomFactor/100)),
-                (int) Math.Round(ImgOriginalSize[1] * (ZoomFactor / 100)));
+            var newWidth  = Math.Round(ImgOriginalSize[0] * (double)zoomfactor / 100);
+            var newHeight = Math.Round(ImgOriginalSize[1] * (double)zoomfactor / 100);
+            var picNewSize = new Point((int)newWidth, (int)newHeight);
             
             picbox.SizeMode = PictureBoxSizeMode.StretchImage;
             picbox.Width = picNewSize.X;
             picbox.Height = picNewSize.Y;
-
+            
             panelImage.Invalidate();
-
+            
             // mouse centered zoom
-            var picPosShift = new Point(PicStart.X - (PicStart.X/picSizeStart.X)*picNewSize.X,
-                PicStart.Y - (PicStart.Y/picSizeStart.Y)*picNewSize.Y);
-
+            var newShiftX = Math.Round((double)PicStart.X - ((double)PicStart.X / (double)picSizeStart.X) * (double)picNewSize.X);
+            var newShiftY = Math.Round((double)picStart.Y - ((double)picStart.Y / (double)picSizeStart.Y) * (double)picNewSize.Y);
+            var picPosShift = new Point((int)newShiftX, (int)newShiftY);
+            
             var picPosEnd = new Point(picbox.Left + picPosShift.X, picbox.Top + picPosShift.Y);
-            //Debug.WriteLine("{0} {1} {2} {3}", picPosShift.X, picPosShift.Y, picPosEnd.X, picPosShift.Y);
-
+            
             var panEndHScroll = -picPosEnd.X;
-           // Debug.WriteLine(panEndHScroll);
             if (panEndHScroll <= 0)
                 panEndHScroll = 0;
             if (panEndHScroll >= panelImage.HorizontalScroll.Maximum)
                 panEndHScroll = panelImage.HorizontalScroll.Maximum;
-
+            
             var panEndVScroll = -picPosEnd.Y;
             if (panEndVScroll <= 0)
                 panEndVScroll = 0;
             if (panEndVScroll >= panelImage.VerticalScroll.Maximum)
                 panEndVScroll = panelImage.VerticalScroll.Maximum;
-
+            
             panelImage.HorizontalScroll.Value = panEndHScroll;
             panelImage.VerticalScroll.Value = panEndVScroll;
-
+            
             panelImage.Update();
         }
 

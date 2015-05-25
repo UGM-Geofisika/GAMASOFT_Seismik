@@ -155,7 +155,7 @@ namespace SegyView
                 GamaSeismicViewer.ZoomFactor = 500;
 
             GamaSeismicViewer.PicStart = picBox1.PointToClient(MousePosition);
-            GamaSeismicViewer.Image_MouseCenteredZoom(picBox1, panelImage);
+            GamaSeismicViewer.Image_MouseCenteredZoom((int)GamaSeismicViewer.ZoomFactor, picBox1, panelImage, MousePosition);
             GamaSeismicViewer.Image_Axis_Update(picBox1, panelX, panelY, panelImage, panelGap);
         }
 
