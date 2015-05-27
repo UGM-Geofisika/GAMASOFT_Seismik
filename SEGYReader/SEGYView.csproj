@@ -64,6 +64,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SegyHeaderItem.cs" />
     <Compile Include="SegyView.cs" />
+    <Compile Include="SeismicViewUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="SEGYDisplay.resx">
       <DependentUpon>SEGYDisplay.cs</DependentUpon>
     </EmbeddedResource>
