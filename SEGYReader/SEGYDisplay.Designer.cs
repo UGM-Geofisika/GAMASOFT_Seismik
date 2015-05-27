@@ -58,6 +58,9 @@
             this.panelX = new System.Windows.Forms.Panel();
             this.panSeismicMenu = new System.Windows.Forms.Panel();
             this.panSeismicZoom = new System.Windows.Forms.Panel();
+            this.lblYAxisScale = new System.Windows.Forms.Label();
+            this.lblXAxisScale = new System.Windows.Forms.Label();
+            this.lblZoom = new System.Windows.Forms.Label();
             this.butSeismicZoom = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
@@ -65,20 +68,15 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tcHeader = new System.Windows.Forms.TabControl();
-            this.tpTextHeader = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.txtHeaderText = new System.Windows.Forms.TextBox();
-            this.tbBinaryHeader = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.colDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colBytePosition = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.lblZoom = new System.Windows.Forms.Label();
-            this.lblXAxisScale = new System.Windows.Forms.Label();
-            this.lblYAxisScale = new System.Windows.Forms.Label();
             this.panelImage = new SegyView.NoScrollPanel();
             this.picBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
@@ -98,9 +96,10 @@
             this.panSeismicMenu.SuspendLayout();
             this.panSeismicZoom.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.tcHeader.SuspendLayout();
-            this.tpTextHeader.SuspendLayout();
-            this.tbBinaryHeader.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panelImage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox1)).BeginInit();
@@ -404,6 +403,36 @@
             this.panSeismicZoom.Size = new System.Drawing.Size(129, 81);
             this.panSeismicZoom.TabIndex = 1;
             // 
+            // lblYAxisScale
+            // 
+            this.lblYAxisScale.AutoSize = true;
+            this.lblYAxisScale.Location = new System.Drawing.Point(80, 52);
+            this.lblYAxisScale.Name = "lblYAxisScale";
+            this.lblYAxisScale.Size = new System.Drawing.Size(36, 13);
+            this.lblYAxisScale.TabIndex = 22;
+            this.lblYAxisScale.Text = "100 %";
+            this.lblYAxisScale.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblXAxisScale
+            // 
+            this.lblXAxisScale.AutoSize = true;
+            this.lblXAxisScale.Location = new System.Drawing.Point(80, 30);
+            this.lblXAxisScale.Name = "lblXAxisScale";
+            this.lblXAxisScale.Size = new System.Drawing.Size(36, 13);
+            this.lblXAxisScale.TabIndex = 21;
+            this.lblXAxisScale.Text = "100 %";
+            this.lblXAxisScale.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblZoom
+            // 
+            this.lblZoom.AutoSize = true;
+            this.lblZoom.Location = new System.Drawing.Point(80, 7);
+            this.lblZoom.Name = "lblZoom";
+            this.lblZoom.Size = new System.Drawing.Size(36, 13);
+            this.lblZoom.TabIndex = 20;
+            this.lblZoom.Text = "100 %";
+            this.lblZoom.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // butSeismicZoom
             // 
             this.butSeismicZoom.Location = new System.Drawing.Point(43, 2);
@@ -463,7 +492,7 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.tcHeader);
+            this.tabPage2.Controls.Add(this.splitContainer2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -471,95 +500,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Header";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // tcHeader
-            // 
-            this.tcHeader.Controls.Add(this.tpTextHeader);
-            this.tcHeader.Controls.Add(this.tbBinaryHeader);
-            this.tcHeader.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tcHeader.Location = new System.Drawing.Point(3, 3);
-            this.tcHeader.Name = "tcHeader";
-            this.tcHeader.SelectedIndex = 0;
-            this.tcHeader.Size = new System.Drawing.Size(772, 488);
-            this.tcHeader.TabIndex = 0;
-            // 
-            // tpTextHeader
-            // 
-            this.tpTextHeader.Controls.Add(this.txtHeaderText);
-            this.tpTextHeader.Location = new System.Drawing.Point(4, 22);
-            this.tpTextHeader.Name = "tpTextHeader";
-            this.tpTextHeader.Padding = new System.Windows.Forms.Padding(3);
-            this.tpTextHeader.Size = new System.Drawing.Size(764, 462);
-            this.tpTextHeader.TabIndex = 0;
-            this.tpTextHeader.Text = "Text Header";
-            this.tpTextHeader.UseVisualStyleBackColor = true;
-            // 
-            // txtHeaderText
-            // 
-            this.txtHeaderText.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.txtHeaderText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtHeaderText.Location = new System.Drawing.Point(3, 3);
-            this.txtHeaderText.Multiline = true;
-            this.txtHeaderText.Name = "txtHeaderText";
-            this.txtHeaderText.ReadOnly = true;
-            this.txtHeaderText.Size = new System.Drawing.Size(758, 456);
-            this.txtHeaderText.TabIndex = 0;
-            // 
-            // tbBinaryHeader
-            // 
-            this.tbBinaryHeader.Controls.Add(this.dataGridView1);
-            this.tbBinaryHeader.Location = new System.Drawing.Point(4, 22);
-            this.tbBinaryHeader.Name = "tbBinaryHeader";
-            this.tbBinaryHeader.Padding = new System.Windows.Forms.Padding(3);
-            this.tbBinaryHeader.Size = new System.Drawing.Size(764, 462);
-            this.tbBinaryHeader.TabIndex = 1;
-            this.tbBinaryHeader.Text = "Binary Header";
-            this.tbBinaryHeader.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colDesc,
-            this.colValue,
-            this.colBytePosition});
-            this.dataGridView1.Location = new System.Drawing.Point(117, 6);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersWidth = 45;
-            this.dataGridView1.Size = new System.Drawing.Size(499, 425);
-            this.dataGridView1.TabIndex = 0;
-            // 
-            // colDesc
-            // 
-            this.colDesc.DataPropertyName = "Description";
-            this.colDesc.HeaderText = "Description";
-            this.colDesc.Name = "colDesc";
-            this.colDesc.ReadOnly = true;
-            // 
-            // colValue
-            // 
-            this.colValue.DataPropertyName = "Value";
-            this.colValue.HeaderText = "Value";
-            this.colValue.Name = "colValue";
-            this.colValue.ReadOnly = true;
-            // 
-            // colBytePosition
-            // 
-            this.colBytePosition.DataPropertyName = "BytePosition";
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.colBytePosition.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colBytePosition.HeaderText = "Byte Position";
-            this.colBytePosition.Name = "colBytePosition";
-            this.colBytePosition.ReadOnly = true;
             // 
             // tabPage3
             // 
@@ -583,35 +523,77 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "\"SEG-Y Files\"|*.sgy";
             // 
-            // lblZoom
+            // splitContainer2
             // 
-            this.lblZoom.AutoSize = true;
-            this.lblZoom.Location = new System.Drawing.Point(80, 7);
-            this.lblZoom.Name = "lblZoom";
-            this.lblZoom.Size = new System.Drawing.Size(36, 13);
-            this.lblZoom.TabIndex = 20;
-            this.lblZoom.Text = "100 %";
-            this.lblZoom.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer2.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer2.Name = "splitContainer2";
             // 
-            // lblXAxisScale
+            // splitContainer2.Panel1
             // 
-            this.lblXAxisScale.AutoSize = true;
-            this.lblXAxisScale.Location = new System.Drawing.Point(80, 30);
-            this.lblXAxisScale.Name = "lblXAxisScale";
-            this.lblXAxisScale.Size = new System.Drawing.Size(36, 13);
-            this.lblXAxisScale.TabIndex = 21;
-            this.lblXAxisScale.Text = "100 %";
-            this.lblXAxisScale.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.splitContainer2.Panel1.Controls.Add(this.txtHeaderText);
             // 
-            // lblYAxisScale
+            // splitContainer2.Panel2
             // 
-            this.lblYAxisScale.AutoSize = true;
-            this.lblYAxisScale.Location = new System.Drawing.Point(80, 52);
-            this.lblYAxisScale.Name = "lblYAxisScale";
-            this.lblYAxisScale.Size = new System.Drawing.Size(36, 13);
-            this.lblYAxisScale.TabIndex = 22;
-            this.lblYAxisScale.Text = "100 %";
-            this.lblYAxisScale.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.splitContainer2.Panel2.Controls.Add(this.dataGridView1);
+            this.splitContainer2.Size = new System.Drawing.Size(772, 488);
+            this.splitContainer2.SplitterDistance = 386;
+            this.splitContainer2.TabIndex = 1;
+            // 
+            // txtHeaderText
+            // 
+            this.txtHeaderText.BackColor = System.Drawing.Color.White;
+            this.txtHeaderText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtHeaderText.Location = new System.Drawing.Point(0, 0);
+            this.txtHeaderText.Multiline = true;
+            this.txtHeaderText.Name = "txtHeaderText";
+            this.txtHeaderText.ReadOnly = true;
+            this.txtHeaderText.Size = new System.Drawing.Size(386, 488);
+            this.txtHeaderText.TabIndex = 0;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.WhiteSmoke;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colDesc,
+            this.colValue,
+            this.colBytePosition});
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersWidth = 45;
+            this.dataGridView1.Size = new System.Drawing.Size(382, 488);
+            this.dataGridView1.TabIndex = 1;
+            // 
+            // colDesc
+            // 
+            this.colDesc.DataPropertyName = "Description";
+            this.colDesc.HeaderText = "Description";
+            this.colDesc.Name = "colDesc";
+            this.colDesc.ReadOnly = true;
+            // 
+            // colValue
+            // 
+            this.colValue.DataPropertyName = "Value";
+            this.colValue.HeaderText = "Value";
+            this.colValue.Name = "colValue";
+            this.colValue.ReadOnly = true;
+            // 
+            // colBytePosition
+            // 
+            this.colBytePosition.DataPropertyName = "BytePosition";
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colBytePosition.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colBytePosition.HeaderText = "Byte Position";
+            this.colBytePosition.Name = "colBytePosition";
+            this.colBytePosition.ReadOnly = true;
             // 
             // panelImage
             // 
@@ -672,10 +654,11 @@
             this.panSeismicZoom.ResumeLayout(false);
             this.panSeismicZoom.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            this.tcHeader.ResumeLayout(false);
-            this.tpTextHeader.ResumeLayout(false);
-            this.tpTextHeader.PerformLayout();
-            this.tbBinaryHeader.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel1.PerformLayout();
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panelImage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picBox1)).EndInit();
@@ -706,21 +689,12 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.TabControl tcHeader;
-        private System.Windows.Forms.TabPage tpTextHeader;
-        private System.Windows.Forms.TabPage tbBinaryHeader;
-        private System.Windows.Forms.TextBox txtHeaderText;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Panel panelSeismicParent;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDesc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colValue;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colBytePosition;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.PictureBox picBox1;
-        internal System.Windows.Forms.Panel Panel1;
         internal System.Windows.Forms.Panel panelX;
         internal System.Windows.Forms.Panel Panel3;
         internal System.Windows.Forms.Panel panelY;
@@ -737,6 +711,13 @@
         private System.Windows.Forms.Label lblZoom;
         private System.Windows.Forms.Label lblYAxisScale;
         private System.Windows.Forms.Label lblXAxisScale;
+        internal System.Windows.Forms.Panel Panel1;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.TextBox txtHeaderText;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDesc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBytePosition;
 
     }
 }
