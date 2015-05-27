@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
@@ -23,8 +22,8 @@ namespace SegyView
         public static Label LblHoverY = new Label();
         public static int Dx = 1;
         public static double Dy = 0.033;
-        public static double MinX = 15;
-        public static double MaxX = 1000 + Dx;
+        public static double MinX;
+        public static double MaxX;
         public static double MinY = 0;
         public static double MaxY = 5;
         public static int DLabelX = 50;
@@ -40,13 +39,26 @@ namespace SegyView
         public static Point ScaleMouse0;
         public static Point PicStart;
 
-        public static void ShowDummyImages(PictureBox picbox)
+        private static PictureBox picbox;
+        private static Panel panelX;
+        private static Panel panelY;
+        private static NoScrollPanel panelImage;
+        private static Panel panelGap;
+
+        public static void Setup(PictureBox pictureBox, Panel xPanel, Panel yPanel, NoScrollPanel imagePanel, Panel gapPanel)
         {
-            var bmp0 =
-                new Bitmap(
-                    "C:/Users/Geoseismal/Documents/GitHub/GAMASOFT_Seismik/TestVBAxis2Bitmap/TestVBAxis2Bitmap/bin/Debug/segybitmap.bmp");
-                    //"D:/Semester X2/Geoseismal - Spectragama 2/TestVBAxis2Bitmap/TestVBAxis2Bitmap/bin/Debug/segybitmap.bmp");
-                    
+            picbox = pictureBox;
+            panelX = xPanel;
+            panelY = yPanel;
+            panelImage = imagePanel;
+            panelGap = gapPanel;
+
+        }
+        public static void ShowSeismic(Bitmap seismic, int tracecount, int maxtime)
+        {
+            var bmp0 = seismic;
+            MaxX = tracecount + Dx;
+            MaxY = maxtime;
 
             ImgOriginalSize[0] = bmp0.Width;
             ImgOriginalSize[1] = bmp0.Height;
@@ -58,8 +70,7 @@ namespace SegyView
             picbox.Image = bmp0;
         }
 
-        public static void Image_Axis_Initialize(PictureBox picbox, Panel panelX, Panel panelY, NoScrollPanel panelImage,
-            Panel panelGap)
+        public static void Image_Axis_Initialize()
         {
             if (ListLabelX != null) ListLabelX.Clear();
             if (ListTickV != null) ListTickV.Clear();
@@ -104,7 +115,7 @@ namespace SegyView
             for (var i = 0; i < ListLabelX.Count; i++)
             {
                 var val0 = MinX + ((i*DLabelX)*((MaxX - MinX)/picbox.Width));
-              
+
                 var with1 = ListTickV[i];
                 with1.Parent = panelX;
                 with1.BringToFront();
@@ -230,8 +241,7 @@ namespace SegyView
             //ggh.Dispose();
         }
 
-        public static void Image_Axis_Update(PictureBox picbox, Panel panelX, Panel panelY, Panel panelImage,
-            Panel panelGap)
+        public static void Image_Axis_Update()
         {
             // move maximum X-axis and Y-axis indicator
             var pixPtrace = (int) Math.Floor(picbox.Width/(MaxX - MaxX));
@@ -293,7 +303,7 @@ namespace SegyView
             panelImage.Update();
         }
 
-        public static void Image_ValueOnHover(Panel panelGap, Panel panelY, PictureBox picbox, Point mouse)
+        public static void Image_ValueOnHover(Point mouse)
         {
             // calculate pointer in resized image
             var scaled = default(Point);
@@ -346,7 +356,7 @@ namespace SegyView
             with4.Invalidate();
         }
 
-        public static void Image_Pan(Panel panelImage, Point mouse)
+        public static void Image_Pan(Point mouse)
         {
             var panEndMouse = panelImage.PointToClient(mouse);
             var panShiftMouse = panEndMouse - (Size) PanStartMouse;
@@ -372,66 +382,66 @@ namespace SegyView
             panelImage.Update();
         }
 
-        public static void Image_ZoomByValue(int zoomfactor, PictureBox picbox, Panel panelImage)
+        public static void Image_ZoomByValue(int zoomfactor)
         {
             // zoom image
-            var newWidth = Math.Round(ImgOriginalSize[0] * (double)zoomfactor / 100);
-            var newHeight = Math.Round(ImgOriginalSize[1] * (double)zoomfactor / 100);
-            var picNewSize = new Point((int)newWidth, (int)newHeight);
+            var newWidth = Math.Round(ImgOriginalSize[0]*(double) zoomfactor/100);
+            var newHeight = Math.Round(ImgOriginalSize[1]*(double) zoomfactor/100);
+            var picNewSize = new Point((int) newWidth, (int) newHeight);
 
             picbox.SizeMode = PictureBoxSizeMode.StretchImage;
             picbox.Width = picNewSize.X;
             picbox.Height = picNewSize.Y;
 
             ZoomFactor = zoomfactor;
-            
+
             panelImage.Invalidate();
             panelImage.Update();
         }
 
-        public static void Image_MouseCenteredZoom(int zoomfactor, PictureBox picbox, Panel panelImage, Point mouse)
+        public static void Image_MouseCenteredZoom(int zoomfactor, Point mouse)
         {
             // save initial parameter for mouse centered zoom
             var picStart = new Point(picbox.PointToClient(mouse).X, picbox.PointToClient(mouse).Y);
             var picSizeStart = new Point(picbox.Width, picbox.Height);
 
             // zoom image
-            var newWidth  = Math.Round(ImgOriginalSize[0] * (double)zoomfactor / 100);
-            var newHeight = Math.Round(ImgOriginalSize[1] * (double)zoomfactor / 100);
-            var picNewSize = new Point((int)newWidth, (int)newHeight);
-            
+            var newWidth = Math.Round(ImgOriginalSize[0]*(double) zoomfactor/100);
+            var newHeight = Math.Round(ImgOriginalSize[1]*(double) zoomfactor/100);
+            var picNewSize = new Point((int) newWidth, (int) newHeight);
+
             picbox.SizeMode = PictureBoxSizeMode.StretchImage;
             picbox.Width = picNewSize.X;
             picbox.Height = picNewSize.Y;
 
             panelImage.Invalidate();
-            
+
             // mouse centered zoom
-            var newShiftX = Math.Round((double)PicStart.X - ((double)PicStart.X / (double)picSizeStart.X) * (double)picNewSize.X);
-            var newShiftY = Math.Round((double)picStart.Y - ((double)picStart.Y / (double)picSizeStart.Y) * (double)picNewSize.Y);
-            var picPosShift = new Point((int)newShiftX, (int)newShiftY);
-            
+            var newShiftX = Math.Round(PicStart.X - (PicStart.X/(double) picSizeStart.X)*picNewSize.X);
+            var newShiftY = Math.Round(picStart.Y - (picStart.Y/(double) picSizeStart.Y)*picNewSize.Y);
+            var picPosShift = new Point((int) newShiftX, (int) newShiftY);
+
             var picPosEnd = new Point(picbox.Left + picPosShift.X, picbox.Top + picPosShift.Y);
-            
+
             var panEndHScroll = -picPosEnd.X;
             if (panEndHScroll <= 0)
                 panEndHScroll = 0;
             if (panEndHScroll >= panelImage.HorizontalScroll.Maximum)
                 panEndHScroll = panelImage.HorizontalScroll.Maximum;
-            
+
             var panEndVScroll = -picPosEnd.Y;
             if (panEndVScroll <= 0)
                 panEndVScroll = 0;
             if (panEndVScroll >= panelImage.VerticalScroll.Maximum)
                 panEndVScroll = panelImage.VerticalScroll.Maximum;
-            
+
             panelImage.HorizontalScroll.Value = panEndHScroll;
             panelImage.VerticalScroll.Value = panEndVScroll;
-            
+
             panelImage.Update();
         }
 
-        public static void Image_Axis_StretchShrink(PictureBox picbox, Panel panelImage, int newWidth, int newHeight)
+        public static void Image_Axis_StretchShrink(int newWidth, int newHeight)
         {
             // for X-axis stretch/shrink
             ImgOriginalSize[0] = newWidth;
@@ -450,8 +460,7 @@ namespace SegyView
             panelImage.Update();
         }
 
-        public static void Image_Axis_StretchShrink(PictureBox picbox, Panel panelX, Panel panelY, Panel panelImage,
-            Point mouse)
+        public static void Image_Axis_StretchShrink(Point mouse)
         {
             // for X-axis stretch/shrink
             if (FScaleX)
@@ -488,7 +497,5 @@ namespace SegyView
             panelImage.Invalidate();
             panelImage.Update();
         }
-
-        
     }
 }
