@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace SegyView
 {
@@ -65,35 +66,21 @@ namespace SegyView
             _picbox.Width = ImgOriginalSize[0];
             _picbox.Height = ImgOriginalSize[1];
             _picbox.Image = bmp0;
+
+            Image_Axis_Initialize();
         }
 
         public static void Image_Axis_Initialize()
         {
             ClearLabelTickIfExist();
             CreateLabelTickList();
-           
-            // auto-adjust Y-axis panel width based on last Y-value label position
-            //var dummy = new Label();
-            //var with0 = dummy;
-            //with0.Parent = _panelY;
-            //with0.AutoSize = true;
-            //
-            //if (ListLabelY != null)
-            //    with0.Text =
-            //        Math.Round(MinY + ((ListLabelY.Count - 1)*((MaxY - MinY)/ImgOriginalSize[1])), 3)
-            //            .ToString(CultureInfo.InvariantCulture);
-            //
-            //with0.Left = 5;
-            //with0.Hide();
-            //
-            //_panelY.Parent.Width = with0.Left + with0.Width + 15;
-            //dummy.Dispose();
 
+            // resize Y-axis panel
+            resizeYAxisPanel();
             // show X-axis label and tick
             showAxisLabelTick_X();
             // show Y-axis label and tick
             showAxisLabelTick_Y();
-            
 
             // show maximum axis indicator
             var pixPtrace = (int) Math.Floor(_picbox.Width/(MaxX - MinX));
@@ -189,6 +176,20 @@ namespace SegyView
             with10.AutoSize = true;
             with10.BackColor = Color.Green;
             with10.ForeColor = Color.White;
+        }
+
+        private static void resizeYAxisPanel()
+        {
+            Label dummy = new Label();
+            dummy.Parent = _panelX; dummy.AutoSize = true;
+            dummy.BackColor = _panelX.BackColor; dummy.ForeColor = _panelX.BackColor;
+            dummy.Width = 1;
+            dummy.Text = String.Concat(Math.Round(MaxY).ToString(), ".000");
+            dummy.Update();
+
+            _panelY.Parent.Width = dummy.Width + 15;
+
+            dummy.Dispose();
         }
 
         private static void showAxisLabelTick_Y()

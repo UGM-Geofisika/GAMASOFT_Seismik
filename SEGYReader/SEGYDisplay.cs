@@ -102,7 +102,6 @@ namespace SegyView
         {
             var maxtime = tracecount*(timeInterval/1000);
             GamaSeismicViewer.ShowSeismic(SEGYView.SegyView.GetAllTracesBitmap(segy), tracecount, maxtime);
-            GamaSeismicViewer.Image_Axis_Initialize();
             GamaSeismicViewer.Image_Axis_Update();
         }
        
