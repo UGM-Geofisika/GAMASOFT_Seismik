@@ -507,5 +507,32 @@ namespace SegyView
             _panelImage.Invalidate();
             _panelImage.Update();
         }
+
+        public static void Image_Axis_StretchShrink(bool FitToWidth, bool FitToHeight)
+        {
+            // Resize X-Axis -> Fit To Width
+            if (FitToWidth == true)
+            {
+                ImgOriginalSize[0] = _panelImage.Width - SystemInformation.VerticalScrollBarWidth;
+
+                _picbox.Width = ImgOriginalSize[0];
+                _picbox.Update();
+            }
+
+            // Resize Y-Axis -> Fit To Height
+            if (FitToHeight == true)
+            {
+                ImgOriginalSize[1] = _panelImage.Height;
+
+                _picbox.Height = ImgOriginalSize[1] - SystemInformation.HorizontalScrollBarHeight;
+                _picbox.Update();
+            }
+
+            // redraw seismic view
+            _panelImage.Invalidate();
+            _panelImage.Update();
+        }
+
+
     }
 }

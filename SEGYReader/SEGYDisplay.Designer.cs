@@ -60,6 +60,7 @@
             this.panelX = new System.Windows.Forms.Panel();
             this.panSeismicMenu = new System.Windows.Forms.Panel();
             this.panSeismicZoom = new System.Windows.Forms.Panel();
+            this.XAxisFitWidth = new System.Windows.Forms.Button();
             this.lblYAxisScale = new System.Windows.Forms.Label();
             this.lblXAxisScale = new System.Windows.Forms.Label();
             this.lblZoom = new System.Windows.Forms.Label();
@@ -79,6 +80,7 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.YAxisFitHeight = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -410,6 +412,8 @@
             // 
             // panSeismicZoom
             // 
+            this.panSeismicZoom.Controls.Add(this.YAxisFitHeight);
+            this.panSeismicZoom.Controls.Add(this.XAxisFitWidth);
             this.panSeismicZoom.Controls.Add(this.lblYAxisScale);
             this.panSeismicZoom.Controls.Add(this.lblXAxisScale);
             this.panSeismicZoom.Controls.Add(this.lblZoom);
@@ -422,13 +426,23 @@
             this.panSeismicZoom.Dock = System.Windows.Forms.DockStyle.Left;
             this.panSeismicZoom.Location = new System.Drawing.Point(0, 0);
             this.panSeismicZoom.Name = "panSeismicZoom";
-            this.panSeismicZoom.Size = new System.Drawing.Size(129, 81);
+            this.panSeismicZoom.Size = new System.Drawing.Size(240, 81);
             this.panSeismicZoom.TabIndex = 1;
+            // 
+            // XAxisFitWidth
+            // 
+            this.XAxisFitWidth.Location = new System.Drawing.Point(107, 26);
+            this.XAxisFitWidth.Name = "XAxisFitWidth";
+            this.XAxisFitWidth.Size = new System.Drawing.Size(76, 20);
+            this.XAxisFitWidth.TabIndex = 23;
+            this.XAxisFitWidth.Text = "Fit To Width";
+            this.XAxisFitWidth.UseVisualStyleBackColor = true;
+            this.XAxisFitWidth.Click += new System.EventHandler(this.XAxisFitWidth_Click);
             // 
             // lblYAxisScale
             // 
             this.lblYAxisScale.AutoSize = true;
-            this.lblYAxisScale.Location = new System.Drawing.Point(80, 52);
+            this.lblYAxisScale.Location = new System.Drawing.Point(37, 52);
             this.lblYAxisScale.Name = "lblYAxisScale";
             this.lblYAxisScale.Size = new System.Drawing.Size(36, 13);
             this.lblYAxisScale.TabIndex = 22;
@@ -438,7 +452,7 @@
             // lblXAxisScale
             // 
             this.lblXAxisScale.AutoSize = true;
-            this.lblXAxisScale.Location = new System.Drawing.Point(80, 30);
+            this.lblXAxisScale.Location = new System.Drawing.Point(37, 30);
             this.lblXAxisScale.Name = "lblXAxisScale";
             this.lblXAxisScale.Size = new System.Drawing.Size(36, 13);
             this.lblXAxisScale.TabIndex = 21;
@@ -448,7 +462,7 @@
             // lblZoom
             // 
             this.lblZoom.AutoSize = true;
-            this.lblZoom.Location = new System.Drawing.Point(80, 7);
+            this.lblZoom.Location = new System.Drawing.Point(37, 7);
             this.lblZoom.Name = "lblZoom";
             this.lblZoom.Size = new System.Drawing.Size(36, 13);
             this.lblZoom.TabIndex = 20;
@@ -457,7 +471,7 @@
             // 
             // butSeismicZoom
             // 
-            this.butSeismicZoom.Location = new System.Drawing.Point(43, 2);
+            this.butSeismicZoom.Location = new System.Drawing.Point(76, 3);
             this.butSeismicZoom.Name = "butSeismicZoom";
             this.butSeismicZoom.Size = new System.Drawing.Size(31, 20);
             this.butSeismicZoom.TabIndex = 1;
@@ -476,7 +490,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(43, 48);
+            this.button3.Location = new System.Drawing.Point(76, 49);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(31, 20);
             this.button3.TabIndex = 16;
@@ -486,7 +500,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(43, 25);
+            this.button2.Location = new System.Drawing.Point(76, 26);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(31, 20);
             this.button2.TabIndex = 15;
@@ -619,6 +633,16 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "\"SEG-Y Files\"|*.sgy";
             // 
+            // YAxisFitHeight
+            // 
+            this.YAxisFitHeight.Location = new System.Drawing.Point(107, 49);
+            this.YAxisFitHeight.Name = "YAxisFitHeight";
+            this.YAxisFitHeight.Size = new System.Drawing.Size(76, 20);
+            this.YAxisFitHeight.TabIndex = 24;
+            this.YAxisFitHeight.Text = "Fit To Height";
+            this.YAxisFitHeight.UseVisualStyleBackColor = true;
+            this.YAxisFitHeight.Click += new System.EventHandler(this.YAxisFitHeight_Click);
+            // 
             // SEGYDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -720,6 +744,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colDesc;
         private System.Windows.Forms.DataGridViewTextBoxColumn colValue;
         private System.Windows.Forms.DataGridViewTextBoxColumn colBytePosition;
+        private System.Windows.Forms.Button XAxisFitWidth;
+        private System.Windows.Forms.Button YAxisFitHeight;
 
     }
 }
