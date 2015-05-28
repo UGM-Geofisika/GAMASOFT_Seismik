@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SEGYDisplay));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.sEGYReadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,6 +51,8 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panelSeismicParent = new System.Windows.Forms.Panel();
+            this.panelImage = new SegyView.NoScrollPanel();
+            this.picBox1 = new System.Windows.Forms.PictureBox();
             this.panelGap = new System.Windows.Forms.Panel();
             this.Panel3 = new System.Windows.Forms.Panel();
             this.panelY = new System.Windows.Forms.Panel();
@@ -58,6 +60,7 @@
             this.panelX = new System.Windows.Forms.Panel();
             this.panSeismicMenu = new System.Windows.Forms.Panel();
             this.panSeismicZoom = new System.Windows.Forms.Panel();
+            this.butZoomFit = new System.Windows.Forms.Button();
             this.YAxisFitHeight = new System.Windows.Forms.Button();
             this.XAxisFitWidth = new System.Windows.Forms.Button();
             this.lblYAxisScale = new System.Windows.Forms.Label();
@@ -79,9 +82,7 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.panelImage = new SegyView.NoScrollPanel();
-            this.picBox1 = new System.Windows.Forms.PictureBox();
-            this.butZoomFit = new System.Windows.Forms.Button();
+            this.butFitAllToScreen = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -94,6 +95,8 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panelSeismicParent.SuspendLayout();
+            this.panelImage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picBox1)).BeginInit();
             this.Panel3.SuspendLayout();
             this.Panel1.SuspendLayout();
             this.panSeismicMenu.SuspendLayout();
@@ -104,8 +107,6 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.panelImage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -317,10 +318,32 @@
             this.panelSeismicParent.Controls.Add(this.Panel3);
             this.panelSeismicParent.Controls.Add(this.Panel1);
             this.panelSeismicParent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelSeismicParent.Location = new System.Drawing.Point(3, 84);
+            this.panelSeismicParent.Location = new System.Drawing.Point(3, 100);
             this.panelSeismicParent.Name = "panelSeismicParent";
-            this.panelSeismicParent.Size = new System.Drawing.Size(772, 407);
+            this.panelSeismicParent.Size = new System.Drawing.Size(772, 391);
             this.panelSeismicParent.TabIndex = 0;
+            // 
+            // panelImage
+            // 
+            this.panelImage.AutoScroll = true;
+            this.panelImage.Controls.Add(this.picBox1);
+            this.panelImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelImage.Location = new System.Drawing.Point(54, 45);
+            this.panelImage.Name = "panelImage";
+            this.panelImage.Size = new System.Drawing.Size(718, 346);
+            this.panelImage.TabIndex = 7;
+            this.panelImage.Scroll += new System.Windows.Forms.ScrollEventHandler(this.panelImage_Scroll);
+            // 
+            // picBox1
+            // 
+            this.picBox1.Location = new System.Drawing.Point(0, 0);
+            this.picBox1.Name = "picBox1";
+            this.picBox1.Size = new System.Drawing.Size(161, 120);
+            this.picBox1.TabIndex = 0;
+            this.picBox1.TabStop = false;
+            this.picBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picBox1_MouseDown);
+            this.picBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picBox1_MouseMove);
+            this.picBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picBox1_MouseUp);
             // 
             // panelGap
             // 
@@ -339,7 +362,7 @@
             this.Panel3.Location = new System.Drawing.Point(0, 35);
             this.Panel3.Name = "Panel3";
             this.Panel3.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
-            this.Panel3.Size = new System.Drawing.Size(54, 372);
+            this.Panel3.Size = new System.Drawing.Size(54, 356);
             this.Panel3.TabIndex = 4;
             // 
             // panelY
@@ -350,7 +373,7 @@
             this.panelY.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelY.Location = new System.Drawing.Point(0, 0);
             this.panelY.Name = "panelY";
-            this.panelY.Size = new System.Drawing.Size(53, 372);
+            this.panelY.Size = new System.Drawing.Size(53, 356);
             this.panelY.TabIndex = 1;
             this.panelY.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelY_MouseDown);
             this.panelY.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelY_MouseMove);
@@ -386,11 +409,12 @@
             this.panSeismicMenu.Dock = System.Windows.Forms.DockStyle.Top;
             this.panSeismicMenu.Location = new System.Drawing.Point(3, 3);
             this.panSeismicMenu.Name = "panSeismicMenu";
-            this.panSeismicMenu.Size = new System.Drawing.Size(772, 81);
+            this.panSeismicMenu.Size = new System.Drawing.Size(772, 97);
             this.panSeismicMenu.TabIndex = 4;
             // 
             // panSeismicZoom
             // 
+            this.panSeismicZoom.Controls.Add(this.butFitAllToScreen);
             this.panSeismicZoom.Controls.Add(this.butZoomFit);
             this.panSeismicZoom.Controls.Add(this.YAxisFitHeight);
             this.panSeismicZoom.Controls.Add(this.XAxisFitWidth);
@@ -406,8 +430,18 @@
             this.panSeismicZoom.Dock = System.Windows.Forms.DockStyle.Left;
             this.panSeismicZoom.Location = new System.Drawing.Point(0, 0);
             this.panSeismicZoom.Name = "panSeismicZoom";
-            this.panSeismicZoom.Size = new System.Drawing.Size(240, 81);
+            this.panSeismicZoom.Size = new System.Drawing.Size(240, 97);
             this.panSeismicZoom.TabIndex = 1;
+            // 
+            // butZoomFit
+            // 
+            this.butZoomFit.Location = new System.Drawing.Point(107, 3);
+            this.butZoomFit.Name = "butZoomFit";
+            this.butZoomFit.Size = new System.Drawing.Size(79, 20);
+            this.butZoomFit.TabIndex = 25;
+            this.butZoomFit.Text = "Fit To Screen";
+            this.butZoomFit.UseVisualStyleBackColor = true;
+            this.butZoomFit.Click += new System.EventHandler(this.butZoomFit_Click);
             // 
             // YAxisFitHeight
             // 
@@ -595,8 +629,8 @@
             // colBytePosition
             // 
             this.colBytePosition.DataPropertyName = "BytePosition";
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.colBytePosition.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colBytePosition.DefaultCellStyle = dataGridViewCellStyle2;
             this.colBytePosition.HeaderText = "Byte Position";
             this.colBytePosition.Name = "colBytePosition";
             this.colBytePosition.ReadOnly = true;
@@ -623,37 +657,15 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "\"SEG-Y Files\"|*.sgy";
             // 
-            // panelImage
+            // butFitAllToScreen
             // 
-            this.panelImage.AutoScroll = true;
-            this.panelImage.Controls.Add(this.picBox1);
-            this.panelImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelImage.Location = new System.Drawing.Point(54, 45);
-            this.panelImage.Name = "panelImage";
-            this.panelImage.Size = new System.Drawing.Size(718, 362);
-            this.panelImage.TabIndex = 7;
-            this.panelImage.Scroll += new System.Windows.Forms.ScrollEventHandler(this.panelImage_Scroll);
-            // 
-            // picBox1
-            // 
-            this.picBox1.Location = new System.Drawing.Point(0, 0);
-            this.picBox1.Name = "picBox1";
-            this.picBox1.Size = new System.Drawing.Size(161, 120);
-            this.picBox1.TabIndex = 0;
-            this.picBox1.TabStop = false;
-            this.picBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picBox1_MouseDown);
-            this.picBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picBox1_MouseMove);
-            this.picBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picBox1_MouseUp);
-            // 
-            // butZoomFit
-            // 
-            this.butZoomFit.Location = new System.Drawing.Point(107, 3);
-            this.butZoomFit.Name = "butZoomFit";
-            this.butZoomFit.Size = new System.Drawing.Size(79, 20);
-            this.butZoomFit.TabIndex = 25;
-            this.butZoomFit.Text = "Fit To Screen";
-            this.butZoomFit.UseVisualStyleBackColor = true;
-            this.butZoomFit.Click += new System.EventHandler(this.butZoomFit_Click);
+            this.butFitAllToScreen.Location = new System.Drawing.Point(76, 72);
+            this.butFitAllToScreen.Name = "butFitAllToScreen";
+            this.butFitAllToScreen.Size = new System.Drawing.Size(110, 20);
+            this.butFitAllToScreen.TabIndex = 26;
+            this.butFitAllToScreen.Text = "Fit View To Screen";
+            this.butFitAllToScreen.UseVisualStyleBackColor = true;
+            this.butFitAllToScreen.Click += new System.EventHandler(this.butFitAllToScreen_Click);
             // 
             // SEGYDisplay
             // 
@@ -685,6 +697,8 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.panelSeismicParent.ResumeLayout(false);
+            this.panelImage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picBox1)).EndInit();
             this.Panel3.ResumeLayout(false);
             this.Panel3.PerformLayout();
             this.Panel1.ResumeLayout(false);
@@ -698,8 +712,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.panelImage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -759,6 +771,7 @@
         private System.Windows.Forms.Button XAxisFitWidth;
         private System.Windows.Forms.Button YAxisFitHeight;
         private System.Windows.Forms.Button butZoomFit;
+        private System.Windows.Forms.Button butFitAllToScreen;
 
     }
 }
