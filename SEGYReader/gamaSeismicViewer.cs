@@ -211,7 +211,7 @@ namespace SegyView
                 with4.Parent = _panelY;
                 with4.AutoSize = true;
                 with4.Text =
-                    Math.Round(MinY + (i * ((MaxY - MinY) / _picbox.Height)), 3).ToString(CultureInfo.InvariantCulture);
+                    Math.Round(MinY + (i * ((MaxY - MinY) / (_picbox.Height-1))), 3).ToString();
                 with4.Left = ListTickH[i].Left - with4.Width;
                 with4.Top = (int)Math.Round((double)(ListTickH[i].Top - (with4.Height / 2)));
                 with4.Show();
@@ -292,7 +292,7 @@ namespace SegyView
             // update Y-axis label
             for (var i = 0; i <= ListLabelY.Count - 1; i++)
             {
-                var val0 = MinY + (((i*DLabelY) - _picbox.Top)*((MaxY - MinY)/_picbox.Height));
+                var val0 = MinY + (((i*DLabelY) - _picbox.Top)*((MaxY - MinY)/(_picbox.Height-1)));
 
                 var with5 = ListTickH[i];
                 with5.Height = 1;
@@ -304,7 +304,7 @@ namespace SegyView
                 with5.Update();
 
                 var with6 = ListLabelY[i];
-                with6.Text = Math.Round(val0, 3).ToString(CultureInfo.InvariantCulture);
+                with6.Text = Math.Round(val0, 3).ToString();
                 with6.Left = ListTickH[i].Left - with6.Width;
                 with6.ForeColor = ListTickH[i].BackColor;
                 with6.Update();
@@ -358,7 +358,7 @@ namespace SegyView
             with3.Invalidate();
 
             var with4 = LblHoverY;
-            with4.Text = Math.Round(MinY + (scaled.Y*((MaxY - MinY)/ImgOriginalSize[1])), 3).ToString(CultureInfo.InvariantCulture);
+            with4.Text = Math.Round(MinY + (scaled.Y*((MaxY - MinY)/(ImgOriginalSize[1]-1))), 3).ToString(CultureInfo.InvariantCulture);
             with4.Top =
                 (int)
                     Math.Round((double) (_picbox.PointToClient(mouse).Y + _panelGap.Height + _picbox.Top - with4.Height/2));
