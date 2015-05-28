@@ -65,31 +65,29 @@ namespace SegyView
             _picbox.Width = ImgOriginalSize[0];
             _picbox.Height = ImgOriginalSize[1];
             _picbox.Image = bmp0;
-
-            Image_Axis_Initialize();
         }
 
-        private static void Image_Axis_Initialize()
+        public static void Image_Axis_Initialize()
         {
             ClearLabelTickIfExist();
             CreateLabelTickList();
            
             // auto-adjust Y-axis panel width based on last Y-value label position
-            var dummy = new Label();
-            var with0 = dummy;
-            with0.Parent = _panelY;
-            with0.AutoSize = true;
-
-            if (ListLabelY != null)
-                with0.Text =
-                    Math.Round(MinY + ((ListLabelY.Count - 1)*((MaxY - MinY)/ImgOriginalSize[1])), 3)
-                        .ToString(CultureInfo.InvariantCulture);
-
-            with0.Left = 5;
-            with0.Hide();
-
-            _panelY.Parent.Width = with0.Left + with0.Width + 15;
-            dummy.Dispose();
+            //var dummy = new Label();
+            //var with0 = dummy;
+            //with0.Parent = _panelY;
+            //with0.AutoSize = true;
+            //
+            //if (ListLabelY != null)
+            //    with0.Text =
+            //        Math.Round(MinY + ((ListLabelY.Count - 1)*((MaxY - MinY)/ImgOriginalSize[1])), 3)
+            //            .ToString(CultureInfo.InvariantCulture);
+            //
+            //with0.Left = 5;
+            //with0.Hide();
+            //
+            //_panelY.Parent.Width = with0.Left + with0.Width + 15;
+            //dummy.Dispose();
 
             // show X-axis label and tick
             showAxisLabelTick_X();

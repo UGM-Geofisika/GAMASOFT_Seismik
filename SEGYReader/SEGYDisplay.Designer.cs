@@ -549,6 +549,7 @@
             this.txtHeaderText.Multiline = true;
             this.txtHeaderText.Name = "txtHeaderText";
             this.txtHeaderText.ReadOnly = true;
+            this.txtHeaderText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtHeaderText.Size = new System.Drawing.Size(386, 488);
             this.txtHeaderText.TabIndex = 0;
             this.txtHeaderText.WordWrap = false;
