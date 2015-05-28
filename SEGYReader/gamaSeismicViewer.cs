@@ -67,6 +67,7 @@ namespace SegyView
             _picbox.Height = ImgOriginalSize[1];
             _picbox.Image = bmp0;
 
+            ZoomFactor = 100;
             Image_Axis_Initialize();
         }
 
@@ -403,10 +404,31 @@ namespace SegyView
             _picbox.Width = picNewSize.X;
             _picbox.Height = picNewSize.Y;
 
-            ZoomFactor = zoomfactor;
+            ZoomFactor = (double)zoomfactor;
 
             _panelImage.Invalidate();
             _panelImage.Update();
+        }
+
+        public static void Image_ZoomToScreen()
+        {
+            int zoomfactor = (int)ZoomFactor;
+
+            // if image width > image height -> fit to width
+            if (_picbox.Width >= _picbox.Height)
+            {
+                zoomfactor = (int)Math.Round((((double)_panelImage.Width - (double)SystemInformation.VerticalScrollBarWidth) /
+                    (double)ImgOriginalSize[0]) * 100);
+            }
+
+            // if image width < image height -> fit to height
+            if (_picbox.Width < _picbox.Height)
+            {
+                zoomfactor = (int)Math.Round((((double)_panelImage.Height - (double)SystemInformation.HorizontalScrollBarHeight) /
+                    (double)ImgOriginalSize[1]) * 100);
+            }
+
+            Image_ZoomByValue(zoomfactor);
         }
 
         public static void Image_MouseCenteredZoom(int zoomfactor, Point mouse)

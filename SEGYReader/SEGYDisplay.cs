@@ -23,6 +23,9 @@ namespace SegyView
             toolStrip1.Renderer = Windows7Renderer.Instance;
             GamaSeismicViewer.Setup(picBox1,panelX,panelY, panelImage, panelGap);
             picBox1.MouseWheel += picBox1_MouseWheel;
+
+            // disable control panel in Seismic Viewer
+            panSeismicMenu.Enabled = false;
         }
 
         private void openToolStripButton_Click_1(object sender, EventArgs e)
@@ -103,7 +106,10 @@ namespace SegyView
             var maxtime = tracecount*(timeInterval/1000);
             GamaSeismicViewer.ShowSeismic(SEGYView.SegyView.GetAllTracesBitmap(segy), tracecount, maxtime);
             GamaSeismicViewer.Image_Axis_Update();
+
+            panSeismicMenu.Enabled = true; panSeismicMenu.Update();
+            lblZoom.Text = String.Concat(GamaSeismicViewer.ZoomFactor, " %"); lblZoom.Update();
         }
-       
+
     }
 }

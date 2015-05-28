@@ -155,5 +155,13 @@ namespace SegyView
 
             lblYAxisScale.Text = String.Concat(Math.Round((GamaSeismicViewer.ImgOriginalSize[1] / (double)picBox1.Image.Height) * 100), " %"); lblYAxisScale.Update();
         }
+
+        private void butZoomFit_Click(object sender, EventArgs e)
+        {
+            GamaSeismicViewer.Image_ZoomToScreen();
+            GamaSeismicViewer.Image_Axis_Update();
+
+            lblZoom.Text = String.Concat(GamaSeismicViewer.ZoomFactor, " %"); lblZoom.Update();
+        }
     }
 }
