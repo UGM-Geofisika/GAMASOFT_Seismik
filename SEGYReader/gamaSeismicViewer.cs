@@ -53,6 +53,7 @@ namespace SegyView
             _panelGap = gapPanel;
 
         }
+
         public static void ShowSeismic(Bitmap seismic, int tracecount, int maxtime)
         {
             var bmp0 = seismic;

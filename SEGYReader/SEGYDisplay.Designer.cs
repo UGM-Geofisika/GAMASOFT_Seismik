@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SEGYDisplay));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.sEGYReadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,6 +61,7 @@
             this.panelX = new System.Windows.Forms.Panel();
             this.panSeismicMenu = new System.Windows.Forms.Panel();
             this.panSeismicZoom = new System.Windows.Forms.Panel();
+            this.butFitAllToScreen = new System.Windows.Forms.Button();
             this.butZoomFit = new System.Windows.Forms.Button();
             this.YAxisFitHeight = new System.Windows.Forms.Button();
             this.XAxisFitWidth = new System.Windows.Forms.Button();
@@ -82,7 +84,7 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.butFitAllToScreen = new System.Windows.Forms.Button();
+            this.imglistFileTree = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -238,6 +240,7 @@
             this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.FullRowSelect = true;
+            this.treeView1.ItemHeight = 19;
             this.treeView1.Location = new System.Drawing.Point(0, 45);
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(250, 474);
@@ -432,6 +435,16 @@
             this.panSeismicZoom.Name = "panSeismicZoom";
             this.panSeismicZoom.Size = new System.Drawing.Size(240, 97);
             this.panSeismicZoom.TabIndex = 1;
+            // 
+            // butFitAllToScreen
+            // 
+            this.butFitAllToScreen.Location = new System.Drawing.Point(76, 72);
+            this.butFitAllToScreen.Name = "butFitAllToScreen";
+            this.butFitAllToScreen.Size = new System.Drawing.Size(110, 20);
+            this.butFitAllToScreen.TabIndex = 26;
+            this.butFitAllToScreen.Text = "Fit View To Screen";
+            this.butFitAllToScreen.UseVisualStyleBackColor = true;
+            this.butFitAllToScreen.Click += new System.EventHandler(this.butFitAllToScreen_Click);
             // 
             // butZoomFit
             // 
@@ -629,8 +642,8 @@
             // colBytePosition
             // 
             this.colBytePosition.DataPropertyName = "BytePosition";
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.colBytePosition.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colBytePosition.DefaultCellStyle = dataGridViewCellStyle1;
             this.colBytePosition.HeaderText = "Byte Position";
             this.colBytePosition.Name = "colBytePosition";
             this.colBytePosition.ReadOnly = true;
@@ -657,15 +670,11 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "\"SEG-Y Files\"|*.sgy";
             // 
-            // butFitAllToScreen
+            // imglistFileTree
             // 
-            this.butFitAllToScreen.Location = new System.Drawing.Point(76, 72);
-            this.butFitAllToScreen.Name = "butFitAllToScreen";
-            this.butFitAllToScreen.Size = new System.Drawing.Size(110, 20);
-            this.butFitAllToScreen.TabIndex = 26;
-            this.butFitAllToScreen.Text = "Fit View To Screen";
-            this.butFitAllToScreen.UseVisualStyleBackColor = true;
-            this.butFitAllToScreen.Click += new System.EventHandler(this.butFitAllToScreen_Click);
+            this.imglistFileTree.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imglistFileTree.ImageSize = new System.Drawing.Size(16, 16);
+            this.imglistFileTree.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // SEGYDisplay
             // 
@@ -676,6 +685,7 @@
             this.Controls.Add(this.toolStripContainer1);
             this.Controls.Add(this.menuStrip1);
             this.Name = "SEGYDisplay";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SEG-Y SegyView";
             this.Load += new System.EventHandler(this.SEGYDisplay_Load);
             this.Resize += new System.EventHandler(this.SEGYDisplay_Resize);
@@ -772,6 +782,7 @@
         private System.Windows.Forms.Button YAxisFitHeight;
         private System.Windows.Forms.Button butZoomFit;
         private System.Windows.Forms.Button butFitAllToScreen;
+        private System.Windows.Forms.ImageList imglistFileTree;
 
     }
 }

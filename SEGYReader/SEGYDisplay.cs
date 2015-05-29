@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using System.Drawing;
 using Antiufo.Controls;
 using Unplugged.Segy;
 
@@ -22,7 +23,9 @@ namespace SegyView
             menuStrip1.Renderer = Windows7Renderer.Instance;
             toolStrip1.Renderer = Windows7Renderer.Instance;
             GamaSeismicViewer.Setup(picBox1,panelX,panelY, panelImage, panelGap);
+            GamaFileViewer.Setup(treeView1);
             picBox1.MouseWheel += picBox1_MouseWheel;
+            treeView1.NodeMouseClick += TreeView_SelectItem;
 
             // disable control panel in Seismic Viewer
             panSeismicMenu.Enabled = false;
@@ -34,6 +37,10 @@ namespace SegyView
 
             if (dlgresult != DialogResult.OK) return;
 
+            // load selected directory
+            GamaFileViewer.LoadDirectory(openFileDialog1.FileName);
+
+            // load selected segy file
             _segyFile = SEGYView.SegyView.Read(openFileDialog1.FileName);
 
             Debug.WriteLine(_segyFile.Traces.Count);
@@ -47,6 +54,8 @@ namespace SegyView
 
             ExtractSegyHeaderInfo(_segyFile);
             DisplaySeismicSection(_segyFile, _segyFile.Header.BinaryHeader.NDataPerTraceReel, _segyFile.Header.BinaryHeader.SampleIntervalReel);
+
+            GamaFileViewer.fileURLNowOpened = openFileDialog1.FileName;
         }
 
         private void ExtractSegyHeaderInfo(ISegyFile segy)
@@ -111,5 +120,32 @@ namespace SegyView
             lblZoom.Text = String.Concat(GamaSeismicViewer.ZoomFactor, " %"); lblZoom.Update();
         }
 
+        private void TreeView_SelectItem(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Node.Name.EndsWith(GamaFileViewer.fileExt) & (e.Node.Name != GamaFileViewer.fileURLNowOpened))
+            {
+                Debug.WriteLine(e.Node.Name);
+                Debug.WriteLine(GamaFileViewer.fileURLNowOpened);
+
+                // load selected segy file
+                _segyFile = SEGYView.SegyView.Read(e.Node.Name);
+
+                Debug.WriteLine(_segyFile.Traces.Count);
+                Debug.WriteLine(_segyFile.Traces.ToList().First().Values.Count);
+                Debug.Write("Job Number: ");
+                Debug.WriteLine(_segyFile.Header.BinaryHeader.JobNumber);
+                Debug.Write("Sample Interval Reel: ");
+                Debug.WriteLine(_segyFile.Header.BinaryHeader.SampleIntervalReel);
+                Debug.Write("Sample Interval Field: ");
+                Debug.WriteLine(_segyFile.Header.BinaryHeader.SampleIntervalField);
+
+                ExtractSegyHeaderInfo(_segyFile);
+                DisplaySeismicSection(_segyFile, _segyFile.Header.BinaryHeader.NDataPerTraceReel, _segyFile.Header.BinaryHeader.SampleIntervalReel);
+
+                GamaFileViewer.fileURLNowOpened = e.Node.Name;
+            }
+        }
+
+              
     }
 }

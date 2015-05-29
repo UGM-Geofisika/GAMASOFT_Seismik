@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GamaFileViewer.cs" />
     <Compile Include="GamaSeismicViewer.cs" />
     <Compile Include="NoScrollPanel.cs">
       <SubType>Component</SubType>
