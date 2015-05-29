@@ -134,6 +134,16 @@ namespace SegyView
 
         private static void ClearLabelTickIfExist()
         {
+            foreach (Label lbl in ListLabelY)
+            {
+                lbl.Hide();
+            }
+
+            foreach (Label lbl in ListLabelX)
+            {
+                lbl.Hide();
+            }
+
             if (ListLabelX != null) ListLabelX.Clear();
             if (ListTickV != null) ListTickV.Clear();
             if (ListLabelY != null) ListLabelY.Clear();

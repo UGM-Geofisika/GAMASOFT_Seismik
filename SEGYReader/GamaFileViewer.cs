@@ -42,7 +42,7 @@ namespace SegyView
                 string pfName = file.Extension.Replace(".","").ToLower();
                 if (pfName == fileExt)
                 {
-                    addInMe.Add(file.FullName, file.Name);
+                    addInMe.Add(file.FullName, file.Name, 1);
                 }
             }
 
@@ -63,7 +63,7 @@ namespace SegyView
                 // if files with specified format are exist, add the subdirectory
                 if (fExtExist == true)
                 {
-                    TreeNode curNode = addInMe.Add(subdir.Name);
+                    TreeNode curNode = addInMe.Add(subdir.FullName, subdir.Name, 0);
                     BuildTree(subdir, curNode.Nodes);
                 }
             }

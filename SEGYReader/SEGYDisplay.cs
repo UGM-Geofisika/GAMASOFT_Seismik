@@ -124,10 +124,7 @@ namespace SegyView
         {
             if (e.Node.Name.EndsWith(GamaFileViewer.fileExt) & (e.Node.Name != GamaFileViewer.fileURLNowOpened))
             {
-                Debug.WriteLine(e.Node.Name);
-                Debug.WriteLine(GamaFileViewer.fileURLNowOpened);
-
-                // load selected segy file
+               // load selected segy file
                 _segyFile = SEGYView.SegyView.Read(e.Node.Name);
 
                 Debug.WriteLine(_segyFile.Traces.Count);
@@ -146,6 +143,10 @@ namespace SegyView
             }
         }
 
-              
+        
+
+       
+      
+                     
     }
 }

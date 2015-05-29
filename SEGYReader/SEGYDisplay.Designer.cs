@@ -45,6 +45,7 @@
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.imglistFileTree = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -84,7 +85,6 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.imglistFileTree = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -240,11 +240,24 @@
             this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.FullRowSelect = true;
+            this.treeView1.ImageIndex = 0;
+            this.treeView1.ImageList = this.imglistFileTree;
             this.treeView1.ItemHeight = 19;
             this.treeView1.Location = new System.Drawing.Point(0, 45);
             this.treeView1.Name = "treeView1";
+            this.treeView1.SelectedImageIndex = 2;
+            this.treeView1.ShowLines = false;
             this.treeView1.Size = new System.Drawing.Size(250, 474);
             this.treeView1.TabIndex = 1;
+            // 
+            // imglistFileTree
+            // 
+            this.imglistFileTree.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imglistFileTree.ImageStream")));
+            this.imglistFileTree.TransparentColor = System.Drawing.Color.Transparent;
+            this.imglistFileTree.Images.SetKeyName(0, "folder_Closed_32xLG.png");
+            this.imglistFileTree.Images.SetKeyName(1, "Miscellaneousfile_8304.png");
+            this.imglistFileTree.Images.SetKeyName(2, "StatusAnnotations_Complete_and_ok_16xLG_color.png");
+            this.imglistFileTree.Images.SetKeyName(3, "color_wheel_32xLG.png");
             // 
             // toolStrip1
             // 
@@ -670,12 +683,6 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "\"SEG-Y Files\"|*.sgy";
             // 
-            // imglistFileTree
-            // 
-            this.imglistFileTree.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imglistFileTree.ImageSize = new System.Drawing.Size(16, 16);
-            this.imglistFileTree.TransparentColor = System.Drawing.Color.Transparent;
-            // 
             // SEGYDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -782,7 +789,7 @@
         private System.Windows.Forms.Button YAxisFitHeight;
         private System.Windows.Forms.Button butZoomFit;
         private System.Windows.Forms.Button butFitAllToScreen;
-        private System.Windows.Forms.ImageList imglistFileTree;
+        public System.Windows.Forms.ImageList imglistFileTree;
 
     }
 }
