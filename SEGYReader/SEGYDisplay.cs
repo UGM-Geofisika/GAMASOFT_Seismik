@@ -32,7 +32,9 @@ namespace SegyView
             panSeismicMenu.Enabled = false;
 
             // prepare colormap
-            GamaSeismicColor.SetColormap_3Color(Color.FromArgb(0, 0, 255), Color.FromArgb(255, 255, 255), Color.FromArgb(255, 0, 0));
+            GamaSeismicColor.Colormap_BlueWhiteRed();  
+            //GamaSeismicColor.Colormap_Grayscale();
+            //GamaSeismicColor.Colormap_Rainbow();
             GamaSeismicColor.UpdateColormapBitmap();
 
         }
@@ -151,7 +153,7 @@ namespace SegyView
             }
         }
 
-       
+        
                      
     }
 }

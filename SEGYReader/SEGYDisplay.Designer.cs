@@ -62,6 +62,8 @@
             this.panelX = new System.Windows.Forms.Panel();
             this.panSeismicMenu = new System.Windows.Forms.Panel();
             this.panSeismicColor = new System.Windows.Forms.Panel();
+            this.butColormapEdit = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
             this.panColormapCont = new System.Windows.Forms.Panel();
             this.picColorScale = new System.Windows.Forms.PictureBox();
             this.panSeismicZoom = new System.Windows.Forms.Panel();
@@ -88,8 +90,6 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.label5 = new System.Windows.Forms.Label();
-            this.butColormapEdit = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -447,6 +447,25 @@
             this.panSeismicColor.Size = new System.Drawing.Size(273, 97);
             this.panSeismicColor.TabIndex = 2;
             // 
+            // butColormapEdit
+            // 
+            this.butColormapEdit.Enabled = false;
+            this.butColormapEdit.Location = new System.Drawing.Point(185, 3);
+            this.butColormapEdit.Name = "butColormapEdit";
+            this.butColormapEdit.Size = new System.Drawing.Size(82, 20);
+            this.butColormapEdit.TabIndex = 28;
+            this.butColormapEdit.Text = "Edit Colormap";
+            this.butColormapEdit.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 7);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(51, 13);
+            this.label5.TabIndex = 27;
+            this.label5.Text = "Colormap";
+            // 
             // panColormapCont
             // 
             this.panColormapCont.BackColor = System.Drawing.Color.DimGray;
@@ -721,24 +740,6 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "\"SEG-Y Files\"|*.sgy";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 7);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(51, 13);
-            this.label5.TabIndex = 27;
-            this.label5.Text = "Colormap";
-            // 
-            // butColormapEdit
-            // 
-            this.butColormapEdit.Location = new System.Drawing.Point(185, 3);
-            this.butColormapEdit.Name = "butColormapEdit";
-            this.butColormapEdit.Size = new System.Drawing.Size(82, 20);
-            this.butColormapEdit.TabIndex = 28;
-            this.butColormapEdit.Text = "Edit Colormap";
-            this.butColormapEdit.UseVisualStyleBackColor = true;
             // 
             // SEGYDisplay
             // 
