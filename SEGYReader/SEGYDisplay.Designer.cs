@@ -61,6 +61,9 @@
             this.Panel1 = new System.Windows.Forms.Panel();
             this.panelX = new System.Windows.Forms.Panel();
             this.panSeismicMenu = new System.Windows.Forms.Panel();
+            this.panSeismicColor = new System.Windows.Forms.Panel();
+            this.panColormapCont = new System.Windows.Forms.Panel();
+            this.picColorScale = new System.Windows.Forms.PictureBox();
             this.panSeismicZoom = new System.Windows.Forms.Panel();
             this.butFitAllToScreen = new System.Windows.Forms.Button();
             this.butZoomFit = new System.Windows.Forms.Button();
@@ -85,6 +88,8 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.label5 = new System.Windows.Forms.Label();
+            this.butColormapEdit = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -102,6 +107,9 @@
             this.Panel3.SuspendLayout();
             this.Panel1.SuspendLayout();
             this.panSeismicMenu.SuspendLayout();
+            this.panSeismicColor.SuspendLayout();
+            this.panColormapCont.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picColorScale)).BeginInit();
             this.panSeismicZoom.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
@@ -256,8 +264,7 @@
             this.imglistFileTree.TransparentColor = System.Drawing.Color.Transparent;
             this.imglistFileTree.Images.SetKeyName(0, "folder_Closed_32xLG.png");
             this.imglistFileTree.Images.SetKeyName(1, "Miscellaneousfile_8304.png");
-            this.imglistFileTree.Images.SetKeyName(2, "StatusAnnotations_Complete_and_ok_16xLG_color.png");
-            this.imglistFileTree.Images.SetKeyName(3, "color_wheel_32xLG.png");
+            this.imglistFileTree.Images.SetKeyName(2, "Symbols_Complete_and_ok_32xLG.png");
             // 
             // toolStrip1
             // 
@@ -421,12 +428,44 @@
             // 
             // panSeismicMenu
             // 
+            this.panSeismicMenu.Controls.Add(this.panSeismicColor);
             this.panSeismicMenu.Controls.Add(this.panSeismicZoom);
             this.panSeismicMenu.Dock = System.Windows.Forms.DockStyle.Top;
             this.panSeismicMenu.Location = new System.Drawing.Point(3, 3);
             this.panSeismicMenu.Name = "panSeismicMenu";
             this.panSeismicMenu.Size = new System.Drawing.Size(772, 97);
             this.panSeismicMenu.TabIndex = 4;
+            // 
+            // panSeismicColor
+            // 
+            this.panSeismicColor.Controls.Add(this.butColormapEdit);
+            this.panSeismicColor.Controls.Add(this.label5);
+            this.panSeismicColor.Controls.Add(this.panColormapCont);
+            this.panSeismicColor.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panSeismicColor.Location = new System.Drawing.Point(193, 0);
+            this.panSeismicColor.Name = "panSeismicColor";
+            this.panSeismicColor.Size = new System.Drawing.Size(273, 97);
+            this.panSeismicColor.TabIndex = 2;
+            // 
+            // panColormapCont
+            // 
+            this.panColormapCont.BackColor = System.Drawing.Color.DimGray;
+            this.panColormapCont.Controls.Add(this.picColorScale);
+            this.panColormapCont.Location = new System.Drawing.Point(9, 27);
+            this.panColormapCont.Name = "panColormapCont";
+            this.panColormapCont.Padding = new System.Windows.Forms.Padding(1);
+            this.panColormapCont.Size = new System.Drawing.Size(258, 20);
+            this.panColormapCont.TabIndex = 1;
+            // 
+            // picColorScale
+            // 
+            this.picColorScale.BackColor = System.Drawing.Color.White;
+            this.picColorScale.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picColorScale.Location = new System.Drawing.Point(1, 1);
+            this.picColorScale.Name = "picColorScale";
+            this.picColorScale.Size = new System.Drawing.Size(256, 18);
+            this.picColorScale.TabIndex = 0;
+            this.picColorScale.TabStop = false;
             // 
             // panSeismicZoom
             // 
@@ -446,7 +485,7 @@
             this.panSeismicZoom.Dock = System.Windows.Forms.DockStyle.Left;
             this.panSeismicZoom.Location = new System.Drawing.Point(0, 0);
             this.panSeismicZoom.Name = "panSeismicZoom";
-            this.panSeismicZoom.Size = new System.Drawing.Size(240, 97);
+            this.panSeismicZoom.Size = new System.Drawing.Size(193, 97);
             this.panSeismicZoom.TabIndex = 1;
             // 
             // butFitAllToScreen
@@ -683,6 +722,24 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "\"SEG-Y Files\"|*.sgy";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 7);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(51, 13);
+            this.label5.TabIndex = 27;
+            this.label5.Text = "Colormap";
+            // 
+            // butColormapEdit
+            // 
+            this.butColormapEdit.Location = new System.Drawing.Point(185, 3);
+            this.butColormapEdit.Name = "butColormapEdit";
+            this.butColormapEdit.Size = new System.Drawing.Size(82, 20);
+            this.butColormapEdit.TabIndex = 28;
+            this.butColormapEdit.Text = "Edit Colormap";
+            this.butColormapEdit.UseVisualStyleBackColor = true;
+            // 
             // SEGYDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -720,6 +777,10 @@
             this.Panel3.PerformLayout();
             this.Panel1.ResumeLayout(false);
             this.panSeismicMenu.ResumeLayout(false);
+            this.panSeismicColor.ResumeLayout(false);
+            this.panSeismicColor.PerformLayout();
+            this.panColormapCont.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picColorScale)).EndInit();
             this.panSeismicZoom.ResumeLayout(false);
             this.panSeismicZoom.PerformLayout();
             this.tabPage2.ResumeLayout(false);
@@ -790,6 +851,11 @@
         private System.Windows.Forms.Button butZoomFit;
         private System.Windows.Forms.Button butFitAllToScreen;
         public System.Windows.Forms.ImageList imglistFileTree;
+        private System.Windows.Forms.Panel panSeismicColor;
+        private System.Windows.Forms.PictureBox picColorScale;
+        private System.Windows.Forms.Panel panColormapCont;
+        private System.Windows.Forms.Button butColormapEdit;
+        private System.Windows.Forms.Label label5;
 
     }
 }

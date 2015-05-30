@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GamaFileViewer.cs" />
+    <Compile Include="GamaSeismicColor.cs" />
     <Compile Include="GamaSeismicViewer.cs" />
     <Compile Include="NoScrollPanel.cs">
       <SubType>Component</SubType>

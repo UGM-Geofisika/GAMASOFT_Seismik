@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+
 #if !MONO_TOUCH
 using System.Drawing.Imaging;
 #endif
@@ -16,6 +17,8 @@ namespace Unplugged.Segy
     /// </summary>
     public class ImageWriter
     {
+        public static byte[,] cScale = new byte[256, 3];
+
         /// <summary>
         /// When true, sample values that are exactly 0.0f will have their alpha component set to 0.
         /// Defaults to true.
@@ -203,13 +206,14 @@ namespace Unplugged.Segy
             if (SetNullValuesToTransparent && value == 0.0f) // Exactly zero is assumed to be a null sample
                 alpha = byte.MinValue;
             var byteValue = (byte)(byte.MaxValue * (value - valueMin) / valueRange);
+
             if (components == 1)
                 bytes[offset + 0] = byteValue;
             else if (components == 4)
             {
-                bytes[offset + 0] = byteValue;
-                bytes[offset + 1] = byteValue;
-                bytes[offset + 2] = byteValue;
+                bytes[offset + 0] = (byte)cScale[byteValue, 2]; 
+                bytes[offset + 1] = (byte)cScale[byteValue, 1];
+                bytes[offset + 2] = (byte)cScale[byteValue, 0];
                 bytes[offset + 3] = alpha;
             }
             else

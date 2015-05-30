@@ -70,6 +70,8 @@ namespace SegyView
 
             ZoomFactor = 100;
             Image_Axis_Initialize();
+
+            //GamaSeismicColor.ReadColorFromBitmap(seismic);
         }
 
         public static void Image_Axis_Initialize()
@@ -217,7 +219,7 @@ namespace SegyView
                 with3.Top = (i * DLabelY) + _panelGap.Height;
                 with3.Left = _panelY.Width - with3.Width;
                 with3.Show();
-                with3.Update();
+                //with3.Update();
 
                 var with4 = ListLabelY[i];
                 with4.Parent = _panelY;
@@ -227,8 +229,10 @@ namespace SegyView
                 with4.Left = ListTickH[i].Left - with4.Width;
                 with4.Top = (int)Math.Round((double)(ListTickH[i].Top - (with4.Height / 2)));
                 with4.Show();
-                with4.Update();
+                //with4.Update();
             }
+
+            _panelY.Invalidate(); _panelY.Update();
         }
 
         private static void showAxisLabelTick_X()
@@ -250,7 +254,7 @@ namespace SegyView
                 with1.Top = _panelX.Height - with1.Height;
                 with1.Left = (i * DLabelX) + _panelY.Width;
                 with1.Show();
-                with1.Update();
+                //with1.Update();
 
                 var with2 = ListLabelX[i];
                 with2.Parent = _panelX;
@@ -260,8 +264,10 @@ namespace SegyView
                 with2.Top = 10;
                 with2.Left = (int)Math.Round((double)(ListTickV[i].Left - (with2.Width / 2)));
                 with2.Show();
-                with2.Update();
+                //with2.Update();
             }
+
+            _panelX.Invalidate(); _panelX.Update();
         }
 
         public static void Image_Axis_Update()

@@ -24,11 +24,17 @@ namespace SegyView
             toolStrip1.Renderer = Windows7Renderer.Instance;
             GamaSeismicViewer.Setup(picBox1,panelX,panelY, panelImage, panelGap);
             GamaFileViewer.Setup(treeView1);
+            GamaSeismicColor.Setup(picBox1, picColorScale);
             picBox1.MouseWheel += picBox1_MouseWheel;
             treeView1.NodeMouseClick += TreeView_SelectItem;
 
             // disable control panel in Seismic Viewer
             panSeismicMenu.Enabled = false;
+
+            // prepare colormap
+            GamaSeismicColor.SetColormap_3Color(Color.FromArgb(0, 0, 255), Color.FromArgb(255, 255, 255), Color.FromArgb(255, 0, 0));
+            GamaSeismicColor.UpdateColormapBitmap();
+
         }
 
         private void openToolStripButton_Click_1(object sender, EventArgs e)
@@ -113,6 +119,8 @@ namespace SegyView
         private void DisplaySeismicSection(ISegyFile segy, int tracecount, int timeInterval)
         {
             var maxtime = tracecount*(timeInterval/1000);
+
+            // display seismic section
             GamaSeismicViewer.ShowSeismic(SEGYView.SegyView.GetAllTracesBitmap(segy), tracecount, maxtime);
             GamaSeismicViewer.Image_Axis_Update();
 
@@ -143,10 +151,7 @@ namespace SegyView
             }
         }
 
-        
-
        
-      
                      
     }
 }
