@@ -32,9 +32,9 @@ namespace SegyView
             panSeismicMenu.Enabled = false;
 
             // prepare colormap
-            GamaSeismicColor.Colormap_BlueWhiteRed();  
+            //GamaSeismicColor.Colormap_BlueWhiteRed();  
             //GamaSeismicColor.Colormap_Grayscale();
-            //GamaSeismicColor.Colormap_Rainbow();
+            GamaSeismicColor.Colormap_Rainbow();
             GamaSeismicColor.UpdateColormapBitmap();
 
         }
@@ -43,7 +43,8 @@ namespace SegyView
         {
             var dlgresult = openFileDialog1.ShowDialog();
 
-            if (dlgresult != DialogResult.OK) return;
+            if (dlgresult != DialogResult.OK)
+            { GamaSeismicViewer.SetScrollbarValue(); return; }
 
             // load selected directory
             GamaFileViewer.LoadDirectory(openFileDialog1.FileName);
@@ -64,6 +65,7 @@ namespace SegyView
             DisplaySeismicSection(_segyFile, _segyFile.Header.BinaryHeader.NDataPerTraceReel, _segyFile.Header.BinaryHeader.SampleIntervalReel);
 
             GamaFileViewer.fileURLNowOpened = openFileDialog1.FileName;
+            GamaSeismicViewer.SetScrollbarValue();
         }
 
         private void ExtractSegyHeaderInfo(ISegyFile segy)
@@ -152,6 +154,13 @@ namespace SegyView
                 GamaFileViewer.fileURLNowOpened = e.Node.Name;
             }
         }
+
+        private void panelImage_MouseLeave(object sender, EventArgs e)
+        {
+            GamaSeismicViewer.GetScrollbarValue();
+        }
+
+       
 
         
                      

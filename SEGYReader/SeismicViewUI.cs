@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace SegyView
 {
@@ -12,10 +13,20 @@ namespace SegyView
             GamaSeismicViewer.Image_Axis_Update();
         }
 
+        private void picBox1_MouseLeave(object sender, EventArgs e)
+        {
+            GamaSeismicViewer.GetScrollbarValue();
+        }
+
         private void picBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            picBox1.Focus();
-            //GamaSeismicViewer.Image_Axis_Update(picBox1, panelX, panelY, panelImage, panelGap);
+            
+            if (picBox1.Focused == false)
+            {
+                picBox1.Focus();
+                GamaSeismicViewer.SetScrollbarValue();
+                GamaSeismicViewer.Image_Axis_Update();
+            }
 
             GamaSeismicViewer.Image_ValueOnHover(MousePosition);
 

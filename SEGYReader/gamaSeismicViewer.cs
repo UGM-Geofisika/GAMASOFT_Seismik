@@ -11,6 +11,7 @@ namespace SegyView
     {
         public static int[] ImgOriginalSize = new int[2];
         public static double ZoomFactor = 100;
+        public static int[] ScrollbarValue = new int[2] {0, 0};
         public static List<Label> ListLabelX = new List<Label>();
         public static List<Label> ListLabelY = new List<Label>();
         public static List<PictureBox> ListTickV = new List<PictureBox>();
@@ -33,11 +34,12 @@ namespace SegyView
         public static Point PanStartMouse;
         public static int PanStartHScroll;
         public static int PanStartVScroll;
-        //public variable for axis scaling
+        // public variable for axis scaling
         public static bool FScaleX = false;
         public static bool FScaleY = false;
         public static Point ScaleMouse0;
         public static Point PicStart;
+        // public variable for control handler
         private static PictureBox _picbox;
         private static Panel _panelX;
         private static Panel _panelY;
@@ -51,7 +53,22 @@ namespace SegyView
             _panelY = yPanel;
             _panelImage = imagePanel;
             _panelGap = gapPanel;
+        }
 
+        public static void GetScrollbarValue()
+        { ScrollbarValue = new int[2] {_panelImage.HorizontalScroll.Value, _panelImage.VerticalScroll.Value}; }
+
+        public static void SetScrollbarValue()
+        {
+            var val0 = ScrollbarValue[0];
+            if (val0 > _panelImage.HorizontalScroll.Maximum) val0 = _panelImage.HorizontalScroll.Maximum;
+
+            var val1 = ScrollbarValue[1];
+            if (val1 > _panelImage.VerticalScroll.Maximum) val1 = _panelImage.VerticalScroll.Maximum;
+
+            _panelImage.AutoScrollPosition = new Point(val0, val1);
+            _picbox.Update();
+            _panelImage.Update();
         }
 
         public static void ShowSeismic(Bitmap seismic, int tracecount, int maxtime)

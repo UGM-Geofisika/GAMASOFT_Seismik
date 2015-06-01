@@ -188,15 +188,15 @@ namespace SegyView
             // interpolate color of the colormap
             for (int i = 0; i < colorVal.Length - 1; i++)
             {
-                double dR = ((double)colorVal[i+1].R - (double)colorVal[i].R) / ((double)colorByte[i+1] - (double)colorByte[i]);
-                double dG = ((double)colorVal[i+1].G - (double)colorVal[i].G) / ((double)colorByte[i+1] - (double)colorByte[i]);
-                double dB = ((double)colorVal[i+1].B - (double)colorVal[i].B) / ((double)colorByte[i+1] - (double)colorByte[i]);
-
-                for (int j = colorByte[i] + 1; j < colorByte[i+1]; j++)
+                double dR = ((double)(colorVal[i+1].R - colorVal[i].R)) / ((double)(colorByte[i+1] - colorByte[i] - 1));
+                double dG = ((double)(colorVal[i+1].G - colorVal[i].G)) / ((double)(colorByte[i+1] - colorByte[i] - 1));
+                double dB = ((double)(colorVal[i+1].B - colorVal[i].B)) / ((double)(colorByte[i+1] - colorByte[i] - 1));
+            
+                for (int j = colorByte[i]; j < colorByte[i+1]; j++)
                 {
-                    cScale[j, 0] = (byte)(cScale[j - 1, 0] + Math.Round(dR));
-                    cScale[j, 1] = (byte)(cScale[j - 1, 1] + Math.Round(dG));
-                    cScale[j, 2] = (byte)(cScale[j - 1, 2] + Math.Round(dB));
+                    cScale[j+1, 0] = (byte)((double)cScale[j, 0] + Math.Round(dR));
+                    cScale[j+1, 1] = (byte)((double)cScale[j, 1] + Math.Round(dG));
+                    cScale[j+1, 2] = (byte)((double)cScale[j, 2] + Math.Round(dB));
                 }
             }
 
