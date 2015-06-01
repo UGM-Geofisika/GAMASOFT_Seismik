@@ -87,8 +87,6 @@ namespace SegyView
 
             ZoomFactor = 100;
             Image_Axis_Initialize();
-
-            //GamaSeismicColor.ReadColorFromBitmap(seismic);
         }
 
         public static void Image_Axis_Initialize()

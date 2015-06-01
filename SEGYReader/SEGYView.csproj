@@ -50,6 +50,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColormapEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColormapEditor.Designer.cs">
+      <DependentUpon>ColormapEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GamaColormapEditor.cs" />
     <Compile Include="GamaFileViewer.cs" />
     <Compile Include="GamaSeismicColor.cs" />
     <Compile Include="GamaSeismicViewer.cs" />
@@ -69,6 +76,9 @@
     <Compile Include="SeismicViewUI.cs">
       <SubType>Form</SubType>
     </Compile>
+    <EmbeddedResource Include="ColormapEditor.resx">
+      <DependentUpon>ColormapEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SEGYDisplay.resx">
       <DependentUpon>SEGYDisplay.cs</DependentUpon>
     </EmbeddedResource>

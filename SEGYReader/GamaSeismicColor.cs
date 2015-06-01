@@ -27,14 +27,28 @@ namespace SegyView
         }
 
         // Colormap Presets
+        public static void Colormap_BlackWhiteRed()
+        {
+            CreateColormap(ImageWriter.cScale, Color.FromArgb(0, 0, 0), 0, Color.FromArgb(255, 255, 255), 127, Color.FromArgb(255, 0, 0), 255);
+
+            GamaColormapEditor.LoadColormapTable(new Color[3] { Color.FromArgb(0, 0, 0), Color.FromArgb(255, 255, 255), Color.FromArgb(255, 0, 0) },
+                                                 new int[3] { 0, 127, 255 });
+        }
+
         public static void Colormap_BlueWhiteRed()
         {
             CreateColormap(ImageWriter.cScale, Color.FromArgb(0, 0, 255), 0, Color.FromArgb(255, 255, 255), 127, Color.FromArgb(255, 0, 0), 255);
+
+            GamaColormapEditor.LoadColormapTable(new Color[3] { Color.FromArgb(0, 0, 255), Color.FromArgb(255, 255, 255), Color.FromArgb(255, 0, 0) },
+                                                 new int[3] { 0, 127, 255 });
         }
 
         public static void Colormap_Grayscale()
         {
             CreateColormap(ImageWriter.cScale, Color.FromArgb(0, 0, 0), 0, Color.FromArgb(255, 255, 255), 255);
+
+            GamaColormapEditor.LoadColormapTable(new Color[2] {Color.FromArgb(0, 0, 0), Color.FromArgb(255, 255, 255)},
+                                                 new int[2] {0, 255});
         }
 
         public static void Colormap_Rainbow()
@@ -42,6 +56,9 @@ namespace SegyView
             CreateColormap(ImageWriter.cScale, 
                 new Color[6] {Color.Red, Color.DarkOrange, Color.Yellow, Color.Lime, Color.Blue, Color.DarkViolet}, 
                 new int[6]   {0,         51,               102,          153,        204,        255             });
+
+            GamaColormapEditor.LoadColormapTable(new Color[6] { Color.Red, Color.DarkOrange, Color.Yellow, Color.Lime, Color.Blue, Color.DarkViolet },
+                                                 new int[6] { 0, 51, 102, 153, 204, 255 });
         }
 
         // linear color interpolation method overloads
@@ -210,6 +227,7 @@ namespace SegyView
                     cScale[i, 2] = colorVal[colorVal.Length - 1].B;
                 }
             }
+
         }
 
         // update colormap everloads

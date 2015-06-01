@@ -20,12 +20,13 @@ namespace SegyView
 
         private void picBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            
+            //if (this.Focused == false) return;
+            //
             if (picBox1.Focused == false)
             {
-                picBox1.Focus();
-                GamaSeismicViewer.SetScrollbarValue();
-                GamaSeismicViewer.Image_Axis_Update();
+              picBox1.Focus();
+              GamaSeismicViewer.SetScrollbarValue();
+              GamaSeismicViewer.Image_Axis_Update();
             }
 
             GamaSeismicViewer.Image_ValueOnHover(MousePosition);
@@ -182,6 +183,11 @@ namespace SegyView
 
             lblXAxisScale.Text = String.Concat(Math.Round((GamaSeismicViewer.ImgOriginalSize[0] / (double)picBox1.Image.Width) * 100), " %"); lblXAxisScale.Update();
             lblYAxisScale.Text = String.Concat(Math.Round((GamaSeismicViewer.ImgOriginalSize[1] / (double)picBox1.Image.Height) * 100), " %"); lblYAxisScale.Update();
+        }
+
+        private void butColormapEdit_Click(object sender, EventArgs e)
+        {
+            frmClrEdit.Show();
         }
     }
 }

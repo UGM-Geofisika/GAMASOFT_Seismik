@@ -13,6 +13,9 @@ namespace SegyView
     {
         private ISegyFile _segyFile;
 
+        // initialize other forms
+        public ColormapEditor frmClrEdit = new ColormapEditor();
+
         public SEGYDisplay()
         {
             InitializeComponent();
@@ -22,9 +25,12 @@ namespace SegyView
         {
             menuStrip1.Renderer = Windows7Renderer.Instance;
             toolStrip1.Renderer = Windows7Renderer.Instance;
+
+            // initialize classes
             GamaSeismicViewer.Setup(picBox1,panelX,panelY, panelImage, panelGap);
             GamaFileViewer.Setup(treeView1);
             GamaSeismicColor.Setup(picBox1, picColorScale);
+            GamaColormapEditor.Setup(frmClrEdit, frmClrEdit.picColorScale, frmClrEdit.dgvColormap);
             picBox1.MouseWheel += picBox1_MouseWheel;
             treeView1.NodeMouseClick += TreeView_SelectItem;
 
@@ -32,9 +38,10 @@ namespace SegyView
             panSeismicMenu.Enabled = false;
 
             // prepare colormap
+            GamaSeismicColor.Colormap_BlackWhiteRed();
             //GamaSeismicColor.Colormap_BlueWhiteRed();  
             //GamaSeismicColor.Colormap_Grayscale();
-            GamaSeismicColor.Colormap_Rainbow();
+            //GamaSeismicColor.Colormap_Rainbow();
             GamaSeismicColor.UpdateColormapBitmap();
 
         }
@@ -159,8 +166,6 @@ namespace SegyView
         {
             GamaSeismicViewer.GetScrollbarValue();
         }
-
-       
 
         
                      

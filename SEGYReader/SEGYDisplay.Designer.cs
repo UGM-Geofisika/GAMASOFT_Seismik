@@ -450,13 +450,13 @@
             // 
             // butColormapEdit
             // 
-            this.butColormapEdit.Enabled = false;
             this.butColormapEdit.Location = new System.Drawing.Point(185, 3);
             this.butColormapEdit.Name = "butColormapEdit";
             this.butColormapEdit.Size = new System.Drawing.Size(82, 20);
             this.butColormapEdit.TabIndex = 28;
             this.butColormapEdit.Text = "Edit Colormap";
             this.butColormapEdit.UseVisualStyleBackColor = true;
+            this.butColormapEdit.Click += new System.EventHandler(this.butColormapEdit_Click);
             // 
             // label5
             // 
