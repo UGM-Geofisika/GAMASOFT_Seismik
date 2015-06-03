@@ -17,6 +17,9 @@ namespace SegyView
 
         public static byte[,] editCMap = new byte[256, 3];
         private static Bitmap bmpEdit = new Bitmap(512, 1);
+        public static int idxSelMarker = 0;
+        public static bool fMarkerSelected = false;
+        public static Point selectMarkerOffset = new Point();
 
         public static PictureBox _picCMap;
         public static DataGridView _dgvCMap;
@@ -43,16 +46,6 @@ namespace SegyView
             _numR = numR; _numG = numG; _numB = numB;
             _numH = numH; _numS = numS; _numV = numV;
             _picPickerHueLine = picPickerHueLine;
-
-            // set color table width
-            //int dgvwidth = 0;
-            //foreach (DataGridViewColumn col in _dgvCMap.Columns)
-            //{
-            //    dgvwidth += col.Width;
-            //}
-            //dgvwidth += _dgvCMap.RowHeadersWidth;
-
-            //_dgvCMap.Parent.Width = dgvwidth + SystemInformation.VerticalScrollBarWidth + _dgvCMap.Parent.Padding.Left + 2;
         }
 
         public static void InitializeColormapEditor()
@@ -146,7 +139,9 @@ namespace SegyView
                 butCScale[i].Show();
 
                 // adding event handler (this takes time)
-                butCScale[i].Click += ColorMarker_Click;
+                butCScale[i].MouseDown += ColorMarker_MouseDown;
+                butCScale[i].MouseMove += ColorMarker_MouseMove;
+                butCScale[i].MouseUp += ColorMarker_MouseUp;
 
                 // for marker line
                 picCScale[i].Parent = (_picCMap.Parent).Parent;
@@ -212,35 +207,47 @@ namespace SegyView
             }
         }
 
-        private static void LoadSaturationValueFromHue(int h)
+        public static void LoadSaturationValueFromHue(int h)
         {
             Bitmap cpSV = new Bitmap(256, 256);
-            _picPickerHueLine.Left = (int)Math.Floor(((double)h / 360) * 256) + _panPickerHue.Parent.Left + _panPickerHue.Padding.Left;
+            _picPickerHueLine.Left = (int)Math.Floor(((double)h / 360) * 256) + _panPickerHue.Parent.Left + _panPickerHue.Parent.Padding.Left;
+            _picPickerHueLine.Update();
 
             for (int s=0; s<256; s++)
                 for (int v = 0; v<256; v++)
                 {
                     byte[] cRGB = new byte[3] { 0, 0, 0 };
-                    ColorFromHSV(cRGB, h, (int)Math.Round((((double)s + 2) / 256) * 100), (int)Math.Round((((double)v+2) / 256) * 100));
+                    ColorFromHSV(cRGB, h, (int)Math.Round((((double)s + 2) / 256) * 100), (int)Math.Round((((double)v + 2) / 256) * 100));
                     cpSV.SetPixel(s, v, Color.FromArgb(cRGB[0], cRGB[1], cRGB[2]));
                 }
 
             cpSV.RotateFlip(RotateFlipType.RotateNoneFlipY);
             _panPickerSV.BackgroundImage = cpSV;
+            _panPickerSV.Update();
         }
 
-        public static void ColorMarker_Click(object sender, EventArgs e)
+        public static void ChangeMarkerColor(int buttonindex, Color newcolor)
         {
-            int butidx = 0;
+            butCScale[buttonindex].BackColor = newcolor;
+        }
+
+        public static void ColorMarker_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+
+            idxSelMarker = 0; fMarkerSelected = true;
+      
             Button but = (Button)sender;
             // identify which button acts as the sender
             for (int i = 0; i < butCScale.Count; i++)
             {
                 if (but.BackColor == butCScale[i].BackColor)
                 {
-                    butidx = i; break;
+                    idxSelMarker = i; break;
                 }
             }
+
+            selectMarkerOffset = butCScale[idxSelMarker].PointToClient(Control.MousePosition);
 
             // update color information value
             _numR.Value = but.BackColor.R;
@@ -252,9 +259,46 @@ namespace SegyView
 
             // select row in color table
             _dgvCMap.ClearSelection();
-            _dgvCMap.Rows[butidx].Selected = true;
+            _dgvCMap.Rows[idxSelMarker].Selected = true;
             LoadSaturationValueFromHue((int)but.BackColor.GetHue());
         }
+
+        public static void ColorMarker_MouseMove(object sender, MouseEventArgs e)
+        {
+            // change marker position
+            if (fMarkerSelected == true)
+            {
+                int newleft = _picCMap.PointToClient(Control.MousePosition).X + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
+                newleft = (int)(Math.Floor((double)newleft / 2) * 2)-1;
+
+
+                picCScale[idxSelMarker].Left = newleft; picCScale[idxSelMarker].Update();
+                butCScale[idxSelMarker].Left = newleft - 4; butCScale[idxSelMarker].Update();
+
+                _dgvCMap[2, idxSelMarker].Value = (newleft - _picCMap.Parent.Left - _picCMap.Parent.Padding.Left) / 2;
+
+                // change colormap
+                Color[] newColor = new Color[butCScale.Count];
+                int[] newIndex = new int[butCScale.Count];
+
+                for (int i = 0; i < butCScale.Count; i++)
+                {
+                    //newColor[i] = butCScale[i].BackColor;
+                    //newIndex[i] = (int)((double)_dgvCMap[2, i].Value);
+                    //Debug.WriteLine(newIndex[i]);
+
+                }
+
+                //GamaSeismicColor.CreateColormap(GamaColormapEditor.editCMap, newColor, newIndex);
+                //GamaColormapEditor.LoadColormapTable(newColor, newIndex);
+                //GamaColormapEditor.UpdateBitmapColormap(GamaColormapEditor.editCMap);
+            }
+
+           
+        }
+
+        public static void ColorMarker_MouseUp(object sender, MouseEventArgs e)
+        { fMarkerSelected = false; }
 
 
     }

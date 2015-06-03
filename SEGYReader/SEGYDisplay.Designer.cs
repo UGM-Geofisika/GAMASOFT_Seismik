@@ -281,8 +281,8 @@
             this.openToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripButton.Image")));
             this.openToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openToolStripButton.Name = "openToolStripButton";
-            this.openToolStripButton.Size = new System.Drawing.Size(70, 22);
-            this.openToolStripButton.Text = "&Add File";
+            this.openToolStripButton.Size = new System.Drawing.Size(77, 22);
+            this.openToolStripButton.Text = "&Open File";
             this.openToolStripButton.Click += new System.EventHandler(this.openToolStripButton_Click_1);
             // 
             // panel2

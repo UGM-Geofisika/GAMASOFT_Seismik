@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Data;
 using System.Drawing;
 using System.Text;
@@ -64,6 +65,23 @@ namespace SegyView
                 GamaColormapEditor.UpdateBitmapColormap(GamaColormapEditor.editCMap);
                 break;
             }
+        }
+
+        private void panPickerHue_MouseMove(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void panPickerHue_Click(object sender, EventArgs e)
+        {
+            var hue = (int)Math.Round(((double)panPickerHue.PointToClient(MousePosition).X/255)*359);
+            Debug.WriteLine(hue);
+            GamaColormapEditor.LoadSaturationValueFromHue(hue);
+        }
+
+        private void toolStripButton1_MouseMove(object sender, MouseEventArgs e)
+        {
+
         }
 
         

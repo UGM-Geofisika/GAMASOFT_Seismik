@@ -43,10 +43,11 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.panPickerSV = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panPickerHue = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.panPickerSV = new System.Windows.Forms.Panel();
+            this.picPickerHueLine = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.numR = new System.Windows.Forms.NumericUpDown();
             this.numH = new System.Windows.Forms.NumericUpDown();
@@ -59,7 +60,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.numV = new System.Windows.Forms.NumericUpDown();
-            this.picPickerHueLine = new System.Windows.Forms.PictureBox();
             this.panColormapCont.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picColorScale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvColormap)).BeginInit();
@@ -67,15 +67,15 @@
             this.toolStrip1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel5.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picPickerHueLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numR)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numV)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picPickerHueLine)).BeginInit();
             this.SuspendLayout();
             // 
             // panColormapCont
@@ -116,6 +116,7 @@
             this.dgvColormap.RowHeadersWidth = 10;
             this.dgvColormap.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvColormap.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dgvColormap.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvColormap.Size = new System.Drawing.Size(229, 208);
             this.dgvColormap.TabIndex = 3;
             // 
@@ -202,47 +203,29 @@
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(114, 22);
             this.toolStripButton1.Text = "Apply Colormap";
+            this.toolStripButton1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.toolStripButton1_MouseMove);
             // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.DimGray;
             this.panel4.Controls.Add(this.panel1);
-            this.panel4.Location = new System.Drawing.Point(257, 96);
+            this.panel4.Location = new System.Drawing.Point(256, 96);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(1);
-            this.panel4.Size = new System.Drawing.Size(269, 300);
+            this.panel4.Size = new System.Drawing.Size(270, 301);
             this.panel4.TabIndex = 8;
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.picPickerHueLine);
-            this.panel1.Controls.Add(this.panel5);
             this.panel1.Controls.Add(this.panel2);
+            this.panel1.Controls.Add(this.panel5);
+            this.panel1.Controls.Add(this.picPickerHueLine);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(1, 1);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(267, 298);
+            this.panel1.Size = new System.Drawing.Size(268, 299);
             this.panel1.TabIndex = 9;
-            // 
-            // panel5
-            // 
-            this.panel5.BackColor = System.Drawing.Color.DimGray;
-            this.panel5.Controls.Add(this.panPickerSV);
-            this.panel5.Location = new System.Drawing.Point(5, 36);
-            this.panel5.Name = "panel5";
-            this.panel5.Padding = new System.Windows.Forms.Padding(1);
-            this.panel5.Size = new System.Drawing.Size(257, 257);
-            this.panel5.TabIndex = 1;
-            // 
-            // panPickerSV
-            // 
-            this.panPickerSV.BackColor = System.Drawing.Color.White;
-            this.panPickerSV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panPickerSV.Location = new System.Drawing.Point(1, 1);
-            this.panPickerSV.Name = "panPickerSV";
-            this.panPickerSV.Size = new System.Drawing.Size(255, 255);
-            this.panPickerSV.TabIndex = 2;
             // 
             // panel2
             // 
@@ -251,7 +234,7 @@
             this.panel2.Location = new System.Drawing.Point(5, 5);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(1);
-            this.panel2.Size = new System.Drawing.Size(257, 25);
+            this.panel2.Size = new System.Drawing.Size(258, 25);
             this.panel2.TabIndex = 0;
             // 
             // panPickerHue
@@ -260,8 +243,38 @@
             this.panPickerHue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panPickerHue.Location = new System.Drawing.Point(1, 1);
             this.panPickerHue.Name = "panPickerHue";
-            this.panPickerHue.Size = new System.Drawing.Size(255, 23);
+            this.panPickerHue.Size = new System.Drawing.Size(256, 23);
             this.panPickerHue.TabIndex = 1;
+            this.panPickerHue.Click += new System.EventHandler(this.panPickerHue_Click);
+            this.panPickerHue.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panPickerHue_MouseMove);
+            // 
+            // panel5
+            // 
+            this.panel5.BackColor = System.Drawing.Color.DimGray;
+            this.panel5.Controls.Add(this.panPickerSV);
+            this.panel5.Location = new System.Drawing.Point(5, 36);
+            this.panel5.Name = "panel5";
+            this.panel5.Padding = new System.Windows.Forms.Padding(1);
+            this.panel5.Size = new System.Drawing.Size(258, 258);
+            this.panel5.TabIndex = 1;
+            // 
+            // panPickerSV
+            // 
+            this.panPickerSV.BackColor = System.Drawing.Color.White;
+            this.panPickerSV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panPickerSV.Location = new System.Drawing.Point(1, 1);
+            this.panPickerSV.Name = "panPickerSV";
+            this.panPickerSV.Size = new System.Drawing.Size(256, 256);
+            this.panPickerSV.TabIndex = 2;
+            // 
+            // picPickerHueLine
+            // 
+            this.picPickerHueLine.BackColor = System.Drawing.Color.Black;
+            this.picPickerHueLine.Location = new System.Drawing.Point(7, 0);
+            this.picPickerHueLine.Name = "picPickerHueLine";
+            this.picPickerHueLine.Size = new System.Drawing.Size(1, 40);
+            this.picPickerHueLine.TabIndex = 2;
+            this.picPickerHueLine.TabStop = false;
             // 
             // label1
             // 
@@ -409,15 +422,6 @@
             0,
             0});
             // 
-            // picPickerHueLine
-            // 
-            this.picPickerHueLine.BackColor = System.Drawing.Color.Black;
-            this.picPickerHueLine.Location = new System.Drawing.Point(2, 0);
-            this.picPickerHueLine.Name = "picPickerHueLine";
-            this.picPickerHueLine.Size = new System.Drawing.Size(1, 40);
-            this.picPickerHueLine.TabIndex = 2;
-            this.picPickerHueLine.TabStop = false;
-            // 
             // ColormapEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -455,15 +459,15 @@
             this.toolStrip1.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picPickerHueLine)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numR)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numH)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numG)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numV)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picPickerHueLine)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
