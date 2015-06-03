@@ -19,7 +19,7 @@ namespace SegyView
 
         private void ColormapEditor_Load(object sender, EventArgs e)
         {
-            GamaColormapEditor.InitializeControl();
+            GamaColormapEditor.InitializeColormapEditor();
         }
 
         private void comboPreset_SelectedIndexChanged(object sender, EventArgs e)
@@ -65,6 +65,8 @@ namespace SegyView
                 break;
             }
         }
+
+        
 
     }
 }
