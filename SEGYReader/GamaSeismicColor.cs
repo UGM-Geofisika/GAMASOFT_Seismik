@@ -15,7 +15,7 @@ namespace SegyView
         //public static double MaxA;
 
         //public static int[,] cScale = new int[256, 3] -> declared inside ImageWriter;
-        public static Bitmap bmpScale = new Bitmap(256, 1);
+       // public static Bitmap bmpScale = new Bitmap(256, 1);
 
         public static PictureBox _picbox;
         public static PictureBox _picCscale;
@@ -233,6 +233,8 @@ namespace SegyView
         // update colormap everloads
         public static void UpdateColormapBitmap()
         {
+            Bitmap bmpScale = new Bitmap(256, 1);
+ 
             // create bitmap color scale
             for (int i = 0; i < 256; i++)
             {
@@ -246,13 +248,13 @@ namespace SegyView
         public static void UpdateColormapBitmap(byte[,] cScale, PictureBox picColormap)
         {
             // create bitmap color scale
-            for (int i = 0; i < 256; i++)
-            {
-                bmpScale.SetPixel(i, 0, Color.FromArgb(cScale[i, 0], cScale[i, 1], cScale[i, 2]));
-            }
+            //for (int i = 0; i < 256; i++)
+            //{
+            //    bmpScale.SetPixel(i, 0, Color.FromArgb(cScale[i, 0], cScale[i, 1], cScale[i, 2]));
+            //}
 
-            picColormap.BackgroundImage = bmpScale;
-            picColormap.Update();
+            //picColormap.BackgroundImage = bmpScale;
+            //picColormap.Update();
         }
 
 

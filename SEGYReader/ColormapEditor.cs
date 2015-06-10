@@ -79,12 +79,31 @@ namespace SegyView
             GamaColormapEditor.LoadSaturationValueFromHue(hue);
         }
 
-        private void toolStripButton1_MouseMove(object sender, MouseEventArgs e)
+        private void toolStripButton1_Click(object sender, EventArgs e)
         {
+            switch (comboPreset.SelectedIndex)
+            {
+                case 0: // Preset: Black-White-Red
+                    GamaSeismicColor.Colormap_BlackWhiteRed(); break;
+                case 1: // Preset: Blue-White-Red
+                    GamaSeismicColor.Colormap_BlueWhiteRed(); break;
+                case 2: // Preset: Grayscale
+                    GamaSeismicColor.Colormap_Grayscale(); break;
+                case 3: // Preset: Rainbow
+                    GamaSeismicColor.Colormap_Rainbow(); break;
+            }
 
+            GamaSeismicViewer.ShowSeismic(SEGYView.SegyView.GetAllTracesBitmap(SEGYDisplay._segyFile4Bmp));
+            GamaSeismicColor.UpdateColormapBitmap();
+            ColormapEditor.ActiveForm.Hide();
         }
 
-        
+        // event handler on FormClosing event, to prevent disposal of Colormap Editor window
+        private void ColormapEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Hide();
+            e.Cancel = true;
+        }
 
     }
 }

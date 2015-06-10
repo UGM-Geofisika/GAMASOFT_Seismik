@@ -186,9 +186,11 @@
             "Black-White-Red",
             "Blue-White-Red",
             "Grayscale",
-            "Rainbow"});
+            "Rainbow",
+            "Custom..."});
             this.comboPreset.Name = "comboPreset";
             this.comboPreset.Size = new System.Drawing.Size(121, 25);
+            this.comboPreset.Text = "Custom...";
             this.comboPreset.SelectedIndexChanged += new System.EventHandler(this.comboPreset_SelectedIndexChanged);
             // 
             // toolStripSeparator1
@@ -203,7 +205,7 @@
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(114, 22);
             this.toolStripButton1.Text = "Apply Colormap";
-            this.toolStripButton1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.toolStripButton1_MouseMove);
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // panel4
             // 
@@ -450,6 +452,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Colormap Editor";
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ColormapEditor_FormClosing);
             this.Load += new System.EventHandler(this.ColormapEditor_Load);
             this.panColormapCont.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picColorScale)).EndInit();

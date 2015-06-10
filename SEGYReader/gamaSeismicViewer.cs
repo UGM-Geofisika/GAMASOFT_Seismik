@@ -89,6 +89,13 @@ namespace SegyView
             Image_Axis_Initialize();
         }
 
+        public static void ShowSeismic(Bitmap seismic)
+        {
+            _picbox.SizeMode = PictureBoxSizeMode.StretchImage;
+            _picbox.Image = seismic;
+            _picbox.Update();
+        }
+
         public static void Image_Axis_Initialize()
         {
             ClearLabelTickIfExist();

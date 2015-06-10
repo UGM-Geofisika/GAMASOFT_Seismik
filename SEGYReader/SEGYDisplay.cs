@@ -12,6 +12,7 @@ namespace SegyView
     public partial class SEGYDisplay : Form
     {
         private ISegyFile _segyFile;
+        public static ISegyFile _segyFile4Bmp;
 
         // initialize other forms
         public ColormapEditor frmClrEdit = new ColormapEditor();
@@ -71,7 +72,8 @@ namespace SegyView
 
             ExtractSegyHeaderInfo(_segyFile);
             DisplaySeismicSection(_segyFile, _segyFile.Header.BinaryHeader.NDataPerTraceReel, _segyFile.Header.BinaryHeader.SampleIntervalReel);
-
+            _segyFile4Bmp = _segyFile;
+ 
             GamaFileViewer.fileURLNowOpened = openFileDialog1.FileName;
             GamaSeismicViewer.SetScrollbarValue();
         }
@@ -158,6 +160,7 @@ namespace SegyView
 
                 ExtractSegyHeaderInfo(_segyFile);
                 DisplaySeismicSection(_segyFile, _segyFile.Header.BinaryHeader.NDataPerTraceReel, _segyFile.Header.BinaryHeader.SampleIntervalReel);
+                _segyFile4Bmp = _segyFile;
 
                 GamaFileViewer.fileURLNowOpened = e.Node.Name;
             }
