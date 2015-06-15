@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
@@ -41,12 +42,10 @@ namespace SegyView
 
             // prepare colormap
             GamaSeismicColor.Colormap_BlackWhiteRed();
-            //GamaSeismicColor.Colormap_BlueWhiteRed();  
-            //GamaSeismicColor.Colormap_Grayscale();
-            //GamaSeismicColor.Colormap_Rainbow();
             GamaSeismicColor.UpdateColormapBitmap();
         }
 
+        // File Open Handler
         private void openToolStripButton_Click_1(object sender, EventArgs e)
         {
             var dlgresult = openFileDialog1.ShowDialog();
@@ -62,7 +61,7 @@ namespace SegyView
 
             // load selected segy file
             readerWorker.RunWorkerAsync(openFileDialog1.FileName);
-            
+
             GamaFileViewer.fileURLNowOpened = openFileDialog1.FileName;
             GamaSeismicViewer.SetScrollbarValue();
         }
@@ -122,17 +121,6 @@ namespace SegyView
             }
         }
 
-        private void BindCombobox(ISegyFile file)
-        {
-           var tracelist = new List<string>();
-
-            for (var i = 0; i < file.Traces.Count; i++)
-            {
-                tracelist.Add(string.Format("Trace {0}",i+1));
-            }
-
-            comboBox1.DataSource = tracelist;
-        }
         private void ExtractTraceHeaderInfo(ISegyFile segy, int index)
         {
             var traceHeaderInfo = segy.Traces[index].Header;
@@ -142,13 +130,13 @@ namespace SegyView
                 new SegyTraceHeaderItem("Trace Number Sequence within file (reel).", traceHeaderInfo.Tracr, "05 - 08"),
                 new SegyTraceHeaderItem("Original Field Record Number", traceHeaderInfo.Fldr, "09 - 12"),
                 new SegyTraceHeaderItem("Trace number within original field record", traceHeaderInfo.Tracf, "13 - 16"),
-                new SegyTraceHeaderItem("Distance from source point to receiver group.", traceHeaderInfo.Offset, "37 - 40"),
+                new SegyTraceHeaderItem("Distance from source point to receiver group.", traceHeaderInfo.Offset,
+                    "37 - 40"),
                 new SegyTraceHeaderItem("Source coordinate - X.", traceHeaderInfo.Sx, "73 - 76"),
                 new SegyTraceHeaderItem("Source coordinate - Y.", traceHeaderInfo.Sy, "77 - 80"),
                 new SegyTraceHeaderItem("Group coordinate - X.", traceHeaderInfo.Gx, "81 - 84"),
                 new SegyTraceHeaderItem("Group coordinate - Y.", traceHeaderInfo.Gy, "85 - 88"),
-                new SegyTraceHeaderItem("Coordinate units.", traceHeaderInfo.Counit, "89 - 90"),
-
+                new SegyTraceHeaderItem("Coordinate units.", traceHeaderInfo.Counit, "89 - 90")
             };
 
             dgvTraceHeader.DataSource = traceHeaderItems;
@@ -188,6 +176,7 @@ namespace SegyView
             }
         }
 
+        #region seismic view event handler
         private void picBox1_MouseDown(object sender, MouseEventArgs e)
         {
             // if left mouse is clicked, activate pan mode
@@ -239,19 +228,18 @@ namespace SegyView
         {
             GamaSeismicViewer.Image_Axis_Update();
         }
+        #endregion
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ExtractTraceHeaderInfo(_segyFile,comboBox1.SelectedIndex);
-        }
-
-        private void readerWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        // Reading of SEGY Files, done on a separate thread.
+        private void readerWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             var infile = e.Argument as string;
             e.Result = SEGYView.SegyView.Read(infile);
         }
 
-        private void readerWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        //Display Header and Seismic Section after reading complete
+
+        private void readerWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             _segyFile = e.Result as ISegyFile;
 
@@ -261,6 +249,26 @@ namespace SegyView
             DisplaySeismicSection(_segyFile, _segyFile.Header.BinaryHeader.NDataPerTraceReel,
                 _segyFile.Header.BinaryHeader.SampleIntervalReel);
             SEGYFile4Bmp = _segyFile;
+        }
+
+        // Automatically display trace header information when cbox index changed.
+
+        private void cboxTraceSelection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ExtractTraceHeaderInfo(_segyFile, cboxTraceSelection.SelectedIndex);
+        }
+
+        // Bind Combobox with traces in SEGY File
+        private void BindCombobox(ISegyFile file)
+        {
+            var tracelist = new List<string>();
+
+            for (var i = 0; i < file.Traces.Count; i++)
+            {
+                tracelist.Add(string.Format("Trace {0}", i + 1));
+            }
+
+            cboxTraceSelection.DataSource = tracelist;
         }
     }
 }
