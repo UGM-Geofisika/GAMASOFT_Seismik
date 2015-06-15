@@ -92,10 +92,10 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.dgvTraceHeader = new System.Windows.Forms.DataGridView();
             this.colTraceDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTraceBytePos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTraceHeaderValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTraceBytePos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label6 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cboxTraceSelection = new System.Windows.Forms.ComboBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.readerWorker = new System.ComponentModel.BackgroundWorker();
@@ -735,7 +735,7 @@
             // 
             this.tabPage3.Controls.Add(this.dgvTraceHeader);
             this.tabPage3.Controls.Add(this.label6);
-            this.tabPage3.Controls.Add(this.comboBox1);
+            this.tabPage3.Controls.Add(this.cboxTraceSelection);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(778, 494);
@@ -755,8 +755,8 @@
             this.dgvTraceHeader.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTraceHeader.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colTraceDesc,
-            this.colTraceBytePos,
-            this.colTraceHeaderValue});
+            this.colTraceHeaderValue,
+            this.colTraceBytePos});
             this.dgvTraceHeader.Location = new System.Drawing.Point(228, 4);
             this.dgvTraceHeader.Name = "dgvTraceHeader";
             this.dgvTraceHeader.ReadOnly = true;
@@ -770,23 +770,23 @@
             this.colTraceDesc.Name = "colTraceDesc";
             this.colTraceDesc.ReadOnly = true;
             // 
-            // colTraceBytePos
-            // 
-            this.colTraceBytePos.DataPropertyName = "BytePosition";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colTraceBytePos.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colTraceBytePos.HeaderText = "Byte";
-            this.colTraceBytePos.Name = "colTraceBytePos";
-            this.colTraceBytePos.ReadOnly = true;
-            // 
             // colTraceHeaderValue
             // 
             this.colTraceHeaderValue.DataPropertyName = "Value";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.colTraceHeaderValue.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colTraceHeaderValue.DefaultCellStyle = dataGridViewCellStyle2;
             this.colTraceHeaderValue.HeaderText = "Value";
             this.colTraceHeaderValue.Name = "colTraceHeaderValue";
             this.colTraceHeaderValue.ReadOnly = true;
+            // 
+            // colTraceBytePos
+            // 
+            this.colTraceBytePos.DataPropertyName = "BytePosition";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colTraceBytePos.DefaultCellStyle = dataGridViewCellStyle3;
+            this.colTraceBytePos.HeaderText = "Byte";
+            this.colTraceBytePos.Name = "colTraceBytePos";
+            this.colTraceBytePos.ReadOnly = true;
             // 
             // label6
             // 
@@ -797,16 +797,16 @@
             this.label6.TabIndex = 1;
             this.label6.Text = "Select Trace";
             // 
-            // comboBox1
+            // cboxTraceSelection
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(23, 23);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(155, 21);
-            this.comboBox1.TabIndex = 0;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.cboxTraceSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxTraceSelection.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cboxTraceSelection.FormattingEnabled = true;
+            this.cboxTraceSelection.Location = new System.Drawing.Point(23, 23);
+            this.cboxTraceSelection.Name = "cboxTraceSelection";
+            this.cboxTraceSelection.Size = new System.Drawing.Size(155, 21);
+            this.cboxTraceSelection.TabIndex = 0;
+            this.cboxTraceSelection.SelectedIndexChanged += new System.EventHandler(this.cboxTraceSelection_SelectedIndexChanged);
             // 
             // statusStrip1
             // 
@@ -947,11 +947,11 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridView dgvTraceHeader;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTraceDesc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTraceBytePos;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTraceHeaderValue;
+        private System.Windows.Forms.ComboBox cboxTraceSelection;
         private System.ComponentModel.BackgroundWorker readerWorker;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTraceDesc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTraceHeaderValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTraceBytePos;
 
     }
 }

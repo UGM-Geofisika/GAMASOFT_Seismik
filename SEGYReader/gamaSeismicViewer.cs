@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace SegyView
 {
@@ -11,7 +10,7 @@ namespace SegyView
     {
         public static int[] ImgOriginalSize = new int[2];
         public static double ZoomFactor = 100;
-        public static int[] ScrollbarValue = new int[2] {0, 0};
+        public static int[] ScrollbarValue = {0, 0};
         public static List<Label> ListLabelX = new List<Label>();
         public static List<Label> ListLabelY = new List<Label>();
         public static List<PictureBox> ListTickV = new List<PictureBox>();
@@ -56,7 +55,7 @@ namespace SegyView
         }
 
         public static void GetScrollbarValue()
-        { ScrollbarValue = new int[2] {_panelImage.HorizontalScroll.Value, _panelImage.VerticalScroll.Value}; }
+        { ScrollbarValue = new[] {_panelImage.HorizontalScroll.Value, _panelImage.VerticalScroll.Value}; }
 
         public static void SetScrollbarValue()
         {
@@ -102,7 +101,7 @@ namespace SegyView
             CreateLabelTickList();
 
             // resize Y-axis panel
-            resizeYAxisPanel();
+            ResizeYAxisPanel();
             // show X-axis label and tick
             showAxisLabelTick_X();
             // show Y-axis label and tick
@@ -214,13 +213,17 @@ namespace SegyView
             with10.ForeColor = Color.White;
         }
 
-        private static void resizeYAxisPanel()
+        private static void ResizeYAxisPanel()
         {
-            Label dummy = new Label();
-            dummy.Parent = _panelX; dummy.AutoSize = true;
-            dummy.BackColor = _panelX.BackColor; dummy.ForeColor = _panelX.BackColor;
-            dummy.Width = 1;
-            dummy.Text = String.Concat(Math.Round(MaxY).ToString(), ".000");
+            var dummy = new Label
+            {
+                Parent = _panelX,
+                AutoSize = true,
+                BackColor = _panelX.BackColor,
+                ForeColor = _panelX.BackColor,
+                Width = 1,
+                Text = String.Concat(Math.Round(MaxY).ToString(CultureInfo.InvariantCulture), ".000")
+            };
             dummy.Update();
 
             _panelY.Parent.Width = dummy.Width + 15;
@@ -247,7 +250,7 @@ namespace SegyView
                 with4.Parent = _panelY;
                 with4.AutoSize = true;
                 with4.Text =
-                    Math.Round(MinY + (i * ((MaxY - MinY) / (_picbox.Height-1))), 3).ToString();
+                    Math.Round(MinY + (i * ((MaxY - MinY) / (_picbox.Height-1))), 3).ToString(CultureInfo.InvariantCulture);
                 with4.Left = ListTickH[i].Left - with4.Width;
                 with4.Top = (int)Math.Round((double)(ListTickH[i].Top - (with4.Height / 2)));
                 with4.Show();
@@ -344,7 +347,7 @@ namespace SegyView
                 with5.Update();
 
                 var with6 = ListLabelY[i];
-                with6.Text = Math.Round(val0, 3).ToString();
+                with6.Text = Math.Round(val0, 3).ToString(CultureInfo.InvariantCulture);
                 with6.Left = ListTickH[i].Left - with6.Width;
                 with6.ForeColor = ListTickH[i].BackColor;
                 with6.Update();
@@ -443,7 +446,7 @@ namespace SegyView
             _picbox.Width = picNewSize.X;
             _picbox.Height = picNewSize.Y;
 
-            ZoomFactor = (double)zoomfactor;
+            ZoomFactor = zoomfactor;
 
             _panelImage.Invalidate();
             _panelImage.Update();
@@ -456,15 +459,15 @@ namespace SegyView
             // if image width > image height -> fit to width
             if (_picbox.Width >= _picbox.Height)
             {
-                zoomfactor = (int)Math.Round((((double)_panelImage.Width - (double)SystemInformation.VerticalScrollBarWidth) /
-                    (double)ImgOriginalSize[0]) * 100);
+                zoomfactor = (int)Math.Round(((_panelImage.Width - (double)SystemInformation.VerticalScrollBarWidth) /
+                    ImgOriginalSize[0]) * 100);
             }
 
             // if image width < image height -> fit to height
             if (_picbox.Width < _picbox.Height)
             {
-                zoomfactor = (int)Math.Round((((double)_panelImage.Height - (double)SystemInformation.HorizontalScrollBarHeight) /
-                    (double)ImgOriginalSize[1]) * 100);
+                zoomfactor = (int)Math.Round(((_panelImage.Height - (double)SystemInformation.HorizontalScrollBarHeight) /
+                    ImgOriginalSize[1]) * 100);
             }
 
             Image_ZoomByValue(zoomfactor);
@@ -569,10 +572,10 @@ namespace SegyView
             _panelImage.Update();
         }
 
-        public static void Image_Axis_StretchShrink(bool FitToWidth, bool FitToHeight)
+        public static void Image_Axis_StretchShrink(bool fitToWidth, bool fitToHeight)
         {
             // Resize X-Axis -> Fit To Width
-            if (FitToWidth == true)
+            if (fitToWidth)
             {
                 ImgOriginalSize[0] = _panelImage.Width - SystemInformation.VerticalScrollBarWidth;
 
@@ -581,7 +584,7 @@ namespace SegyView
             }
 
             // Resize Y-Axis -> Fit To Height
-            if (FitToHeight == true)
+            if (fitToHeight)
             {
                 ImgOriginalSize[1] = _panelImage.Height;
 
