@@ -93,7 +93,7 @@ namespace SegyView
                     GamaSeismicColor.Colormap_Rainbow(); break;
             }
 
-            GamaSeismicViewer.ShowSeismic(SEGYView.SegyView.GetAllTracesBitmap(SEGYDisplay._segyFile4Bmp));
+            GamaSeismicViewer.ShowSeismic(SEGYView.SegyView.GetAllTracesBitmap(SEGYDisplay.SEGYFile4Bmp));
             GamaSeismicColor.UpdateColormapBitmap();
             ColormapEditor.ActiveForm.Hide();
         }

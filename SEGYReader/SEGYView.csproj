@@ -71,7 +71,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SegyHeaderItem.cs" />
+    <Compile Include="SegyFileHeaderItem.cs" />
+    <Compile Include="SegyTraceHeaderItem.cs" />
     <Compile Include="SegyView.cs" />
     <Compile Include="SeismicViewUI.cs">
       <SubType>Form</SubType>

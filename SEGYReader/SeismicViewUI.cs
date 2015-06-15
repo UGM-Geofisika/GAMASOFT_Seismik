@@ -8,58 +8,6 @@ namespace SegyView
     {
         /// THIS CLASS SHOULD ONLY CONTAIN DEFINITION/FUNCTION/EVENT RELATED TO SEISMIC VIEW UI
         /// DONT PUT ANY BUSINESS LOGIC HERE
-        private void panelImage_Scroll(object sender, ScrollEventArgs e)
-        {
-            GamaSeismicViewer.Image_Axis_Update();
-        }
-
-        private void picBox1_MouseLeave(object sender, EventArgs e)
-        {
-            GamaSeismicViewer.GetScrollbarValue();
-        }
-
-        private void picBox1_MouseMove(object sender, MouseEventArgs e)
-        {
-            //if (this.Focused == false) return;
-            //
-            if (picBox1.Focused == false)
-            {
-              picBox1.Focus();
-              GamaSeismicViewer.SetScrollbarValue();
-              GamaSeismicViewer.Image_Axis_Update();
-            }
-
-            GamaSeismicViewer.Image_ValueOnHover(MousePosition);
-
-            if (GamaSeismicViewer.FPan)
-            {
-                GamaSeismicViewer.Image_Pan(MousePosition);
-                GamaSeismicViewer.Image_Axis_Update();
-            }
-        }
-
-        private void picBox1_MouseDown(object sender, MouseEventArgs e)
-        {
-            // if left mouse is clicked, activate pan mode
-            if (MouseButtons == MouseButtons.Left)
-            {
-                GamaSeismicViewer.FPan = true;
-                GamaSeismicViewer.PanStartMouse = panelImage.PointToClient(MousePosition);
-                Cursor.Current = Cursors.Hand;
-
-                if (panelImage.HorizontalScroll.Visible)
-                    GamaSeismicViewer.PanStartHScroll = panelImage.HorizontalScroll.Value;
-                if (panelImage.VerticalScroll.Visible)
-                    GamaSeismicViewer.PanStartVScroll = panelImage.VerticalScroll.Value;
-            }
-        }
-
-        private void picBox1_MouseUp(object sender, MouseEventArgs e)
-        {
-            GamaSeismicViewer.FPan = false;
-            Cursor.Current = Cursors.Default;
-        }
-
         private void picBox1_MouseWheel(object sender, MouseEventArgs e)
         {
             GamaSeismicViewer.ZoomFactor = GamaSeismicViewer.ZoomFactor + 10*(e.Delta/120);
@@ -187,7 +135,7 @@ namespace SegyView
 
         private void butColormapEdit_Click(object sender, EventArgs e)
         {
-            frmClrEdit.Show();
+            FrmClrEdit.Show();
         }
     }
 }

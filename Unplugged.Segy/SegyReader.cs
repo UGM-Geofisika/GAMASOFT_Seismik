@@ -211,6 +211,18 @@ namespace Unplugged.Segy
                 traceHeader.InlineNumber = ToInt32(headerBytes, InlineNumberLocation - 1, isLittleEndian);
             if (headerBytes.Length >= SampleCountIndex + 2)
                 traceHeader.SampleCount = ToInt16(headerBytes, SampleCountIndex, isLittleEndian);
+
+            traceHeader.Tracl = ToInt32(headerBytes, TraceHeaderBytePos.Tracl, isLittleEndian);
+            traceHeader.Tracr = ToInt32(headerBytes, TraceHeaderBytePos.Tracr, isLittleEndian);
+            traceHeader.Fldr = ToInt32(headerBytes, TraceHeaderBytePos.Fldr, isLittleEndian);
+            traceHeader.Tracf = ToInt32(headerBytes, TraceHeaderBytePos.Tracf, isLittleEndian);
+            traceHeader.Offset = ToInt32(headerBytes, TraceHeaderBytePos.Offset, isLittleEndian);
+            traceHeader.Sx = ToInt32(headerBytes, TraceHeaderBytePos.Sx, isLittleEndian);
+            traceHeader.Sy = ToInt32(headerBytes, TraceHeaderBytePos.Sy, isLittleEndian);
+            traceHeader.Gx = ToInt32(headerBytes, TraceHeaderBytePos.Gx, isLittleEndian);
+            traceHeader.Gy = ToInt32(headerBytes, TraceHeaderBytePos.Gy, isLittleEndian);
+            traceHeader.Counit = ToInt16(headerBytes, TraceHeaderBytePos.Counit, isLittleEndian);
+
             return traceHeader;
         }
 

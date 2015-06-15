@@ -62,6 +62,7 @@
     <Compile Include="Trace.cs" />
     <Compile Include="TraceHeader.cs" />
     <Compile Include="IReadingProgress.cs" />
+    <Compile Include="TraceHeaderBytePos.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

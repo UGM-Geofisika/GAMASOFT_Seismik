@@ -8,25 +8,13 @@ namespace Unplugged.Segy
         public int InlineNumber { get; set; }
         public int CrosslineNumber { get; set; }
 
-        public int Tracl
-        {
-            get { throw new System.NotImplementedException(); }
-        }
+        public int Tracl { get; set; }
 
-        public int Tracr
-        {
-            get { throw new System.NotImplementedException(); }
-        }
+        public int Tracr { get; set; }
 
-        public int Fldr
-        {
-            get { throw new System.NotImplementedException(); }
-        }
+        public int Fldr { get; set; }
 
-        public int Tracf
-        {
-            get { throw new System.NotImplementedException(); }
-        }
+        public int Tracf { get; set; }
 
         public int Ep
         {
@@ -63,10 +51,7 @@ namespace Unplugged.Segy
             get { throw new System.NotImplementedException(); }
         }
 
-        public int Offset
-        {
-            get { throw new System.NotImplementedException(); }
-        }
+        public int Offset { get; set; }
 
         public int Gelev
         {
@@ -113,30 +98,15 @@ namespace Unplugged.Segy
             get { throw new System.NotImplementedException(); }
         }
 
-        public int Sx
-        {
-            get { throw new System.NotImplementedException(); }
-        }
+        public int Sx { get; set; }
 
-        public int Sy
-        {
-            get { throw new System.NotImplementedException(); }
-        }
+        public int Sy { get; set; }
 
-        public int Gx
-        {
-            get { throw new System.NotImplementedException(); }
-        }
+        public int Gx { get; set; }
 
-        public int Gy
-        {
-            get { throw new System.NotImplementedException(); }
-        }
+        public int Gy { get; set; }
 
-        public int Counit
-        {
-            get { throw new System.NotImplementedException(); }
-        }
+        public int Counit { get; set; }
 
         public int Wevel
         {

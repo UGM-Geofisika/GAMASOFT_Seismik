@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SEGYDisplay));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.sEGYReadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,13 +85,19 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.txtHeaderText = new System.Windows.Forms.TextBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvFileHeader = new System.Windows.Forms.DataGridView();
             this.colDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colBytePosition = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.dgvTraceHeader = new System.Windows.Forms.DataGridView();
+            this.label6 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.colTraceDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTraceBytePos = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTraceHeaderValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -116,7 +124,9 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFileHeader)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTraceHeader)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -659,7 +669,7 @@
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.dataGridView1);
+            this.splitContainer2.Panel2.Controls.Add(this.dgvFileHeader);
             this.splitContainer2.Size = new System.Drawing.Size(772, 488);
             this.splitContainer2.SplitterDistance = 386;
             this.splitContainer2.TabIndex = 1;
@@ -677,25 +687,25 @@
             this.txtHeaderText.TabIndex = 0;
             this.txtHeaderText.WordWrap = false;
             // 
-            // dataGridView1
+            // dgvFileHeader
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvFileHeader.AllowUserToAddRows = false;
+            this.dgvFileHeader.AllowUserToDeleteRows = false;
+            this.dgvFileHeader.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvFileHeader.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvFileHeader.BackgroundColor = System.Drawing.Color.WhiteSmoke;
+            this.dgvFileHeader.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvFileHeader.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colDesc,
             this.colValue,
             this.colBytePosition});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersWidth = 45;
-            this.dataGridView1.Size = new System.Drawing.Size(382, 488);
-            this.dataGridView1.TabIndex = 1;
+            this.dgvFileHeader.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvFileHeader.Location = new System.Drawing.Point(0, 0);
+            this.dgvFileHeader.Name = "dgvFileHeader";
+            this.dgvFileHeader.ReadOnly = true;
+            this.dgvFileHeader.RowHeadersWidth = 45;
+            this.dgvFileHeader.Size = new System.Drawing.Size(382, 488);
+            this.dgvFileHeader.TabIndex = 1;
             // 
             // colDesc
             // 
@@ -722,12 +732,55 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.dgvTraceHeader);
+            this.tabPage3.Controls.Add(this.label6);
+            this.tabPage3.Controls.Add(this.comboBox1);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(778, 494);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Trace";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // dgvTraceHeader
+            // 
+            this.dgvTraceHeader.AllowUserToAddRows = false;
+            this.dgvTraceHeader.AllowUserToDeleteRows = false;
+            this.dgvTraceHeader.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvTraceHeader.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvTraceHeader.BackgroundColor = System.Drawing.Color.WhiteSmoke;
+            this.dgvTraceHeader.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTraceHeader.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colTraceDesc,
+            this.colTraceBytePos,
+            this.colTraceHeaderValue});
+            this.dgvTraceHeader.Location = new System.Drawing.Point(228, 4);
+            this.dgvTraceHeader.Name = "dgvTraceHeader";
+            this.dgvTraceHeader.ReadOnly = true;
+            this.dgvTraceHeader.Size = new System.Drawing.Size(542, 487);
+            this.dgvTraceHeader.TabIndex = 2;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(23, 4);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(68, 13);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Select Trace";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(23, 23);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(155, 21);
+            this.comboBox1.TabIndex = 0;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // statusStrip1
             // 
@@ -741,6 +794,31 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "\"SEG-Y Files\"|*.sgy";
+            // 
+            // colTraceDesc
+            // 
+            this.colTraceDesc.DataPropertyName = "Description";
+            this.colTraceDesc.HeaderText = "Description";
+            this.colTraceDesc.Name = "colTraceDesc";
+            this.colTraceDesc.ReadOnly = true;
+            // 
+            // colTraceBytePos
+            // 
+            this.colTraceBytePos.DataPropertyName = "BytePosition";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colTraceBytePos.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colTraceBytePos.HeaderText = "Byte";
+            this.colTraceBytePos.Name = "colTraceBytePos";
+            this.colTraceBytePos.ReadOnly = true;
+            // 
+            // colTraceHeaderValue
+            // 
+            this.colTraceHeaderValue.DataPropertyName = "Value";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colTraceHeaderValue.DefaultCellStyle = dataGridViewCellStyle3;
+            this.colTraceHeaderValue.HeaderText = "Value";
+            this.colTraceHeaderValue.Name = "colTraceHeaderValue";
+            this.colTraceHeaderValue.ReadOnly = true;
             // 
             // SEGYDisplay
             // 
@@ -791,7 +869,10 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFileHeader)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTraceHeader)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -844,7 +925,7 @@
         internal System.Windows.Forms.Panel Panel1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.TextBox txtHeaderText;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvFileHeader;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDesc;
         private System.Windows.Forms.DataGridViewTextBoxColumn colValue;
         private System.Windows.Forms.DataGridViewTextBoxColumn colBytePosition;
@@ -858,6 +939,12 @@
         private System.Windows.Forms.Panel panColormapCont;
         private System.Windows.Forms.Button butColormapEdit;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridView dgvTraceHeader;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTraceDesc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTraceBytePos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTraceHeaderValue;
 
     }
 }

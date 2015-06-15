@@ -5,13 +5,13 @@ using System.Text;
 
 namespace SegyView
 {
-    public class SegyHeaderItem
+    public class SegyFileHeaderItem
     {
         public string Description { get; set; }
         public int Value { get; set; }
         public string BytePosition { get; set; }
 
-        public SegyHeaderItem(string desc, int value, string bytePos)
+        public SegyFileHeaderItem(string desc, int value, string bytePos)
         {
             Description = desc;
             Value = value;
