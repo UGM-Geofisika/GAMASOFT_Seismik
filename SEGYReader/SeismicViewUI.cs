@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace SegyView
 {
-    partial class SEGYDisplay
+    partial class SegyFrontPage
     {
         /// THIS CLASS SHOULD ONLY CONTAIN DEFINITION/FUNCTION/EVENT RELATED TO SEISMIC VIEW UI
         /// DONT PUT ANY BUSINESS LOGIC HERE

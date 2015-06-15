@@ -16,7 +16,7 @@ namespace SEGYView
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SEGYDisplay());
+            Application.Run(new SegyFrontPage());
         }
     }
 }

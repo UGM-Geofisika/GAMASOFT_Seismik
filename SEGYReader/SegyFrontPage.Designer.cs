@@ -1,6 +1,6 @@
 ﻿namespace SegyView
 {
-    partial class SEGYDisplay
+    partial class SegyFrontPage
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SEGYDisplay));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SegyFrontPage));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -91,13 +91,14 @@
             this.colBytePosition = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.dgvTraceHeader = new System.Windows.Forms.DataGridView();
+            this.colTraceDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTraceBytePos = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTraceHeaderValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label6 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.colTraceDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTraceBytePos = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTraceHeaderValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.readerWorker = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -762,6 +763,31 @@
             this.dgvTraceHeader.Size = new System.Drawing.Size(542, 487);
             this.dgvTraceHeader.TabIndex = 2;
             // 
+            // colTraceDesc
+            // 
+            this.colTraceDesc.DataPropertyName = "Description";
+            this.colTraceDesc.HeaderText = "Description";
+            this.colTraceDesc.Name = "colTraceDesc";
+            this.colTraceDesc.ReadOnly = true;
+            // 
+            // colTraceBytePos
+            // 
+            this.colTraceBytePos.DataPropertyName = "BytePosition";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colTraceBytePos.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colTraceBytePos.HeaderText = "Byte";
+            this.colTraceBytePos.Name = "colTraceBytePos";
+            this.colTraceBytePos.ReadOnly = true;
+            // 
+            // colTraceHeaderValue
+            // 
+            this.colTraceHeaderValue.DataPropertyName = "Value";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.colTraceHeaderValue.DefaultCellStyle = dataGridViewCellStyle3;
+            this.colTraceHeaderValue.HeaderText = "Value";
+            this.colTraceHeaderValue.Name = "colTraceHeaderValue";
+            this.colTraceHeaderValue.ReadOnly = true;
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -795,32 +821,12 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "\"SEG-Y Files\"|*.sgy";
             // 
-            // colTraceDesc
+            // readerWorker
             // 
-            this.colTraceDesc.DataPropertyName = "Description";
-            this.colTraceDesc.HeaderText = "Description";
-            this.colTraceDesc.Name = "colTraceDesc";
-            this.colTraceDesc.ReadOnly = true;
+            this.readerWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.readerWorker_DoWork);
+            this.readerWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.readerWorker_RunWorkerCompleted);
             // 
-            // colTraceBytePos
-            // 
-            this.colTraceBytePos.DataPropertyName = "BytePosition";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colTraceBytePos.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colTraceBytePos.HeaderText = "Byte";
-            this.colTraceBytePos.Name = "colTraceBytePos";
-            this.colTraceBytePos.ReadOnly = true;
-            // 
-            // colTraceHeaderValue
-            // 
-            this.colTraceHeaderValue.DataPropertyName = "Value";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.colTraceHeaderValue.DefaultCellStyle = dataGridViewCellStyle3;
-            this.colTraceHeaderValue.HeaderText = "Value";
-            this.colTraceHeaderValue.Name = "colTraceHeaderValue";
-            this.colTraceHeaderValue.ReadOnly = true;
-            // 
-            // SEGYDisplay
+            // SegyFrontPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -828,7 +834,7 @@
             this.ClientSize = new System.Drawing.Size(1037, 591);
             this.Controls.Add(this.toolStripContainer1);
             this.Controls.Add(this.menuStrip1);
-            this.Name = "SEGYDisplay";
+            this.Name = "SegyFrontPage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SEG-Y SegyView";
             this.Load += new System.EventHandler(this.SEGYDisplay_Load);
@@ -945,6 +951,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colTraceDesc;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTraceBytePos;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTraceHeaderValue;
+        private System.ComponentModel.BackgroundWorker readerWorker;
 
     }
 }

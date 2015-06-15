@@ -63,11 +63,11 @@
     <Compile Include="NoScrollPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SEGYDisplay.cs">
+    <Compile Include="SegyFrontPage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SEGYDisplay.Designer.cs">
-      <DependentUpon>SEGYDisplay.cs</DependentUpon>
+    <Compile Include="SegyFrontPage.Designer.cs">
+      <DependentUpon>SegyFrontPage.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,8 +80,8 @@
     <EmbeddedResource Include="ColormapEditor.resx">
       <DependentUpon>ColormapEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SEGYDisplay.resx">
-      <DependentUpon>SEGYDisplay.cs</DependentUpon>
+    <EmbeddedResource Include="SegyFrontPage.resx">
+      <DependentUpon>SegyFrontPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
