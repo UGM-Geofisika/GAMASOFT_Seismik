@@ -33,10 +33,11 @@ namespace SegyView
         public static NumericUpDown _numS;
         public static NumericUpDown _numV;
         public static PictureBox _picPickerHueLine;
+        public static ToolStripComboBox _comboPreset;
 
         public static void Setup(Form frmCMap, PictureBox picColorScale, DataGridView dgvCMap, Panel panPickerHue, Panel panPickerSV, 
                                  NumericUpDown numR, NumericUpDown numG, NumericUpDown numB, PictureBox picPickerHueLine,
-                                 NumericUpDown numH, NumericUpDown numS, NumericUpDown numV)
+                                 NumericUpDown numH, NumericUpDown numS, NumericUpDown numV, ToolStripComboBox comboPreset)
         {
             _frmCMap = frmCMap;
             _picCMap = picColorScale;
@@ -46,6 +47,7 @@ namespace SegyView
             _numR = numR; _numG = numG; _numB = numB;
             _numH = numH; _numS = numS; _numV = numV;
             _picPickerHueLine = picPickerHueLine;
+            _comboPreset = comboPreset;
         }
 
         public static void InitializeColormapEditor()
@@ -226,11 +228,6 @@ namespace SegyView
             _panPickerSV.Update();
         }
 
-        public static void ChangeMarkerColor(int buttonindex, Color newcolor)
-        {
-            butCScale[buttonindex].BackColor = newcolor;
-        }
-
         public static void ColorMarker_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
@@ -268,30 +265,81 @@ namespace SegyView
             // change marker position
             if (fMarkerSelected == true)
             {
-                int newleft = _picCMap.PointToClient(Control.MousePosition).X + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
-                newleft = (int)(Math.Floor((double)newleft / 2) * 2)-1;
-
-
-                picCScale[idxSelMarker].Left = newleft; picCScale[idxSelMarker].Update();
-                butCScale[idxSelMarker].Left = newleft - 4; butCScale[idxSelMarker].Update();
-
-                _dgvCMap[2, idxSelMarker].Value = (newleft - _picCMap.Parent.Left - _picCMap.Parent.Padding.Left) / 2;
-
-                // change colormap
-                Color[] newColor = new Color[butCScale.Count];
-                int[] newIndex = new int[butCScale.Count];
-
-                for (int i = 0; i < butCScale.Count; i++)
+                // change marker position
+                if (fMarkerSelected == true)
                 {
-                    //newColor[i] = butCScale[i].BackColor;
-                    //newIndex[i] = (int)((double)_dgvCMap[2, i].Value);
-                    //Debug.WriteLine(newIndex[i]);
+                    // set preset value to "Custom..."
+                    _comboPreset.SelectedIndex = _comboPreset.Items.Count - 1;
+
+                    // calculate new marker position
+                    int newleft = _picCMap.PointToClient(Control.MousePosition).X + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
+                    newleft = (int)(Math.Floor((double)newleft / 2) * 2) - 1;
+                    int byteval = (newleft - _picCMap.Parent.Left - _picCMap.Parent.Padding.Left) / 2;
+
+                    // for leftmost color marker
+                    if (idxSelMarker == 0)
+                    {
+                        if (byteval < 0)
+                        {
+                            newleft = _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
+                            byteval = 0;
+                        }
+                        if (byteval >= Convert.ToInt32(_dgvCMap[2, idxSelMarker + 1].Value))
+                        {
+                            newleft = (Convert.ToInt32(_dgvCMap[2, idxSelMarker + 1].Value) - 1) * 2 + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
+                            byteval = (Convert.ToInt32(_dgvCMap[2, idxSelMarker + 1].Value) - 1);
+                        }
+                    }
+
+                    // for rightmost color marker
+                    if (idxSelMarker == picCScale.Count - 1)
+                    {
+                        if (byteval > 255)
+                        {
+                            newleft = (255 * 2) + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
+                            byteval = 255;
+                        }
+                        if (byteval <= Convert.ToInt32(_dgvCMap[2, idxSelMarker - 1].Value))
+                        {
+                            newleft = (Convert.ToInt32(_dgvCMap[2, idxSelMarker - 1].Value) + 1) * 2 + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
+                            byteval = (Convert.ToInt32(_dgvCMap[2, idxSelMarker - 1].Value) + 1);
+                        }
+                    }
+
+                    // for any color marker
+                    if (idxSelMarker > 0 & idxSelMarker < picCScale.Count - 1)
+                    {
+                        if (byteval >= Convert.ToInt32(_dgvCMap[2, idxSelMarker + 1].Value))
+                        {
+                            newleft = (Convert.ToInt32(_dgvCMap[2, idxSelMarker + 1].Value) - 1) * 2 + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
+                            byteval = (Convert.ToInt32(_dgvCMap[2, idxSelMarker + 1].Value) - 1);
+                        }
+                        if (byteval <= Convert.ToInt32(_dgvCMap[2, idxSelMarker - 1].Value))
+                        {
+                            newleft = (Convert.ToInt32(_dgvCMap[2, idxSelMarker - 1].Value) + 1) * 2 + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
+                            byteval = (Convert.ToInt32(_dgvCMap[2, idxSelMarker - 1].Value) + 1);
+                        }
+                    }
+
+                    picCScale[idxSelMarker].Left = newleft; picCScale[idxSelMarker].Update();
+                    butCScale[idxSelMarker].Left = newleft - 4; butCScale[idxSelMarker].Update();
+
+                    _dgvCMap[2, idxSelMarker].Value = byteval;
+
+                    // change colormap
+                    Color[] newColor = new Color[butCScale.Count];
+                    int[] newIndex = new int[butCScale.Count];
+
+                    for (int i = 0; i < butCScale.Count; i++)
+                    {
+                        newColor[i] = butCScale[i].BackColor;
+                        newIndex[i] = Convert.ToInt32(_dgvCMap[2, i].Value);
+                        //Debug.WriteLine(newColor[i]);
+                    }
+
+                    // built-in color calculation here
 
                 }
-
-                //GamaSeismicColor.CreateColormap(GamaColormapEditor.editCMap, newColor, newIndex);
-                //GamaColormapEditor.LoadColormapTable(newColor, newIndex);
-                //GamaColormapEditor.UpdateBitmapColormap(GamaColormapEditor.editCMap);
             }
 
            

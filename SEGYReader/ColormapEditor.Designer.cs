@@ -487,7 +487,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.ToolStripComboBox comboPreset;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label6;
@@ -509,5 +508,6 @@
         public System.Windows.Forms.NumericUpDown numS;
         public System.Windows.Forms.NumericUpDown numH;
         public System.Windows.Forms.PictureBox picPickerHueLine;
+        public System.Windows.Forms.ToolStripComboBox comboPreset;
     }
 }

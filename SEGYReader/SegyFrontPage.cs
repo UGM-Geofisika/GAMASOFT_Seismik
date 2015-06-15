@@ -33,7 +33,7 @@ namespace SegyView
             GamaColormapEditor.Setup(FrmClrEdit, FrmClrEdit.picColorScale, FrmClrEdit.dgvColormap,
                 FrmClrEdit.panPickerHue, FrmClrEdit.panPickerSV,
                 FrmClrEdit.numR, FrmClrEdit.numG, FrmClrEdit.numB, FrmClrEdit.picPickerHueLine, FrmClrEdit.numH,
-                FrmClrEdit.numS, FrmClrEdit.numV);
+                FrmClrEdit.numS, FrmClrEdit.numV, FrmClrEdit.comboPreset);
             picBox1.MouseWheel += picBox1_MouseWheel;
             treeView1.NodeMouseClick += TreeView_SelectItem;
 
