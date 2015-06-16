@@ -16,86 +16,90 @@ namespace Unplugged.Segy
 
         public int Tracf { get; set; }
 
-        public int Ep
-        {
-            get { throw new System.NotImplementedException(); }
-        }
+        public int Ep { get; set; }
 
-        public int Cdp
-        {
-            get { throw new System.NotImplementedException(); }
-        }
+        public int Cdp { get; set; }
 
-        public int Cdpt
-        {
-            get { throw new System.NotImplementedException(); }
-        }
+        public int Cdpt { get; set; }
 
         public int Trid
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Nvs
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Nhs
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Duse
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Offset { get; set; }
 
         public int Gelev
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Selev
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Sdepth
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Gdel
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Sdel
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Swdep
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Gwdep
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Scalel
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Scalco
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Sx { get; set; }

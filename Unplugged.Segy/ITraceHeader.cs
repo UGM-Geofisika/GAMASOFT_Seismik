@@ -277,7 +277,7 @@
         /// </summary>
         int Slen { get; }
 
-        //1 = linear
+        //1 = linearS
         //2 = parabolic
         //3 = exponential
         //4 = other
