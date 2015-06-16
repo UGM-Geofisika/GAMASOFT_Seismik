@@ -28,7 +28,7 @@ namespace SegyView
         public static DataGridView _dgvCMap;
         public static Form _frmCMap;
         public static Panel _panPickerHue;
-        public static Panel _panPickerSV;
+        public static PictureBox _panPickerSV;
         public static NumericUpDown _numR;
         public static NumericUpDown _numG;
         public static NumericUpDown _numB;
@@ -38,17 +38,14 @@ namespace SegyView
         public static PictureBox _picPickerHueLine;
         public static ToolStripComboBox _comboPreset;
 
-        public static void Setup(Form frmCMap, PictureBox picColorScale, DataGridView dgvCMap, Panel panPickerHue, Panel panPickerSV, 
-                                 NumericUpDown numR, NumericUpDown numG, NumericUpDown numB, PictureBox picPickerHueLine,
-                                 NumericUpDown numH, NumericUpDown numS, NumericUpDown numV, ToolStripComboBox comboPreset)
+        public static void Setup(Form frmCMap, PictureBox picColorScale, DataGridView dgvCMap, Panel panPickerHue, 
+                                 PictureBox panPickerSV, PictureBox picPickerHueLine, ToolStripComboBox comboPreset)
         {
             _frmCMap = frmCMap;
             _picCMap = picColorScale;
             _dgvCMap = dgvCMap;
             _panPickerHue = panPickerHue;
             _panPickerSV = panPickerSV;
-            _numR = numR; _numG = numG; _numB = numB;
-            _numH = numH; _numS = numS; _numV = numV;
             _picPickerHueLine = picPickerHueLine;
             _comboPreset = comboPreset;
         }
@@ -76,7 +73,7 @@ namespace SegyView
 
             _panPickerHue.BackgroundImage = cpHue;
 
-            LoadSaturationValueFromHue((int)clr.GetHue());
+            LoadSaturationValueFromHue(Color.Red);
         }
 
         public static void UpdateBitmapColormap(byte[,] cScale)
@@ -121,15 +118,26 @@ namespace SegyView
             {
                 // for color table
                 _dgvCMap[0, i].Value = (i + 1).ToString();
-                _dgvCMap[1, i].Value = String.Concat(colorVal[i].R.ToString(), ", ", colorVal[i].G.ToString(), ", ", colorVal[i].B.ToString());
-                _dgvCMap[1, i].Style.BackColor = colorVal[i];
-                _dgvCMap[2, i].Value = colorByte[i].ToString();
+                _dgvCMap[1, i].Value = colorByte[i].ToString();
+                // RGB info
+                _dgvCMap[2, i].Value = colorVal[i].R.ToString();
+                _dgvCMap[3, i].Value = colorVal[i].G.ToString();
+                _dgvCMap[4, i].Value = colorVal[i].B.ToString();
+                // HSV info
+                _dgvCMap[5, i].Value = Math.Round(colorVal[i].GetHue()).ToString();
+                _dgvCMap[6, i].Value = Math.Round(colorVal[i].GetSaturation() * 100).ToString();
+                _dgvCMap[7, i].Value = Math.Round(colorVal[i].GetBrightness() * 100).ToString();
+                // RGB color cell style
+                for (int j = 2; j <= 7; j++)
+                {
+                    _dgvCMap[j, i].Style.BackColor = colorVal[i];
 
-                var gB = (int)Math.Round((double)colorVal[i].GetBrightness() * 100);
-                if (gB < 50)
-                { _dgvCMap[1, i].Style.ForeColor = Color.White; }
-                else
-                { _dgvCMap[1, i].Style.ForeColor = Color.Black; }
+                    var gB = (int)Math.Round((double)colorVal[i].GetBrightness() * 100);
+                    if (gB < 50)
+                    { _dgvCMap[j, i].Style.ForeColor = Color.White; }
+                    else
+                    { _dgvCMap[j, i].Style.ForeColor = Color.Black; }
+                }
 
                 // for color marker button
                 butCScale[i].Parent = (_picCMap.Parent).Parent;
@@ -214,23 +222,60 @@ namespace SegyView
             }
         }
 
-        public static void LoadSaturationValueFromHue(int h)
+        //public static void LoadSaturationValueFromHue(int h)
+        //{
+        //    Bitmap cpSV = new Bitmap(256, 256);
+        //    _picPickerHueLine.Left = (int)Math.Floor(((double)h / 360) * 256) + _panPickerHue.Parent.Left + _panPickerHue.Parent.Padding.Left;
+        //    _picPickerHueLine.Update();
+        //
+        //    for (int s=0; s<256; s++)
+        //        for (int v = 0; v<256; v++)
+        //        {
+        //            byte[] cRGB = new byte[3] { 0, 0, 0 };
+        //            ColorFromHSV(cRGB, h, (int)Math.Round((((double)s + 2) / 256) * 100), (int)Math.Round((((double)v + 2) / 256) * 100));
+        //            cpSV.SetPixel(s, v, Color.FromArgb(cRGB[0], cRGB[1], cRGB[2]));
+        //        }
+        //
+        //    cpSV.RotateFlip(RotateFlipType.RotateNoneFlipY);
+        //    _panPickerSV.BackgroundImage = cpSV;
+        //    _panPickerSV.Update();
+        //}
+
+        public static void LoadSaturationValueFromHue(Color Hue)
         {
             Bitmap cpSV = new Bitmap(256, 256);
-            _picPickerHueLine.Left = (int)Math.Floor(((double)h / 360) * 256) + _panPickerHue.Parent.Left + _panPickerHue.Parent.Padding.Left;
+            Graphics g = Graphics.FromImage(cpSV);
+
+            Bitmap tempHue = new Bitmap(_panPickerHue.BackgroundImage);
+            int pointerindex = 0;
+            for (int i = 0; i < 256; i++)
+            {
+                if (tempHue.GetPixel(i, 0) == Hue)
+                { pointerindex = i; break; }
+            }
+
+            _picPickerHueLine.Left = pointerindex + _panPickerHue.Parent.Left + _panPickerHue.Parent.Padding.Left;
             _picPickerHueLine.Update();
 
-            for (int s=0; s<256; s++)
-                for (int v = 0; v<256; v++)
-                {
-                    byte[] cRGB = new byte[3] { 0, 0, 0 };
-                    ColorFromHSV(cRGB, h, (int)Math.Round((((double)s + 2) / 256) * 100), (int)Math.Round((((double)v + 2) / 256) * 100));
-                    cpSV.SetPixel(s, v, Color.FromArgb(cRGB[0], cRGB[1], cRGB[2]));
-                }
+            // create vertical guide gradient at leftmost and rightmost column of saturation-value map
+            // create gradient at saturation = 0, value = 0-100%
+            LinearGradientBrush lgb = new LinearGradientBrush(new Point(0, 0), new Point(0, 255), Color.White, Color.Black);
+            g.DrawLine(new Pen(lgb), new Point(0, 0), new Point(0, 255));
+            // create gradient at saturation = 100%, value = 0-100%
+            lgb = new LinearGradientBrush(new Point(0, 0), new Point(0, 255), Hue, Color.Black);
+            g.DrawLine(new Pen(lgb), new Point(255, 0), new Point(255, 255));
 
-            cpSV.RotateFlip(RotateFlipType.RotateNoneFlipY);
-            _panPickerSV.BackgroundImage = cpSV;
+            for (int i = 0; i < 256; i++)
+            {
+                lgb = new LinearGradientBrush(new Point(0, 0), new Point(255, 0), cpSV.GetPixel(0, i), cpSV.GetPixel(255, i));
+                g.DrawLine(new Pen(lgb), new Point(0, i), new Point(255, i));
+            }
+
+            //cpSV.RotateFlip(RotateFlipType.RotateNoneFlipY);
+            _panPickerSV.Image = cpSV;
             _panPickerSV.Update();
+            g.Dispose();
+            lgb.Dispose();
         }
 
         public static void ColorMarker_MouseDown(object sender, MouseEventArgs e)
@@ -251,18 +296,12 @@ namespace SegyView
 
             selectMarkerOffset = butCScale[idxSelMarker].PointToClient(Control.MousePosition);
 
-            // update color information value
-            _numR.Value = but.BackColor.R;
-            _numG.Value = but.BackColor.G;
-            _numB.Value = but.BackColor.B;
-            _numH.Value = (decimal)but.BackColor.GetHue();
-            _numS.Value = (decimal)(but.BackColor.GetSaturation()*100);
-            _numV.Value = (decimal)(but.BackColor.GetBrightness()*100);
-
             // select row in color table
             _dgvCMap.ClearSelection();
             _dgvCMap.Rows[idxSelMarker].Selected = true;
-            LoadSaturationValueFromHue((int)but.BackColor.GetHue());
+            _panPickerSV.Parent.Parent.Parent.Parent.Show(); 
+
+            //LoadSaturationValueFromHue(but.BackColor);
         }
 
         public static void ColorMarker_MouseMove(object sender, MouseEventArgs e)
@@ -286,10 +325,10 @@ namespace SegyView
                         newleft = _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
                         byteval = 0;
                     }
-                    if (byteval >= Convert.ToInt32(_dgvCMap[2, idxSelMarker + 1].Value))
+                    if (byteval >= Convert.ToInt32(_dgvCMap[1, idxSelMarker + 1].Value))
                     {
-                        newleft = (Convert.ToInt32(_dgvCMap[2, idxSelMarker + 1].Value) - 1) * 2 + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
-                        byteval = (Convert.ToInt32(_dgvCMap[2, idxSelMarker + 1].Value) - 1);
+                        newleft = (Convert.ToInt32(_dgvCMap[1, idxSelMarker + 1].Value) - 1) * 2 + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
+                        byteval = (Convert.ToInt32(_dgvCMap[1, idxSelMarker + 1].Value) - 1);
                     }
                 }
 
@@ -301,32 +340,32 @@ namespace SegyView
                         newleft = (255 * 2) + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
                         byteval = 255;
                     }
-                    if (byteval <= Convert.ToInt32(_dgvCMap[2, idxSelMarker - 1].Value))
+                    if (byteval <= Convert.ToInt32(_dgvCMap[1, idxSelMarker - 1].Value))
                     {
-                        newleft = (Convert.ToInt32(_dgvCMap[2, idxSelMarker - 1].Value) + 1) * 2 + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
-                        byteval = (Convert.ToInt32(_dgvCMap[2, idxSelMarker - 1].Value) + 1);
+                        newleft = (Convert.ToInt32(_dgvCMap[1, idxSelMarker - 1].Value) + 1) * 2 + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
+                        byteval = (Convert.ToInt32(_dgvCMap[1, idxSelMarker - 1].Value) + 1);
                     }
                 }
 
                 // for any color marker
                 if (idxSelMarker > 0 & idxSelMarker < picCScale.Count - 1)
                 {
-                    if (byteval >= Convert.ToInt32(_dgvCMap[2, idxSelMarker + 1].Value))
+                    if (byteval >= Convert.ToInt32(_dgvCMap[1, idxSelMarker + 1].Value))
                     {
-                        newleft = (Convert.ToInt32(_dgvCMap[2, idxSelMarker + 1].Value) - 1) * 2 + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
-                        byteval = (Convert.ToInt32(_dgvCMap[2, idxSelMarker + 1].Value) - 1);
+                        newleft = (Convert.ToInt32(_dgvCMap[1, idxSelMarker + 1].Value) - 1) * 2 + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
+                        byteval = (Convert.ToInt32(_dgvCMap[1, idxSelMarker + 1].Value) - 1);
                     }
-                    if (byteval <= Convert.ToInt32(_dgvCMap[2, idxSelMarker - 1].Value))
+                    if (byteval <= Convert.ToInt32(_dgvCMap[1, idxSelMarker - 1].Value))
                     {
-                        newleft = (Convert.ToInt32(_dgvCMap[2, idxSelMarker - 1].Value) + 1) * 2 + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
-                        byteval = (Convert.ToInt32(_dgvCMap[2, idxSelMarker - 1].Value) + 1);
+                        newleft = (Convert.ToInt32(_dgvCMap[1, idxSelMarker - 1].Value) + 1) * 2 + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
+                        byteval = (Convert.ToInt32(_dgvCMap[1, idxSelMarker - 1].Value) + 1);
                     }
                 }
 
                 picCScale[idxSelMarker].Left = newleft; picCScale[idxSelMarker].Update();
                 butCScale[idxSelMarker].Left = newleft - 4; butCScale[idxSelMarker].Update();
 
-                _dgvCMap[2, idxSelMarker].Value = byteval;
+                _dgvCMap[1, idxSelMarker].Value = byteval;
 
                 // built-in color calculation here
                 Graphics g = Graphics.FromImage(tmpEdit);
@@ -335,9 +374,9 @@ namespace SegyView
                 if (idxSelMarker == 0)
                 {
                     Color newColor = butCScale[idxSelMarker].BackColor;
-                    int newIndex = Convert.ToInt32(_dgvCMap[2, idxSelMarker].Value);
+                    int newIndex = Convert.ToInt32(_dgvCMap[1, idxSelMarker].Value);
                     Color nextColor = butCScale[idxSelMarker + 1].BackColor;
-                    int nextIndex = Convert.ToInt32(_dgvCMap[2, idxSelMarker + 1].Value);
+                    int nextIndex = Convert.ToInt32(_dgvCMap[1, idxSelMarker + 1].Value);
 
                     // if bottom limit is > 0, assign bottom color to all index below it
                     if (newIndex > 0)
@@ -359,9 +398,9 @@ namespace SegyView
                 if (idxSelMarker == picCScale.Count - 1)
                 {
                     Color newColor = butCScale[idxSelMarker].BackColor;
-                    int newIndex = Convert.ToInt32(_dgvCMap[2, idxSelMarker].Value);
+                    int newIndex = Convert.ToInt32(_dgvCMap[1, idxSelMarker].Value);
                     Color prevColor = butCScale[idxSelMarker - 1].BackColor;
-                    int prevIndex = Convert.ToInt32(_dgvCMap[2, idxSelMarker - 1].Value);
+                    int prevIndex = Convert.ToInt32(_dgvCMap[1, idxSelMarker - 1].Value);
                                 
                     // if upper limit is < 255, assign upper color to all index after it
                     if (newIndex < 255)
@@ -383,11 +422,11 @@ namespace SegyView
                 if (idxSelMarker != 0 & idxSelMarker != picCScale.Count - 1)
                 {
                     Color newColor = butCScale[idxSelMarker].BackColor;
-                    int newIndex = Convert.ToInt32(_dgvCMap[2, idxSelMarker].Value);
+                    int newIndex = Convert.ToInt32(_dgvCMap[1, idxSelMarker].Value);
                     Color nextColor = butCScale[idxSelMarker + 1].BackColor;
-                    int nextIndex = Convert.ToInt32(_dgvCMap[2, idxSelMarker + 1].Value);
+                    int nextIndex = Convert.ToInt32(_dgvCMap[1, idxSelMarker + 1].Value);
                     Color prevColor = butCScale[idxSelMarker - 1].BackColor;
-                    int prevIndex = Convert.ToInt32(_dgvCMap[2, idxSelMarker - 1].Value);
+                    int prevIndex = Convert.ToInt32(_dgvCMap[1, idxSelMarker - 1].Value);
 
                     // for right-side of color marker
                     LinearGradientBrush lgb = new LinearGradientBrush(new Point(newIndex, 0), new Point(nextIndex, 0), newColor, nextColor);
@@ -407,7 +446,7 @@ namespace SegyView
                 }
 
                 UpdateBitmapColormap(tempCMap);
-                _picCMap.Update();
+                _picCMap.Update(); g.Dispose();
             }
                        
         }
