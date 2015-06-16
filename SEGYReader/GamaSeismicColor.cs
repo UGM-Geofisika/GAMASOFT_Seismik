@@ -243,20 +243,9 @@ namespace SegyView
             
             _picCscale.BackgroundImage = bmpScale;
             _picCscale.Update();
+
+            GamaColormapEditor.tempCMap = ImageWriter.cScale;
         }
 
-        public static void UpdateColormapBitmap(byte[,] cScale, PictureBox picColormap)
-        {
-            // create bitmap color scale
-            //for (int i = 0; i < 256; i++)
-            //{
-            //    bmpScale.SetPixel(i, 0, Color.FromArgb(cScale[i, 0], cScale[i, 1], cScale[i, 2]));
-            //}
-
-            //picColormap.BackgroundImage = bmpScale;
-            //picColormap.Update();
-        }
-
-
-    }
+      }
 }

@@ -91,6 +91,8 @@ namespace SegyView
                     GamaSeismicColor.Colormap_Grayscale(); break;
                 case 3: // Preset: Rainbow
                     GamaSeismicColor.Colormap_Rainbow(); break;
+                case 4: // Custom Colormap
+                    ImageWriter.cScale = GamaColormapEditor.tempCMap; break;
             }
 
             GamaSeismicViewer.ShowSeismic(SEGYView.SegyView.GetAllTracesBitmap(SegyFrontPage.SEGYFile4Bmp));
