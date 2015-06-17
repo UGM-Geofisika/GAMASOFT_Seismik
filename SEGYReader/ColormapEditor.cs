@@ -16,6 +16,14 @@ namespace SegyView
         public ColormapEditor()
         {
             InitializeComponent();
+
+            dgvPickColor.Rows.Add(6);
+            dgvPickColor[0, 0].Value = "Red";
+            dgvPickColor[0, 1].Value = "Green";
+            dgvPickColor[0, 2].Value = "Blue";
+            dgvPickColor[0, 3].Value = "Hue";
+            dgvPickColor[0, 4].Value = "Saturation";
+            dgvPickColor[0, 5].Value = "Value";
         }
 
         private void ColormapEditor_Load(object sender, EventArgs e)
@@ -70,11 +78,13 @@ namespace SegyView
             if (e.Button == MouseButtons.Left)
             {
                 Bitmap hueImage = new Bitmap(panPickerHue.BackgroundImage);
-                int mouseX = panPickerHue.PointToClient(MousePosition).X;
-                if (mouseX < 0) mouseX = 0;
-                if (mouseX > 255) mouseX = 255;
+                int mouseY = panPickerHue.PointToClient(MousePosition).Y;
+                if (mouseY < 0) mouseY = 0;
+                if (mouseY > 255) mouseY = 255;
 
-                GamaColormapEditor.LoadSaturationValueFromHue(hueImage.GetPixel(mouseX, 0));
+                GamaColormapEditor.LoadSaturationValueFromHue(hueImage.GetPixel(0, mouseY));
+                GamaColormapEditor.UpdateSelectedColor(panPickerSV.PointToScreen(new Point(GamaColormapEditor.panboxPicker[0].Left + 3, GamaColormapEditor.panboxPicker[1].Top + 3)));
+                picNewClr.Update(); dgvPickColor.Update();
                 hueImage.Dispose();
             }
         }
@@ -82,11 +92,11 @@ namespace SegyView
         private void panPickerHue_Click(object sender, EventArgs e)
         {
             Bitmap hueImage = new Bitmap(panPickerHue.BackgroundImage);
-            int mouseX = panPickerHue.PointToClient(MousePosition).X;
-            if (mouseX < 0) mouseX = 0;
-            if (mouseX > 255) mouseX = 255;
+            int mouseY = panPickerHue.PointToClient(MousePosition).Y;
+            if (mouseY < 0) mouseY = 0;
+            if (mouseY > 255) mouseY = 255;
 
-            GamaColormapEditor.LoadSaturationValueFromHue(hueImage.GetPixel(mouseX, 0));
+            GamaColormapEditor.LoadSaturationValueFromHue(hueImage.GetPixel(0, mouseY));
             hueImage.Dispose();
         }
 
@@ -118,23 +128,40 @@ namespace SegyView
             e.Cancel = true;
         }
 
-        private void panPickerSV_Click(object sender, EventArgs e)
-        {
-            //if (MouseButtons == MouseButtons.Left)
-            //{
-                if (panel6.Visible == true)
-                { panel6.Hide(); }
-                else
-                { panel6.Show(); }
-            //}
-        }
-
         private void panel6_VisibleChanged(object sender, EventArgs e)
         {
             if (panel6.Visible == true)
             { panel7.Padding = new Padding(12, 0, 0, 12); }
             else
             { panel7.Padding = new Padding(12, 0, 12, 12); }
+        }
+
+        private void panPickerSV_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            { GamaColormapEditor.UpdateSelectedColor(MousePosition); }
+        }
+
+        private void panPickerSV_Click(object sender, EventArgs e)
+        {
+            if (((MouseEventArgs)e).Button == MouseButtons.Left)
+            { GamaColormapEditor.UpdateSelectedColor(MousePosition); }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            panel6.Hide();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GamaColormapEditor.UpdateCurrentColor(picNewClr.BackColor);
+            GamaColormapEditor.UpdateColorTableData(picNewClr.BackColor, GamaColormapEditor.idxSelMarker);
+            GamaColormapEditor.UpdateCustomColormap(picNewClr.BackColor, GamaColormapEditor.idxSelMarker);
+            GamaColormapEditor.UpdateBitmapColormap(GamaColormapEditor.tempCMap);
+            comboPreset.SelectedIndex = comboPreset.Items.Count - 1;
+            picColorScale.Update(); 
+            panel6.Hide();
         }
 
 

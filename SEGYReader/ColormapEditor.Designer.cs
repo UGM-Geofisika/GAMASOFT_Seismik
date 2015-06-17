@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ColormapEditor));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panColormapCont = new System.Windows.Forms.Panel();
             this.picColorScale = new System.Windows.Forms.PictureBox();
             this.dgvColormap = new System.Windows.Forms.DataGridView();
@@ -57,17 +57,17 @@
             this.panPickerSV = new System.Windows.Forms.PictureBox();
             this.picPickerHueLine = new System.Windows.Forms.PictureBox();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.panel7 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.picNewClr = new System.Windows.Forms.PictureBox();
+            this.panCurClrCont = new System.Windows.Forms.Panel();
+            this.picCurClr = new System.Windows.Forms.PictureBox();
             this.dgvPickColor = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panCurClrCont = new System.Windows.Forms.Panel();
-            this.picCurClr = new System.Windows.Forms.PictureBox();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.picNewClr = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.panel7 = new System.Windows.Forms.Panel();
             this.panColormapCont.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picColorScale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvColormap)).BeginInit();
@@ -80,12 +80,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.panPickerSV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPickerHueLine)).BeginInit();
             this.panel6.SuspendLayout();
-            this.panel7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPickColor)).BeginInit();
-            this.panCurClrCont.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picCurClr)).BeginInit();
             this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picNewClr)).BeginInit();
+            this.panCurClrCont.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picCurClr)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPickColor)).BeginInit();
+            this.panel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // panColormapCont
@@ -132,7 +132,7 @@
             this.dgvColormap.RowHeadersWidth = 10;
             this.dgvColormap.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvColormap.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvColormap.Size = new System.Drawing.Size(0, 304);
+            this.dgvColormap.Size = new System.Drawing.Size(0, 272);
             this.dgvColormap.TabIndex = 3;
             // 
             // ID
@@ -265,10 +265,10 @@
             // 
             this.panel4.BackColor = System.Drawing.Color.DimGray;
             this.panel4.Controls.Add(this.panel1);
-            this.panel4.Location = new System.Drawing.Point(187, 0);
+            this.panel4.Location = new System.Drawing.Point(196, 0);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(1);
-            this.panel4.Size = new System.Drawing.Size(270, 301);
+            this.panel4.Size = new System.Drawing.Size(318, 269);
             this.panel4.TabIndex = 8;
             // 
             // panel1
@@ -280,17 +280,17 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(1, 1);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(268, 299);
+            this.panel1.Size = new System.Drawing.Size(316, 267);
             this.panel1.TabIndex = 9;
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.DimGray;
             this.panel2.Controls.Add(this.panPickerHue);
-            this.panel2.Location = new System.Drawing.Point(5, 5);
+            this.panel2.Location = new System.Drawing.Point(268, 5);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(1);
-            this.panel2.Size = new System.Drawing.Size(258, 25);
+            this.panel2.Size = new System.Drawing.Size(25, 258);
             this.panel2.TabIndex = 0;
             // 
             // panPickerHue
@@ -299,7 +299,7 @@
             this.panPickerHue.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panPickerHue.Location = new System.Drawing.Point(1, 1);
             this.panPickerHue.Name = "panPickerHue";
-            this.panPickerHue.Size = new System.Drawing.Size(256, 23);
+            this.panPickerHue.Size = new System.Drawing.Size(23, 256);
             this.panPickerHue.TabIndex = 1;
             this.panPickerHue.Click += new System.EventHandler(this.panPickerHue_Click);
             this.panPickerHue.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panPickerHue_MouseMove);
@@ -308,7 +308,7 @@
             // 
             this.panel5.BackColor = System.Drawing.Color.DimGray;
             this.panel5.Controls.Add(this.panPickerSV);
-            this.panel5.Location = new System.Drawing.Point(5, 36);
+            this.panel5.Location = new System.Drawing.Point(5, 5);
             this.panel5.Name = "panel5";
             this.panel5.Padding = new System.Windows.Forms.Padding(1);
             this.panel5.Size = new System.Drawing.Size(258, 258);
@@ -324,41 +324,94 @@
             this.panPickerSV.TabIndex = 1;
             this.panPickerSV.TabStop = false;
             this.panPickerSV.Click += new System.EventHandler(this.panPickerSV_Click);
+            this.panPickerSV.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panPickerSV_MouseMove);
             // 
             // picPickerHueLine
             // 
-            this.picPickerHueLine.BackColor = System.Drawing.Color.Black;
-            this.picPickerHueLine.Location = new System.Drawing.Point(7, 0);
+            this.picPickerHueLine.BackColor = System.Drawing.Color.Transparent;
+            this.picPickerHueLine.Image = ((System.Drawing.Image)(resources.GetObject("picPickerHueLine.Image")));
+            this.picPickerHueLine.Location = new System.Drawing.Point(293, 0);
             this.picPickerHueLine.Name = "picPickerHueLine";
-            this.picPickerHueLine.Size = new System.Drawing.Size(1, 40);
+            this.picPickerHueLine.Size = new System.Drawing.Size(18, 18);
             this.picPickerHueLine.TabIndex = 2;
             this.picPickerHueLine.TabStop = false;
             // 
             // panel6
             // 
             this.panel6.Controls.Add(this.button2);
+            this.panel6.Controls.Add(this.panel4);
             this.panel6.Controls.Add(this.button1);
             this.panel6.Controls.Add(this.panel8);
             this.panel6.Controls.Add(this.panCurClrCont);
             this.panel6.Controls.Add(this.dgvPickColor);
-            this.panel6.Controls.Add(this.panel4);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel6.Location = new System.Drawing.Point(12, 95);
             this.panel6.Name = "panel6";
             this.panel6.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.panel6.Size = new System.Drawing.Size(527, 312);
+            this.panel6.Size = new System.Drawing.Size(527, 280);
             this.panel6.TabIndex = 16;
+            this.panel6.Visible = false;
             this.panel6.VisibleChanged += new System.EventHandler(this.panel6_VisibleChanged);
             // 
-            // panel7
+            // button2
             // 
-            this.panel7.Controls.Add(this.dgvColormap);
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(0, 95);
-            this.panel7.Name = "panel7";
-            this.panel7.Padding = new System.Windows.Forms.Padding(12, 0, 0, 8);
-            this.panel7.Size = new System.Drawing.Size(12, 312);
-            this.panel7.TabIndex = 17;
+            this.button2.Location = new System.Drawing.Point(108, 246);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 20;
+            this.button2.Text = "Cancel";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(108, 217);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 19;
+            this.button1.Text = "OK";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // panel8
+            // 
+            this.panel8.BackColor = System.Drawing.Color.DimGray;
+            this.panel8.Controls.Add(this.picNewClr);
+            this.panel8.Location = new System.Drawing.Point(133, 0);
+            this.panel8.Name = "panel8";
+            this.panel8.Padding = new System.Windows.Forms.Padding(1);
+            this.panel8.Size = new System.Drawing.Size(50, 40);
+            this.panel8.TabIndex = 18;
+            // 
+            // picNewClr
+            // 
+            this.picNewClr.BackColor = System.Drawing.Color.White;
+            this.picNewClr.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picNewClr.Location = new System.Drawing.Point(1, 1);
+            this.picNewClr.Name = "picNewClr";
+            this.picNewClr.Size = new System.Drawing.Size(48, 38);
+            this.picNewClr.TabIndex = 1;
+            this.picNewClr.TabStop = false;
+            // 
+            // panCurClrCont
+            // 
+            this.panCurClrCont.BackColor = System.Drawing.Color.DimGray;
+            this.panCurClrCont.Controls.Add(this.picCurClr);
+            this.panCurClrCont.Location = new System.Drawing.Point(82, 0);
+            this.panCurClrCont.Name = "panCurClrCont";
+            this.panCurClrCont.Padding = new System.Windows.Forms.Padding(1);
+            this.panCurClrCont.Size = new System.Drawing.Size(50, 40);
+            this.panCurClrCont.TabIndex = 11;
+            // 
+            // picCurClr
+            // 
+            this.picCurClr.BackColor = System.Drawing.Color.White;
+            this.picCurClr.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picCurClr.Location = new System.Drawing.Point(1, 1);
+            this.picCurClr.Name = "picCurClr";
+            this.picCurClr.Size = new System.Drawing.Size(48, 38);
+            this.picCurClr.TabIndex = 1;
+            this.picCurClr.TabStop = false;
             // 
             // dgvPickColor
             // 
@@ -375,7 +428,7 @@
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3});
             this.dgvPickColor.EnableHeadersVisualStyles = false;
-            this.dgvPickColor.Location = new System.Drawing.Point(13, 46);
+            this.dgvPickColor.Location = new System.Drawing.Point(22, 46);
             this.dgvPickColor.MultiSelect = false;
             this.dgvPickColor.Name = "dgvPickColor";
             this.dgvPickColor.RowHeadersVisible = false;
@@ -388,8 +441,8 @@
             // 
             // dataGridViewTextBoxColumn1
             // 
-            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle28;
             this.dataGridViewTextBoxColumn1.Frozen = true;
             this.dataGridViewTextBoxColumn1.HeaderText = " ";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
@@ -400,8 +453,8 @@
             // 
             // dataGridViewTextBoxColumn2
             // 
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle29;
             this.dataGridViewTextBoxColumn2.HeaderText = "Current Color";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.ReadOnly = true;
@@ -411,81 +464,34 @@
             // 
             // dataGridViewTextBoxColumn3
             // 
-            dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle30.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle30;
             this.dataGridViewTextBoxColumn3.HeaderText = "New Color";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.dataGridViewTextBoxColumn3.Width = 50;
             // 
-            // panCurClrCont
+            // panel7
             // 
-            this.panCurClrCont.BackColor = System.Drawing.Color.DimGray;
-            this.panCurClrCont.Controls.Add(this.picCurClr);
-            this.panCurClrCont.Location = new System.Drawing.Point(73, 0);
-            this.panCurClrCont.Name = "panCurClrCont";
-            this.panCurClrCont.Padding = new System.Windows.Forms.Padding(1);
-            this.panCurClrCont.Size = new System.Drawing.Size(50, 40);
-            this.panCurClrCont.TabIndex = 11;
-            // 
-            // picCurClr
-            // 
-            this.picCurClr.BackColor = System.Drawing.Color.White;
-            this.picCurClr.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picCurClr.Location = new System.Drawing.Point(1, 1);
-            this.picCurClr.Name = "picCurClr";
-            this.picCurClr.Size = new System.Drawing.Size(48, 38);
-            this.picCurClr.TabIndex = 1;
-            this.picCurClr.TabStop = false;
-            // 
-            // panel8
-            // 
-            this.panel8.BackColor = System.Drawing.Color.DimGray;
-            this.panel8.Controls.Add(this.picNewClr);
-            this.panel8.Location = new System.Drawing.Point(124, 0);
-            this.panel8.Name = "panel8";
-            this.panel8.Padding = new System.Windows.Forms.Padding(1);
-            this.panel8.Size = new System.Drawing.Size(50, 40);
-            this.panel8.TabIndex = 18;
-            // 
-            // picNewClr
-            // 
-            this.picNewClr.BackColor = System.Drawing.Color.White;
-            this.picNewClr.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picNewClr.Location = new System.Drawing.Point(1, 1);
-            this.picNewClr.Name = "picNewClr";
-            this.picNewClr.Size = new System.Drawing.Size(48, 38);
-            this.picNewClr.TabIndex = 1;
-            this.picNewClr.TabStop = false;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(99, 217);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 19;
-            this.button1.Text = "OK";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(99, 246);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 20;
-            this.button2.Text = "Cancel";
-            this.button2.UseVisualStyleBackColor = true;
+            this.panel7.Controls.Add(this.dgvColormap);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel7.Location = new System.Drawing.Point(0, 95);
+            this.panel7.Name = "panel7";
+            this.panel7.Padding = new System.Windows.Forms.Padding(12, 0, 12, 8);
+            this.panel7.Size = new System.Drawing.Size(12, 280);
+            this.panel7.TabIndex = 17;
             // 
             // ColormapEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(539, 407);
+            this.ClientSize = new System.Drawing.Size(539, 375);
             this.Controls.Add(this.panel7);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.toolStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ColormapEditor";
@@ -508,12 +514,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.panPickerSV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPickerHueLine)).EndInit();
             this.panel6.ResumeLayout(false);
-            this.panel7.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPickColor)).EndInit();
-            this.panCurClrCont.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picCurClr)).EndInit();
             this.panel8.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picNewClr)).EndInit();
+            this.panCurClrCont.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picCurClr)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPickColor)).EndInit();
+            this.panel7.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

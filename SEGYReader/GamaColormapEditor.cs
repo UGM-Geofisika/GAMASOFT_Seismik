@@ -15,6 +15,7 @@ namespace SegyView
         private static List<Panel> editCScale = new List<Panel>();
         private static List<Panel> butCScale = new List<Panel>();
         private static List<PictureBox> picCScale = new List<PictureBox>();
+        public static List<Panel> panboxPicker = new List<Panel>();
 
         public static byte[,] editCMap = new byte[256, 3];
         public static byte[,] tempCMap = new byte[256, 3];
@@ -33,6 +34,7 @@ namespace SegyView
         public static PictureBox _picPickerHueLine;
         public static ToolStripComboBox _comboPreset;
         public static PictureBox _picCurClr;
+        public static PictureBox _picNewClr;
 
         public struct ColorRGB
         {
@@ -58,7 +60,7 @@ namespace SegyView
 
         public static void Setup(Form frmCMap, PictureBox picColorScale, DataGridView dgvCMap, Panel panPickerHue, 
                                  PictureBox panPickerSV, PictureBox picPickerHueLine, ToolStripComboBox comboPreset,
-                                 DataGridView dgvColorPick, PictureBox picCurClr)
+                                 DataGridView dgvColorPick, PictureBox picCurClr, PictureBox picNewClr)
         {
             _frmCMap = frmCMap;
             _picCMap = picColorScale;
@@ -69,40 +71,72 @@ namespace SegyView
             _comboPreset = comboPreset;
             _dgvColorPick = dgvColorPick;
             _picCurClr = picCurClr;
+            _picNewClr = picNewClr;
         }
 
         public static void InitializeColormapEditor()
         {
-            Color clr = new Color();
-            // load current colormap   
-            for (int i = 0; i < 256; i++)
-            {
-                clr = System.Drawing.Color.FromArgb(ImageWriter.cScale[i, 0], ImageWriter.cScale[i, 1], ImageWriter.cScale[i, 2]);
-                bmpEdit.SetPixel(i * 2, 0, clr);
-                bmpEdit.SetPixel((i * 2) + 1, 0, clr);
-                _picCMap.BackgroundImage = bmpEdit;
-            }
+           Color clr = new Color();
+           // load current colormap   
+           for (int i = 0; i < 256; i++)
+           {
+               clr = System.Drawing.Color.FromArgb(ImageWriter.cScale[i, 0], ImageWriter.cScale[i, 1], ImageWriter.cScale[i, 2]);
+               bmpEdit.SetPixel(i * 2, 0, clr);
+               bmpEdit.SetPixel((i * 2) + 1, 0, clr);
+               _picCMap.BackgroundImage = bmpEdit;
+           }
 
             // create images for color picker
             Bitmap cpHue = new Bitmap(1, 256);
             for (int i = 0; i < 256; i++)
             {
-                byte[] cRGB = new byte[3] { 0, 0, 0 };
-                //ColorFromHSV(cRGB, (int)Math.Round((((double)i+1)/256)*360), 100, 100);
-                HSV2RGB((((double)i + 1) / 256) * 360, cRGB);
-                cpHue.SetPixel(0, 1, Color.FromArgb(cRGB[0], cRGB[1], cRGB[2]));
+                ColorRGB cRGB = new ColorRGB();
+                cRGB = HSL2RGB((((double)i) / 256), 1, 0.5);
+                cpHue.SetPixel(0, i, Color.FromArgb(cRGB.R, cRGB.G, cRGB.B));
             }
             
             _panPickerHue.BackgroundImage = cpHue;
             LoadSaturationValueFromHue(Color.Red);
 
-            _dgvColorPick.Rows.Add(6);
-            _dgvColorPick[0, 0].Value = "Red";
-            _dgvColorPick[0, 1].Value = "Green";
-            _dgvColorPick[0, 2].Value = "Blue";
-            _dgvColorPick[0, 3].Value = "Hue";
-            _dgvColorPick[0, 4].Value = "Saturation";
-            _dgvColorPick[0, 5].Value = "Value";
+            // create picker box
+            for (int i = 0; i < 4; i++) panboxPicker.Add(new Panel());
+            for (int i = 0; i < 4; i++)
+            {
+                panboxPicker[i].Parent = _panPickerSV;
+                panboxPicker[i].BackColor = Color.Black;
+                panboxPicker[i].Show();
+            }
+
+            panboxPicker[0].Width = 1; panboxPicker[0].Height = 7;
+            panboxPicker[1].Width = 7; panboxPicker[1].Height = 1;
+            panboxPicker[2].Width = 1; panboxPicker[2].Height = 7;
+            panboxPicker[3].Width = 7; panboxPicker[3].Height = 1;
+
+            UpdateSelectedColor(_panPickerSV.PointToScreen(new Point(255, 0)));
+        }
+
+        public static void PickerBox_Move(Point mouse)
+        {
+            Point pointer = mouse;
+            if (pointer.X < 0) pointer.X = 0;
+            if (pointer.Y < 0) pointer.Y = 0;
+            if (pointer.X > 255) pointer.X = 255;
+            if (pointer.Y > 255) pointer.Y = 255;
+
+            /* left   */ panboxPicker[0].Left = pointer.X - 3; panboxPicker[0].Top = pointer.Y - 3;
+            /* top    */ panboxPicker[1].Left = pointer.X - 3; panboxPicker[1].Top = pointer.Y - 3;
+            /* right  */ panboxPicker[2].Left = pointer.X + 3; panboxPicker[2].Top = pointer.Y - 3;
+            /* bottom */ panboxPicker[3].Left = pointer.X - 3; panboxPicker[3].Top = pointer.Y + 3;
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (((Bitmap)_panPickerSV.Image).GetPixel(pointer.X, pointer.Y).GetBrightness() * 100 > 30)
+                { panboxPicker[i].BackColor = Color.Black; }
+                else
+                { panboxPicker[i].BackColor = Color.White; }
+
+                panboxPicker[i].Update();
+            }
         }
 
         public static void UpdateBitmapColormap(byte[,] cScale)
@@ -148,35 +182,14 @@ namespace SegyView
                 // for color table
                 _dgvCMap[0, i].Value = (i + 1).ToString();
                 _dgvCMap[1, i].Value = colorByte[i].ToString();
-                // RGB info
-                _dgvCMap[2, i].Value = colorVal[i].R.ToString();
-                _dgvCMap[3, i].Value = colorVal[i].G.ToString();
-                _dgvCMap[4, i].Value = colorVal[i].B.ToString();
-                // HSV info
-                _dgvCMap[5, i].Value = Math.Round(colorVal[i].GetHue()).ToString();
-                _dgvCMap[6, i].Value = Math.Round(colorVal[i].GetSaturation() * 100).ToString();
-                _dgvCMap[7, i].Value = Math.Round(colorVal[i].GetBrightness() * 100).ToString();
-                // RGB color cell style
-                for (int j = 2; j <= 7; j++)
-                {
-                    _dgvCMap[j, i].Style.BackColor = colorVal[i];
 
-                    var gB = (int)Math.Round((double)colorVal[i].GetBrightness() * 100);
-                    if (gB < 50)
-                    { _dgvCMap[j, i].Style.ForeColor = Color.White; }
-                    else
-                    { _dgvCMap[j, i].Style.ForeColor = Color.Black; }
-                }
+                UpdateColorTableData(colorVal[i], i);
 
                 // for color marker button
                 butCScale[i].Parent = (_picCMap.Parent).Parent;
                 butCScale[i].Width = 10;
                 butCScale[i].Height = 10;
-                //butCScale[i].FlatStyle = FlatStyle.Flat;
-                //butCScale[i].FlatAppearance.BorderColor = Color.Black;
-                //butCScale[i].FlatAppearance.BorderSize = 1;
-                //butCScale[i].FlatAppearance.MouseDownBackColor = colorVal[i];
-                //butCScale[i].FlatAppearance.MouseOverBackColor = colorVal[i];
+                butCScale[i].BorderStyle = BorderStyle.FixedSingle;
                 butCScale[i].BackColor = colorVal[i];
                 butCScale[i].Left = (colorByte[i] * 2) + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left - 4;
                 butCScale[i].Top = _picCMap.Parent.Top + _picCMap.Parent.Height + 3;
@@ -196,89 +209,12 @@ namespace SegyView
                 picCScale[i].Left = (colorByte[i] * 2) + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
                 picCScale[i].Top = _picCMap.Parent.Top - 5;
                 picCScale[i].Show();
+
             }
-        }
 
-        private static void ColorFromHSV(byte[] cRGB, int H, int S, int V)
-        {
-            // scale the saturation and value to 0-1 range, hue is between 0-359
-            double hue = (double)H;
-            double sat = (double)S / 100.0;
-            double val = (double)V / 100.0;
-        
-            double r = 0; double g = 0; double b = 0;
-        
-            if (sat == 0)
-            {
-                // if saturation is 0, then all color are the same (grayscale)
-                r = val; g = val; b = val;
-            }
-            else
-            {
-                // calculate the appropriate sector of a six-part color wheel
-                double sectorPos = hue / 60.0;
-                int sectorNumber = (int)Math.Floor(sectorPos);
-        
-                // get the fractional part of the sector
-                double fracSector = sectorPos - (double)sectorNumber;
-        
-                // calculate values for the three axes of the color
-                double p = val * (1 - sat);
-                double q = val * (1 - (sat * fracSector));
-                double t = val * (1 - (sat * (1 - fracSector)));
-        
-                // assign the fractional colors to red, green, blue based on the sector the angle is in
-                switch (sectorNumber)
-                {
-                    case 0:
-                    case 6:
-                        r = val; g = t; b = p; break;
-                    case 1:
-                        r = q; g = val; b = p; break;
-                    case 2:
-                        r = p; g = val; b = t; break;
-                    case 3:
-                        r = p; g = q; b = val; break;
-                    case 4:
-                        r = t; g = p; b = val; break;
-                    case 5:
-                        r = val; g = p; b = q; break;
-                }
-        
-                // scale the rgb color to 0-255 range
-                cRGB[0] = (byte)Math.Round(r * 255);
-                cRGB[1] = (byte)Math.Round(g * 255);
-                cRGB[2] = (byte)Math.Round(b * 255);
-            }
-        }
-
-        private static void HSV2RGB(double HueAngle, byte[] RGB)
-        {
-	        double S = 1;
-            double V = 1;
-
-            // Hue must valued from 0 to 359 degrees
-            double C = V * S;
-            double X = C * (1 - Math.Abs((HueAngle / 60) % 2) - 1);
-            double m = V - C;
-
-            double[] RGBx = new double[3];
-            if (HueAngle >= 0 && HueAngle < 60)
-	        {RGBx[0] = C; RGBx[1] = X; RGBx[2] = 0;}
-            else if (HueAngle >= 60 && HueAngle < 120) 
-            {RGBx[0] = X; RGBx[1] = C; RGBx[2] = 0;}
-            else if (HueAngle >= 120 && HueAngle < 180)
-            {RGBx[0] = 0; RGBx[1] = C; RGBx[2] = X;} 
-            else if (HueAngle >= 180 && HueAngle < 240)
-            {RGBx[0] = 0; RGBx[1] = X; RGBx[2] = C;}
-            else if (HueAngle >= 240 && HueAngle < 300)
-            {RGBx[0] = X; RGBx[1] = 0; RGBx[2] = C;}
-            else if (HueAngle >= 300 && HueAngle < 360)
-            {RGBx[0] = C; RGBx[1] = 0; RGBx[2] = X;}
-
-	        RGB[0] = (byte)(255 * (RGBx[0] + m));
-	        RGB[1] = (byte)(255 * (RGBx[1] + m));
-	        RGB[2] = (byte)(255 * (RGBx[2] + m));
+            // for current color, load first color
+            UpdateCurrentColor(colorVal[0]);
+          
         }
 
         public static ColorRGB HSL2RGB(double h, double sl, double l)
@@ -286,9 +222,8 @@ namespace SegyView
             double v;
             double r, g, b;
 
-            r = l;   // default to gray
-            g = l;
-            b = l;
+            r = l; g = l; b = l;
+
             v = (l <= 0.5) ? (l * (1.0 + sl)) : (l + sl - l * sl);
             if (v > 0)
             {
@@ -308,35 +243,17 @@ namespace SegyView
                 switch (sextant)
                 {
                     case 0:
-                        r = v;
-                        g = mid1;
-                        b = m;
-                        break;
+                        r = v; g = mid1; b = m; break;
                     case 1:
-                        r = mid2;
-                        g = v;
-                        b = m;
-                        break;
+                        r = mid2; g = v; b = m; break;
                     case 2:
-                        r = m;
-                        g = v;
-                        b = mid1;
-                        break;
+                        r = m; g = v; b = mid1; break;
                     case 3:
-                        r = m;
-                        g = mid2;
-                        b = v;
-                        break;
+                        r = m; g = mid2; b = v; break;
                     case 4:
-                        r = mid1;
-                        g = m;
-                        b = v;
-                        break;
+                        r = mid1; g = m; b = v; break;
                     case 5:
-                        r = v;
-                        g = m;
-                        b = mid2;
-                        break;
+                        r = v; g = m; b = mid2; break;
                 }
             }
             ColorRGB rgb;
@@ -346,40 +263,21 @@ namespace SegyView
             return rgb;
         }
 
-        //public static void LoadSaturationValueFromHue(int h)
-        //{
-        //    Bitmap cpSV = new Bitmap(256, 256);
-        //    _picPickerHueLine.Left = (int)Math.Floor(((double)h / 360) * 256) + _panPickerHue.Parent.Left + _panPickerHue.Parent.Padding.Left;
-        //    _picPickerHueLine.Update();
-        //
-        //    for (int s=0; s<256; s++)
-        //        for (int v = 0; v<256; v++)
-        //        {
-        //            byte[] cRGB = new byte[3] { 0, 0, 0 };
-        //            ColorFromHSV(cRGB, h, (int)Math.Round((((double)s + 2) / 256) * 100), (int)Math.Round((((double)v + 2) / 256) * 100));
-        //            cpSV.SetPixel(s, v, Color.FromArgb(cRGB[0], cRGB[1], cRGB[2]));
-        //        }
-        //
-        //    cpSV.RotateFlip(RotateFlipType.RotateNoneFlipY);
-        //    _panPickerSV.BackgroundImage = cpSV;
-        //    _panPickerSV.Update();
-        //}
-
         public static void LoadSaturationValueFromHue(Color Hue)
         {
             Bitmap cpSV = new Bitmap(256, 256);
             Graphics g = Graphics.FromImage(cpSV);
 
-            //Bitmap tempHue = new Bitmap(_panPickerHue.BackgroundImage);
-            //int pointerindex = 0;
-            //for (int i = 0; i < 256; i++)
-            //{
-            //    if (tempHue.GetPixel(i, 0) == Hue)
-            //    { pointerindex = i; break; }
-            //}
-            //
-            //_picPickerHueLine.Left = pointerindex + _panPickerHue.Parent.Left + _panPickerHue.Parent.Padding.Left;
-            //_picPickerHueLine.Update();
+            Bitmap tempHue = new Bitmap(_panPickerHue.BackgroundImage);
+            int pointerindex = 0;
+            for (int i = 0; i < 256; i++)
+            {
+                if (tempHue.GetPixel(0, i) == Hue)
+                { pointerindex = i; break; }
+            }
+
+            _picPickerHueLine.Top = pointerindex + _panPickerHue.Parent.Top + _panPickerHue.Parent.Padding.Top - (_picPickerHueLine.Height / 2) + 1;
+            _picPickerHueLine.Update();
 
             // create vertical guide gradient at leftmost and rightmost column of saturation-value map
             // create gradient at saturation = 0, value = 0-100%
@@ -400,6 +298,153 @@ namespace SegyView
             _panPickerSV.Update();
             g.Dispose();
             lgb.Dispose();
+        }
+
+        public static void UpdateSelectedColor(Point pointer)
+        {
+            Bitmap temp = new Bitmap(_panPickerSV.Image);
+            Point mouse = _panPickerSV.PointToClient(pointer);
+            if (mouse.X < 0) mouse.X = 0;
+            if (mouse.Y < 0) mouse.Y = 0;
+            if (mouse.X > 255) mouse.X = 255;
+            if (mouse.Y > 255) mouse.Y = 255;
+
+            Color tmpclr = temp.GetPixel(mouse.X, mouse.Y);
+            _picNewClr.BackColor = tmpclr;
+
+            // RGB info
+            _dgvColorPick[2, 0].Value = tmpclr.R.ToString();
+            _dgvColorPick[2, 1].Value = tmpclr.G.ToString();
+            _dgvColorPick[2, 2].Value = tmpclr.B.ToString();
+            // HSV info
+            _dgvColorPick[2, 3].Value = Math.Round(tmpclr.GetHue()).ToString();
+            _dgvColorPick[2, 4].Value = Math.Round(tmpclr.GetSaturation() * 100).ToString();
+            _dgvColorPick[2, 5].Value = Math.Round(tmpclr.GetBrightness() * 100).ToString();
+
+            PickerBox_Move(mouse);
+            temp.Dispose();
+        }
+
+        public static void UpdateCurrentColor(Color newColor)
+        {
+            _picCurClr.BackColor = newColor;
+
+            // RGB info
+            _dgvColorPick[1, 0].Value = newColor.R.ToString();
+            _dgvColorPick[1, 1].Value = newColor.G.ToString();
+            _dgvColorPick[1, 2].Value = newColor.B.ToString();
+            // HSV info
+            _dgvColorPick[1, 3].Value = Math.Round(newColor.GetHue()).ToString();
+            _dgvColorPick[1, 4].Value = Math.Round(newColor.GetSaturation() * 100).ToString();
+            _dgvColorPick[1, 5].Value = Math.Round(newColor.GetBrightness() * 100).ToString();
+  
+        }
+
+        public static void UpdateColorTableData(Color newColor, int index)
+        {
+            // RGB info
+            _dgvCMap[2, index].Value = newColor.R.ToString();
+            _dgvCMap[3, index].Value = newColor.G.ToString();
+            _dgvCMap[4, index].Value = newColor.B.ToString();
+            // HSV info
+            _dgvCMap[5, index].Value = Math.Round(newColor.GetHue()).ToString();
+            _dgvCMap[6, index].Value = Math.Round(newColor.GetSaturation() * 100).ToString();
+            _dgvCMap[7, index].Value = Math.Round(newColor.GetBrightness() * 100).ToString();
+            // RGB color cell style
+            for (int j = 2; j <= 7; j++)
+            {
+                _dgvCMap[j, index].Style.BackColor = newColor;
+
+                var gB = (int)Math.Round((double)newColor.GetBrightness() * 100);
+                if (gB < 50)
+                { _dgvCMap[j, index].Style.ForeColor = Color.White; }
+                else
+                { _dgvCMap[j, index].Style.ForeColor = Color.Black; }
+            }
+
+            butCScale[index].BackColor = newColor; 
+        }
+
+        public static void UpdateCustomColormap(Color newColor, int idxMarker)
+        {
+            Graphics g = Graphics.FromImage(tmpEdit);
+
+            // for leftmost color marker
+            if (idxMarker == 0)
+            {
+                //Color newColor = butCScale[idxSelMarker].BackColor;
+                int newIndex = Convert.ToInt32(_dgvCMap[1, idxMarker].Value);
+                Color nextColor = butCScale[idxMarker + 1].BackColor;
+                int nextIndex = Convert.ToInt32(_dgvCMap[1, idxMarker + 1].Value);
+
+                // if bottom limit is > 0, assign bottom color to all index below it
+                if (newIndex > 0)
+                {
+                    for (int i = 0; i < newIndex; i++)
+                    { tempCMap[i, 0] = newColor.R; tempCMap[i, 1] = newColor.G; tempCMap[i, 2] = newColor.B; }
+                }
+
+                LinearGradientBrush lgb = new LinearGradientBrush(new Point(newIndex, 0), new Point(nextIndex, 0), newColor, nextColor);
+                g.DrawLine(new Pen(lgb), new Point(newIndex, 0), new Point(nextIndex, 0));
+
+                for (int i = newIndex + 1; i < nextIndex; i++)
+                { tempCMap[i, 0] = tmpEdit.GetPixel(i, 0).R; tempCMap[i, 1] = tmpEdit.GetPixel(i, 0).G; tempCMap[i, 2] = tmpEdit.GetPixel(i, 0).B; }
+
+                tempCMap[newIndex, 0] = newColor.R; tempCMap[newIndex, 1] = newColor.G; tempCMap[newIndex, 2] = newColor.B;
+            }
+
+            // for rightmost color marker
+            if (idxMarker == picCScale.Count - 1)
+            {
+                //Color newColor = butCScale[idxSelMarker].BackColor;
+                int newIndex = Convert.ToInt32(_dgvCMap[1, idxMarker].Value);
+                Color prevColor = butCScale[idxMarker - 1].BackColor;
+                int prevIndex = Convert.ToInt32(_dgvCMap[1, idxMarker - 1].Value);
+
+                // if upper limit is < 255, assign upper color to all index after it
+                if (newIndex < 255)
+                {
+                    for (int i = newIndex + 1; i <= 255; i++)
+                    { tempCMap[i, 0] = newColor.R; tempCMap[i, 1] = newColor.G; tempCMap[i, 2] = newColor.B; }
+                }
+
+                LinearGradientBrush lgb = new LinearGradientBrush(new Point(prevIndex, 0), new Point(newIndex, 0), prevColor, newColor);
+                g.DrawLine(new Pen(lgb), new Point(prevIndex, 0), new Point(newIndex, 0));
+
+                for (int i = prevIndex + 1; i < newIndex; i++)
+                { tempCMap[i, 0] = tmpEdit.GetPixel(i, 0).R; tempCMap[i, 1] = tmpEdit.GetPixel(i, 0).G; tempCMap[i, 2] = tmpEdit.GetPixel(i, 0).B; }
+
+                tempCMap[newIndex, 0] = newColor.R; tempCMap[newIndex, 1] = newColor.G; tempCMap[newIndex, 2] = newColor.B;
+            }
+
+            // for any color marker
+            if (idxMarker != 0 & idxMarker != picCScale.Count - 1)
+            {
+                //Color newColor = butCScale[idxSelMarker].BackColor;
+                int newIndex = Convert.ToInt32(_dgvCMap[1, idxMarker].Value);
+                Color nextColor = butCScale[idxMarker + 1].BackColor;
+                int nextIndex = Convert.ToInt32(_dgvCMap[1, idxMarker + 1].Value);
+                Color prevColor = butCScale[idxMarker - 1].BackColor;
+                int prevIndex = Convert.ToInt32(_dgvCMap[1, idxMarker - 1].Value);
+
+                // for right-side of color marker
+                LinearGradientBrush lgb = new LinearGradientBrush(new Point(newIndex, 0), new Point(nextIndex, 0), newColor, nextColor);
+                g.DrawLine(new Pen(lgb), new Point(newIndex, 0), new Point(nextIndex, 0));
+
+                for (int i = newIndex + 1; i < nextIndex; i++)
+                { tempCMap[i, 0] = tmpEdit.GetPixel(i, 0).R; tempCMap[i, 1] = tmpEdit.GetPixel(i, 0).G; tempCMap[i, 2] = tmpEdit.GetPixel(i, 0).B; }
+
+                // for left-side of color marker
+                lgb = new LinearGradientBrush(new Point(prevIndex, 0), new Point(newIndex, 0), prevColor, newColor);
+                g.DrawLine(new Pen(lgb), new Point(prevIndex, 0), new Point(newIndex, 0));
+
+                for (int i = prevIndex + 1; i < newIndex; i++)
+                { tempCMap[i, 0] = tmpEdit.GetPixel(i, 0).R; tempCMap[i, 1] = tmpEdit.GetPixel(i, 0).G; tempCMap[i, 2] = tmpEdit.GetPixel(i, 0).B; }
+
+                tempCMap[newIndex, 0] = newColor.R; tempCMap[newIndex, 1] = newColor.G; tempCMap[newIndex, 2] = newColor.B;
+            }
+
+            g.Dispose();
         }
 
         public static void ColorMarker_MouseDown(object sender, MouseEventArgs e)
@@ -498,86 +543,10 @@ namespace SegyView
 
                 _dgvCMap[1, idxSelMarker].Value = byteval;
 
-                // built-in color calculation here
-                Graphics g = Graphics.FromImage(tmpEdit);
-
-                // for leftmost color marker
-                if (idxSelMarker == 0)
-                {
-                    Color newColor = butCScale[idxSelMarker].BackColor;
-                    int newIndex = Convert.ToInt32(_dgvCMap[1, idxSelMarker].Value);
-                    Color nextColor = butCScale[idxSelMarker + 1].BackColor;
-                    int nextIndex = Convert.ToInt32(_dgvCMap[1, idxSelMarker + 1].Value);
-
-                    // if bottom limit is > 0, assign bottom color to all index below it
-                    if (newIndex > 0)
-                    {
-                        for (int i = 0; i < newIndex; i++)
-                        { tempCMap[i, 0] = newColor.R; tempCMap[i, 1] = newColor.G; tempCMap[i, 2] = newColor.B; }
-                    }
-
-                    LinearGradientBrush lgb = new LinearGradientBrush(new Point(newIndex, 0), new Point(nextIndex, 0), newColor, nextColor);
-                    g.DrawLine(new Pen(lgb),new Point(newIndex, 0),new Point(nextIndex, 0));
-
-                    for (int i = newIndex+1; i < nextIndex; i++)
-                    { tempCMap[i, 0] = tmpEdit.GetPixel(i, 0).R; tempCMap[i, 1] = tmpEdit.GetPixel(i, 0).G; tempCMap[i, 2] = tmpEdit.GetPixel(i, 0).B; }
-
-                    tempCMap[newIndex, 0] = newColor.R; tempCMap[newIndex, 1] = newColor.G; tempCMap[newIndex, 2] = newColor.B;
-                }
-
-                // for rightmost color marker
-                if (idxSelMarker == picCScale.Count - 1)
-                {
-                    Color newColor = butCScale[idxSelMarker].BackColor;
-                    int newIndex = Convert.ToInt32(_dgvCMap[1, idxSelMarker].Value);
-                    Color prevColor = butCScale[idxSelMarker - 1].BackColor;
-                    int prevIndex = Convert.ToInt32(_dgvCMap[1, idxSelMarker - 1].Value);
-                                
-                    // if upper limit is < 255, assign upper color to all index after it
-                    if (newIndex < 255)
-                    {
-                        for (int i = newIndex + 1; i <= 255; i++)
-                        { tempCMap[i, 0] = newColor.R; tempCMap[i, 1] = newColor.G; tempCMap[i, 2] = newColor.B; }
-                    }
-                
-                    LinearGradientBrush lgb = new LinearGradientBrush(new Point(prevIndex, 0), new Point(newIndex, 0), prevColor, newColor);
-                    g.DrawLine(new Pen(lgb), new Point(prevIndex, 0), new Point(newIndex, 0));
-                
-                    for (int i = prevIndex + 1; i < newIndex; i++)
-                    { tempCMap[i, 0] = tmpEdit.GetPixel(i, 0).R; tempCMap[i, 1] = tmpEdit.GetPixel(i, 0).G; tempCMap[i, 2] = tmpEdit.GetPixel(i, 0).B; }
-
-                    tempCMap[newIndex, 0] = newColor.R; tempCMap[newIndex, 1] = newColor.G; tempCMap[newIndex, 2] = newColor.B;
-                }
-
-                // for any color marker
-                if (idxSelMarker != 0 & idxSelMarker != picCScale.Count - 1)
-                {
-                    Color newColor = butCScale[idxSelMarker].BackColor;
-                    int newIndex = Convert.ToInt32(_dgvCMap[1, idxSelMarker].Value);
-                    Color nextColor = butCScale[idxSelMarker + 1].BackColor;
-                    int nextIndex = Convert.ToInt32(_dgvCMap[1, idxSelMarker + 1].Value);
-                    Color prevColor = butCScale[idxSelMarker - 1].BackColor;
-                    int prevIndex = Convert.ToInt32(_dgvCMap[1, idxSelMarker - 1].Value);
-
-                    // for right-side of color marker
-                    LinearGradientBrush lgb = new LinearGradientBrush(new Point(newIndex, 0), new Point(nextIndex, 0), newColor, nextColor);
-                    g.DrawLine(new Pen(lgb), new Point(newIndex, 0), new Point(nextIndex, 0));
-
-                    for (int i = newIndex + 1; i < nextIndex; i++)
-                    { tempCMap[i, 0] = tmpEdit.GetPixel(i, 0).R; tempCMap[i, 1] = tmpEdit.GetPixel(i, 0).G; tempCMap[i, 2] = tmpEdit.GetPixel(i, 0).B; }
-
-                    // for left-side of color marker
-                    lgb = new LinearGradientBrush(new Point(prevIndex, 0), new Point(newIndex, 0), prevColor, newColor);
-                    g.DrawLine(new Pen(lgb), new Point(prevIndex, 0), new Point(newIndex, 0));
-
-                    for (int i = prevIndex + 1; i < newIndex; i++)
-                    { tempCMap[i, 0] = tmpEdit.GetPixel(i, 0).R; tempCMap[i, 1] = tmpEdit.GetPixel(i, 0).G; tempCMap[i, 2] = tmpEdit.GetPixel(i, 0).B; }
-
-                    tempCMap[newIndex, 0] = newColor.R; tempCMap[newIndex, 1] = newColor.G; tempCMap[newIndex, 2] = newColor.B;
-                }
-
+                // update color here
+                UpdateCustomColormap(_dgvCMap[2, idxSelMarker].Style.BackColor, idxSelMarker);
                 UpdateBitmapColormap(tempCMap);
-                _picCMap.Update(); g.Dispose();
+                _picCMap.Update(); 
             }
                        
         }
