@@ -114,157 +114,188 @@ namespace Unplugged.Segy
 
         public int Wevel
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Swevel
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Sut
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Gut
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Sstat
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Gstat
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Tstat
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Laga
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Lagb
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Delrt
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Muts
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Mute
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Ns
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Dt
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Gain
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Igc
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Igi
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Corr
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Sfs
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Sfe
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Slen
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Styp
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Stas
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Stae
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Tatyp
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Afilf
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Afils
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Nofilf
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Nofils
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Lcf
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Hcf
         {
-            get { throw new System.NotImplementedException(); }
+            get;
+            set;
         }
 
         public int Lcs

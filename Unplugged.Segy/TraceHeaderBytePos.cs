@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Unplugged.Segy
+﻿namespace Unplugged.Segy
 {
     class TraceHeaderBytePos
     {
@@ -33,37 +28,37 @@ namespace Unplugged.Segy
         internal static int Gx = 80;
         internal static int Gy = 84;
         internal static int Counit = 88;
-        internal static int Wevel;
-        internal static int Swevel;
-        internal static int Sut;
-        internal static int Gut;
-        internal static int Sstat;
-        internal static int Gstat;
-        internal static int Tstat;
-        internal static int Laga;
-        internal static int Lagb;
-        internal static int Delrt;
-        internal static int Muts;
-        internal static int Mute;
-        internal static int Ns;
-        internal static int Dt;
-        internal static int Gain;
-        internal static int Igc;
-        internal static int Igi;
-        internal static int Corr;
-        internal static int Sfs;
-        internal static int Sfe;
-        internal static int Slen;
-        internal static int Styp;
-        internal static int Stas;
-        internal static int Stae;
-        internal static int Tatyp;
-        internal static int Afilf;
-        internal static int Afils;
-        internal static int Nofilf;
-        internal static int Nofils;
-        internal static int Lcf;
-        internal static int Hcf;
+        internal static int Wevel = 90;
+        internal static int Swevel = 92;
+        internal static int Sut = 94;
+        internal static int Gut = 96;
+        internal static int Sstat = 98;
+        internal static int Gstat = 100;
+        internal static int Tstat = 102;
+        internal static int Laga = 104;
+        internal static int Lagb = 106;
+        internal static int Delrt = 108;
+        internal static int Muts = 110;
+        internal static int Mute = 112;
+        internal static int Ns = 114;
+        internal static int Dt = 116;
+        internal static int Gain = 118;
+        internal static int Igc = 120;
+        internal static int Igi = 122;
+        internal static int Corr = 124;
+        internal static int Sfs = 126;
+        internal static int Sfe = 128;
+        internal static int Slen = 130;
+        internal static int Styp = 132;
+        internal static int Stas = 134;
+        internal static int Stae = 136;
+        internal static int Tatyp = 138;
+        internal static int Afilf = 140;
+        internal static int Afils = 142;
+        internal static int Nofilf = 144;
+        internal static int Nofils = 146;
+        internal static int Lcf = 148;
+        internal static int Hcf = 150;
 
     }
 }

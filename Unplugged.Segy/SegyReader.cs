@@ -238,6 +238,37 @@ namespace Unplugged.Segy
             traceHeader.Gx = ToInt32(headerBytes, TraceHeaderBytePos.Gx, isLittleEndian);
             traceHeader.Gy = ToInt32(headerBytes, TraceHeaderBytePos.Gy, isLittleEndian);
             traceHeader.Counit = ToInt16(headerBytes, TraceHeaderBytePos.Counit, isLittleEndian);
+            traceHeader.Wevel = ToInt16(headerBytes, TraceHeaderBytePos.Wevel, isLittleEndian);
+            traceHeader.Swevel = ToInt16(headerBytes, TraceHeaderBytePos.Swevel, isLittleEndian);
+            traceHeader.Sut = ToInt16(headerBytes, TraceHeaderBytePos.Sut, isLittleEndian);
+            traceHeader.Gut = ToInt16(headerBytes, TraceHeaderBytePos.Gut, isLittleEndian);
+            traceHeader.Sstat = ToInt16(headerBytes, TraceHeaderBytePos.Sstat, isLittleEndian);
+            traceHeader.Gstat = ToInt16(headerBytes, TraceHeaderBytePos.Gstat, isLittleEndian);
+            traceHeader.Tstat = ToInt16(headerBytes, TraceHeaderBytePos.Tstat, isLittleEndian);
+            traceHeader.Laga = ToInt16(headerBytes, TraceHeaderBytePos.Laga, isLittleEndian);
+            traceHeader.Lagb = ToInt16(headerBytes, TraceHeaderBytePos.Lagb, isLittleEndian);
+            traceHeader.Delrt = ToInt16(headerBytes, TraceHeaderBytePos.Delrt, isLittleEndian);
+            traceHeader.Muts = ToInt16(headerBytes, TraceHeaderBytePos.Muts, isLittleEndian);
+            traceHeader.Mute = ToInt16(headerBytes, TraceHeaderBytePos.Mute, isLittleEndian);
+            traceHeader.Ns = ToInt16(headerBytes, TraceHeaderBytePos.Ns, isLittleEndian);
+            traceHeader.Dt = ToInt16(headerBytes, TraceHeaderBytePos.Dt, isLittleEndian);
+            traceHeader.Gain = ToInt16(headerBytes, TraceHeaderBytePos.Gain, isLittleEndian);
+            traceHeader.Igc = ToInt16(headerBytes, TraceHeaderBytePos.Igc, isLittleEndian);
+            traceHeader.Igi = ToInt16(headerBytes, TraceHeaderBytePos.Igi, isLittleEndian);
+            traceHeader.Corr = ToInt16(headerBytes, TraceHeaderBytePos.Corr, isLittleEndian);
+            traceHeader.Sfs = ToInt16(headerBytes, TraceHeaderBytePos.Sfs, isLittleEndian);
+            traceHeader.Sfe = ToInt16(headerBytes, TraceHeaderBytePos.Sfe, isLittleEndian);
+            traceHeader.Slen = ToInt16(headerBytes, TraceHeaderBytePos.Slen, isLittleEndian);
+            traceHeader.Styp = ToInt16(headerBytes, TraceHeaderBytePos.Styp, isLittleEndian);
+            traceHeader.Stas = ToInt16(headerBytes, TraceHeaderBytePos.Stas, isLittleEndian);
+            traceHeader.Stae = ToInt16(headerBytes, TraceHeaderBytePos.Stae, isLittleEndian);
+            traceHeader.Tatyp = ToInt16(headerBytes, TraceHeaderBytePos.Tatyp, isLittleEndian);
+            traceHeader.Afilf = ToInt16(headerBytes, TraceHeaderBytePos.Afilf, isLittleEndian);
+            traceHeader.Afils = ToInt16(headerBytes, TraceHeaderBytePos.Afils, isLittleEndian);
+            traceHeader.Nofilf = ToInt16(headerBytes, TraceHeaderBytePos.Nofilf, isLittleEndian);
+            traceHeader.Nofils = ToInt16(headerBytes, TraceHeaderBytePos.Nofils, isLittleEndian);
+            traceHeader.Lcf = ToInt16(headerBytes, TraceHeaderBytePos.Lcf, isLittleEndian);
+            traceHeader.Hcf = ToInt16(headerBytes, TraceHeaderBytePos.Hcf, isLittleEndian);
 
             return traceHeader;
         }
