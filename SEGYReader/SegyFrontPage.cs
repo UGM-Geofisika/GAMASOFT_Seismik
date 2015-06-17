@@ -31,8 +31,8 @@ namespace SegyView
             GamaFileViewer.Setup(treeView1);
             GamaSeismicColor.Setup(picBox1, picColorScale);
             GamaColormapEditor.Setup(FrmClrEdit, FrmClrEdit.picColorScale, FrmClrEdit.dgvColormap,
-                                     FrmClrEdit.panPickerHue, FrmClrEdit.panPickerSV, FrmClrEdit.picPickerHueLine, 
-                                     FrmClrEdit.comboPreset);
+                                     FrmClrEdit.panPickerHue, FrmClrEdit.panPickerSV, FrmClrEdit.picPickerHueLine,
+                                     FrmClrEdit.comboPreset, FrmClrEdit.dgvPickColor, FrmClrEdit.picCurClr);
             picBox1.MouseWheel += picBox1_MouseWheel;
             treeView1.NodeMouseClick += TreeView_SelectItem;
 
