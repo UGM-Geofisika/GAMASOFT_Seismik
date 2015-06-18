@@ -13,7 +13,7 @@ namespace SegyView
     {
         // list for color values
         private static List<Panel> editCScale = new List<Panel>();
-        private static List<Panel> butCScale = new List<Panel>();
+        public static List<ColorMarker> butCScale = new List<ColorMarker>();
         private static List<PictureBox> picCScale = new List<PictureBox>();
         public static List<Panel> panboxPicker = new List<Panel>();
 
@@ -35,6 +35,7 @@ namespace SegyView
         public static ToolStripComboBox _comboPreset;
         public static PictureBox _picCurClr;
         public static PictureBox _picNewClr;
+        public static Panel _panMarkerIsSelected;
 
         public struct ColorRGB
         {
@@ -60,7 +61,8 @@ namespace SegyView
 
         public static void Setup(Form frmCMap, PictureBox picColorScale, DataGridView dgvCMap, Panel panPickerHue, 
                                  PictureBox panPickerSV, PictureBox picPickerHueLine, ToolStripComboBox comboPreset,
-                                 DataGridView dgvColorPick, PictureBox picCurClr, PictureBox picNewClr)
+                                 DataGridView dgvColorPick, PictureBox picCurClr, PictureBox picNewClr,
+                                 Panel panMarkerIsSelected)
         {
             _frmCMap = frmCMap;
             _picCMap = picColorScale;
@@ -72,6 +74,7 @@ namespace SegyView
             _dgvColorPick = dgvColorPick;
             _picCurClr = picCurClr;
             _picNewClr = picNewClr;
+            _panMarkerIsSelected = panMarkerIsSelected;
         }
 
         public static void InitializeColormapEditor()
@@ -173,7 +176,7 @@ namespace SegyView
             for (int i = 0; i < colorVal.Length; i++)
             { 
                 _dgvCMap.Rows.Add();
-                butCScale.Add(new Panel());
+                butCScale.Add(new ColorMarker());
                 picCScale.Add(new PictureBox());
             }
 
@@ -186,6 +189,7 @@ namespace SegyView
                 UpdateColorTableData(colorVal[i], i);
 
                 // for color marker button
+                butCScale[i].ID = i;
                 butCScale[i].Parent = (_picCMap.Parent).Parent;
                 butCScale[i].Width = 10;
                 butCScale[i].Height = 10;
@@ -193,8 +197,7 @@ namespace SegyView
                 butCScale[i].BackColor = colorVal[i];
                 butCScale[i].Left = (colorByte[i] * 2) + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left - 4;
                 butCScale[i].Top = _picCMap.Parent.Top + _picCMap.Parent.Height + 3;
-                butCScale[i].Show();
-
+                
                 // adding event handler (this takes time)
                 butCScale[i].MouseDown += ColorMarker_MouseDown;
                 butCScale[i].MouseMove += ColorMarker_MouseMove;
@@ -208,13 +211,156 @@ namespace SegyView
                 picCScale[i].BackColor = Color.Black;
                 picCScale[i].Left = (colorByte[i] * 2) + _picCMap.Parent.Left + _picCMap.Parent.Padding.Left;
                 picCScale[i].Top = _picCMap.Parent.Top - 5;
-                picCScale[i].Show();
 
+                picCScale[i].BringToFront(); picCScale[i].Show();
+                butCScale[i].BringToFront(); butCScale[i].Show();
             }
 
-            // for current color, load first color
-            UpdateCurrentColor(colorVal[0]);
+            _picCMap.Parent.BringToFront();
+            _dgvColorPick.Parent.Hide();
+  
+            // for current color, load first color or selected color
+            if (idxSelMarker < butCScale.Count)
+            {
+                UpdateCurrentColor(colorVal[idxSelMarker]);
+                _panMarkerIsSelected.Left = butCScale[idxSelMarker].Left;
+            }
+            else
+            {
+                UpdateCurrentColor(colorVal[0]);
+                _panMarkerIsSelected.Left = butCScale[0].Left;
+            }
           
+        }
+
+        public static void AddColorMarker(Color newColor, int newIndex)
+        {
+            // abort if newIndex already exist
+            for (int i = 0; i < _dgvCMap.Rows.Count; i++)
+            {
+                if (Convert.ToInt32(_dgvCMap[1, i].Value) == newIndex) return; 
+            }
+
+            // define new Color[] and int[]
+            Color[] tempColor = new Color[_dgvCMap.Rows.Count + 1];
+            int[] tempIndex = new int[_dgvCMap.Rows.Count + 1];
+            int newColorIdx = 0;
+
+            // check if newIndex is the leftmost marker
+            if (newIndex < Convert.ToInt32(_dgvCMap[1, 0].Value))
+            { newColorIdx = 0; }
+
+            // check if newIndex is the leftmost marker
+            if (newIndex > Convert.ToInt32(_dgvCMap[1, _dgvCMap.Rows.Count-1].Value))
+            { newColorIdx = _dgvCMap.Rows.Count; }
+
+            // check if newIndex is between any two markers
+            if (newIndex > Convert.ToInt32(_dgvCMap[1, 0].Value) & newIndex < Convert.ToInt32(_dgvCMap[1, _dgvCMap.Rows.Count-1].Value))
+            {
+                for (int i = 0; i < _dgvCMap.Rows.Count - 1; i++)
+                {
+                    if (newIndex > Convert.ToInt32(_dgvCMap[1, i].Value) & newIndex < Convert.ToInt32(_dgvCMap[1, i + 1].Value))
+                    { newColorIdx = i + 1; }
+                }
+            }
+
+            // create new color and index array
+            if (newColorIdx == 0)
+            {
+                tempColor[0] = newColor; 
+                tempIndex[0] = newIndex;
+
+                for (int i = 1; i < tempColor.Length; i++)
+                {
+                    tempColor[i] = _dgvCMap[2, i - 1].Style.BackColor;
+                    tempIndex[i] = Convert.ToInt32(_dgvCMap[1, i - 1].Value);
+                }
+            }
+
+            if (newColorIdx == tempColor.Length - 1)
+            {
+                for (int i = 0; i < tempColor.Length-1; i++)
+                {
+                    tempColor[i] = _dgvCMap[2, i].Style.BackColor;
+                    tempIndex[i] = Convert.ToInt32(_dgvCMap[1, i].Value);
+                }
+
+                tempColor[tempColor.Length - 1] = newColor; 
+                tempIndex[tempColor.Length - 1] = newIndex;
+            }
+
+            if (newColorIdx != 0 & newColorIdx != tempColor.Length - 1)
+            {
+                for (int i = 0; i < newColorIdx; i++)
+                {
+                    tempColor[i] = _dgvCMap[2, i].Style.BackColor;
+                    tempIndex[i] = Convert.ToInt32(_dgvCMap[1, i].Value);
+                }
+
+                tempColor[newColorIdx] = newColor;
+                tempIndex[newColorIdx] = newIndex;
+
+                for (int i = newColorIdx + 1; i < tempColor.Length; i++)
+                {
+                    tempColor[i] = _dgvCMap[2, i - 1].Style.BackColor;
+                    tempIndex[i] = Convert.ToInt32(_dgvCMap[1, i - 1].Value);
+                }
+            }
+
+            GamaSeismicColor.CreateColormap(editCMap, tempColor, tempIndex);
+            LoadColormapTable(tempColor, tempIndex);
+            UpdateBitmapColormap(editCMap);
+            _dgvColorPick.Parent.Hide();
+        }
+
+        public static void DeleteColorMarker(int markerIndex)
+        {
+            if (butCScale.Count <= 2) return;
+
+            // define new Color[] and int[]
+            Color[] tempColor = new Color[_dgvCMap.Rows.Count - 1];
+            int[] tempIndex = new int[_dgvCMap.Rows.Count - 1];
+
+            // if marker to be deleted is the leftmost marker
+            if (markerIndex == 0)
+            {
+                for (int i = 1; i < _dgvCMap.Rows.Count; i++)
+                {
+                    tempColor[i-1] = _dgvCMap[2, i].Style.BackColor;
+                    tempIndex[i-1] = Convert.ToInt32(_dgvCMap[1, i].Value);
+                }
+            }
+
+            // if marker to be deleted is the rightmost marker
+            if (markerIndex == _dgvCMap .Rows.Count - 1)
+            {
+                for (int i = 0; i < _dgvCMap.Rows.Count-1; i++)
+                {
+                    tempColor[i] = _dgvCMap[2, i].Style.BackColor;
+                    tempIndex[i] = Convert.ToInt32(_dgvCMap[1, i].Value);
+                }
+            }
+
+            // if marker to be deleted is any marker in the middle
+            if (markerIndex != 0 & markerIndex != _dgvCMap.Rows.Count - 1)
+            {
+                for (int i = 0; i < markerIndex; i++)
+                {
+                    tempColor[i] = _dgvCMap[2, i].Style.BackColor;
+                    tempIndex[i] = Convert.ToInt32(_dgvCMap[1, i].Value);
+                }
+
+                for (int i = markerIndex + 1; i < _dgvCMap.Rows.Count; i++)
+                {
+                    tempColor[i - 1] = _dgvCMap[2, i].Style.BackColor;
+                    tempIndex[i - 1] = Convert.ToInt32(_dgvCMap[1, i].Value);
+                }
+            }
+
+            GamaSeismicColor.CreateColormap(editCMap, tempColor, tempIndex);
+            LoadColormapTable(tempColor, tempIndex);
+            UpdateBitmapColormap(editCMap);
+            _dgvColorPick.Parent.Hide();
         }
 
         public static ColorRGB HSL2RGB(double h, double sl, double l)
@@ -354,12 +500,20 @@ namespace SegyView
             for (int j = 2; j <= 7; j++)
             {
                 _dgvCMap[j, index].Style.BackColor = newColor;
+                _dgvCMap[j, index].Style.SelectionBackColor = newColor;
 
                 var gB = (int)Math.Round((double)newColor.GetBrightness() * 100);
-                if (gB < 50)
-                { _dgvCMap[j, index].Style.ForeColor = Color.White; }
+                var gH = (int)Math.Round((double)newColor.GetHue());
+                if (gB < 50 | gH > 212)
+                {
+                    _dgvCMap[j, index].Style.ForeColor = Color.White;
+                    _dgvCMap[j, index].Style.SelectionForeColor = Color.White;
+                }
                 else
-                { _dgvCMap[j, index].Style.ForeColor = Color.Black; }
+                {
+                    _dgvCMap[j, index].Style.ForeColor = Color.Black;
+                    _dgvCMap[j, index].Style.SelectionForeColor = Color.Black;
+                }
             }
 
             butCScale[index].BackColor = newColor; 
@@ -447,22 +601,17 @@ namespace SegyView
             g.Dispose();
         }
 
+        #region "Color Marker Events"
         public static void ColorMarker_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left) return;
 
             idxSelMarker = 0; fMarkerSelected = true;
-      
-            Panel but = (Panel)sender;
-            // identify which button acts as the sender
-            for (int i = 0; i < butCScale.Count; i++)
-            {
-                if (but.BackColor == butCScale[i].BackColor)
-                {
-                    idxSelMarker = i; break;
-                }
-            }
 
+            ColorMarker but = (ColorMarker)sender;
+            // identify which button acts as the sender
+            idxSelMarker = but.ID;
+            _panMarkerIsSelected.Left = but.Left;
             selectMarkerOffset = butCScale[idxSelMarker].PointToClient(Control.MousePosition);
 
             // select row in color table
@@ -476,8 +625,6 @@ namespace SegyView
             _dgvColorPick[1, 3].Value = Math.Round(but.BackColor.GetHue());
             _dgvColorPick[1, 4].Value = Math.Round(but.BackColor.GetSaturation() * 100);
             _dgvColorPick[1, 5].Value = Math.Round(but.BackColor.GetBrightness() * 100); 
-
-            //LoadSaturationValueFromHue(but.BackColor);
         }
 
         public static void ColorMarker_MouseMove(object sender, MouseEventArgs e)
@@ -540,7 +687,7 @@ namespace SegyView
 
                 picCScale[idxSelMarker].Left = newleft; picCScale[idxSelMarker].Update();
                 butCScale[idxSelMarker].Left = newleft - 4; butCScale[idxSelMarker].Update();
-
+                _panMarkerIsSelected.Left = butCScale[idxSelMarker].Left;
                 _dgvCMap[1, idxSelMarker].Value = byteval;
 
                 // update color here
@@ -556,7 +703,12 @@ namespace SegyView
 
         public static void ColorMarker_DoubleClick(object sender, EventArgs e)
         {
-            _panPickerSV.Parent.Parent.Parent.Parent.Show();
+            if (((MouseEventArgs)e).Button == MouseButtons.Left)
+            { _panPickerSV.Parent.Parent.Parent.Parent.Show(); }
+
+            if (((MouseEventArgs)e).Button == MouseButtons.Right)
+            { DeleteColorMarker(((ColorMarker)sender).ID); } 
         }
+        #endregion
     }
 }

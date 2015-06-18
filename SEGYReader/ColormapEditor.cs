@@ -29,6 +29,12 @@ namespace SegyView
         private void ColormapEditor_Load(object sender, EventArgs e)
         {
             GamaColormapEditor.InitializeColormapEditor();
+
+            panAddMarkerIndicator.SendToBack();
+            pictureBox1.SendToBack();
+            pictureBox2.SendToBack();
+            pictureBox3.SendToBack();
+            pictureBox4.SendToBack();
         }
 
         private void comboPreset_SelectedIndexChanged(object sender, EventArgs e)
@@ -97,6 +103,8 @@ namespace SegyView
             if (mouseY > 255) mouseY = 255;
 
             GamaColormapEditor.LoadSaturationValueFromHue(hueImage.GetPixel(0, mouseY));
+            GamaColormapEditor.UpdateSelectedColor(panPickerSV.PointToScreen(new Point(GamaColormapEditor.panboxPicker[0].Left + 3, GamaColormapEditor.panboxPicker[1].Top + 3)));
+            picNewClr.Update(); dgvPickColor.Update();
             hueImage.Dispose();
         }
 
@@ -131,9 +139,9 @@ namespace SegyView
         private void panel6_VisibleChanged(object sender, EventArgs e)
         {
             if (panel6.Visible == true)
-            { panel7.Padding = new Padding(12, 0, 0, 12); }
+            { toolStripButton1.Enabled = false; }//panel7.Padding = new Padding(12, 0, 0, 12); }
             else
-            { panel7.Padding = new Padding(12, 0, 12, 12); }
+            { toolStripButton1.Enabled = true; } //panel7.Padding = new Padding(12, 0, 12, 12); }
         }
 
         private void panPickerSV_MouseMove(object sender, MouseEventArgs e)
@@ -162,6 +170,46 @@ namespace SegyView
             comboPreset.SelectedIndex = comboPreset.Items.Count - 1;
             picColorScale.Update(); 
             panel6.Hide();
+        }
+
+        
+        private void picColorScale_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (GamaColormapEditor.butCScale != null)
+            {
+                if (picColorScale.PointToClient(MousePosition).X % 2 == 0)
+                {
+                    pictureBox2.Left = picColorScale.PointToClient(MousePosition).X + picColorScale.Parent.Left + 1;
+                   
+                }
+                else
+                {
+                    pictureBox2.Left = picColorScale.PointToClient(MousePosition).X + picColorScale.Parent.Left;
+                }
+
+                panAddMarkerIndicator.Left = pictureBox2.Left - 4;
+                pictureBox2.Show();
+                panAddMarkerIndicator.Show();
+            }
+        }
+
+        private void picColorScale_MouseLeave(object sender, EventArgs e)
+        {
+            pictureBox2.Hide();
+            panAddMarkerIndicator.Hide();
+        }
+
+        private void picColorScale_DoubleClick(object sender, EventArgs e)
+        {
+            var ee = (MouseEventArgs)e;
+            Bitmap temp = new Bitmap(picColorScale.BackgroundImage);
+            if (ee.Button == MouseButtons.Left)
+            {
+                GamaColormapEditor.AddColorMarker(temp.GetPixel(picColorScale.PointToClient(MousePosition).X, 0),
+                                                                (pictureBox2.Left - picColorScale.Parent.Left - 1) / 2);
+            }
+
+            temp.Dispose();
         }
 
 

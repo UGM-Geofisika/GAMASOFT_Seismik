@@ -33,7 +33,7 @@ namespace SegyView
             GamaColormapEditor.Setup(FrmClrEdit, FrmClrEdit.picColorScale, FrmClrEdit.dgvColormap,
                                      FrmClrEdit.panPickerHue, FrmClrEdit.panPickerSV, FrmClrEdit.picPickerHueLine,
                                      FrmClrEdit.comboPreset, FrmClrEdit.dgvPickColor, FrmClrEdit.picCurClr,
-                                     FrmClrEdit.picNewClr);
+                                     FrmClrEdit.picNewClr, FrmClrEdit.panMarkerIsSelected);
             picBox1.MouseWheel += picBox1_MouseWheel;
             treeView1.NodeMouseClick += TreeView_SelectItem;
 
@@ -212,6 +212,7 @@ namespace SegyView
         private void picBox1_MouseLeave(object sender, EventArgs e)
         {
             GamaSeismicViewer.GetScrollbarValue();
+            GamaSeismicViewer.Image_HideValueOnHover();
         }
 
         private void picBox1_MouseMove(object sender, MouseEventArgs e)

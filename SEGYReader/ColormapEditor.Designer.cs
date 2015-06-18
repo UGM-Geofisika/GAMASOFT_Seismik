@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ColormapEditor));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panColormapCont = new System.Windows.Forms.Panel();
             this.picColorScale = new System.Windows.Forms.PictureBox();
             this.dgvColormap = new System.Windows.Forms.DataGridView();
@@ -44,6 +44,12 @@
             this.cS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cV = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.panMarkerIsSelected = new System.Windows.Forms.Panel();
+            this.panAddMarkerIndicator = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.comboPreset = new System.Windows.Forms.ToolStripComboBox();
@@ -72,6 +78,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.picColorScale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvColormap)).BeginInit();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -107,6 +117,9 @@
             this.picColorScale.Size = new System.Drawing.Size(512, 28);
             this.picColorScale.TabIndex = 1;
             this.picColorScale.TabStop = false;
+            this.picColorScale.DoubleClick += new System.EventHandler(this.picColorScale_DoubleClick);
+            this.picColorScale.MouseLeave += new System.EventHandler(this.picColorScale_MouseLeave);
+            this.picColorScale.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picColorScale_MouseMove);
             // 
             // dgvColormap
             // 
@@ -149,6 +162,7 @@
             // 
             this.Index.HeaderText = "Index";
             this.Index.Name = "Index";
+            this.Index.ReadOnly = true;
             this.Index.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.Index.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Index.Width = 50;
@@ -157,6 +171,7 @@
             // 
             this.cR.HeaderText = "Red";
             this.cR.Name = "cR";
+            this.cR.ReadOnly = true;
             this.cR.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.cR.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.cR.Width = 50;
@@ -165,6 +180,7 @@
             // 
             this.cG.HeaderText = "Green";
             this.cG.Name = "cG";
+            this.cG.ReadOnly = true;
             this.cG.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.cG.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.cG.Width = 50;
@@ -173,6 +189,7 @@
             // 
             this.cB.HeaderText = "Blue";
             this.cB.Name = "cB";
+            this.cB.ReadOnly = true;
             this.cB.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.cB.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.cB.Width = 50;
@@ -181,6 +198,7 @@
             // 
             this.cH.HeaderText = "Hue";
             this.cH.Name = "cH";
+            this.cH.ReadOnly = true;
             this.cH.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.cH.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.cH.Width = 50;
@@ -189,6 +207,7 @@
             // 
             this.cS.HeaderText = "Sat";
             this.cS.Name = "cS";
+            this.cS.ReadOnly = true;
             this.cS.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.cS.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.cS.Width = 50;
@@ -197,18 +216,81 @@
             // 
             this.cV.HeaderText = "Value";
             this.cV.Name = "cV";
+            this.cV.ReadOnly = true;
             this.cV.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.cV.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.cV.Width = 50;
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.panMarkerIsSelected);
+            this.panel3.Controls.Add(this.panAddMarkerIndicator);
             this.panel3.Controls.Add(this.panColormapCont);
+            this.panel3.Controls.Add(this.pictureBox1);
+            this.panel3.Controls.Add(this.pictureBox2);
+            this.panel3.Controls.Add(this.pictureBox3);
+            this.panel3.Controls.Add(this.pictureBox4);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 25);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(539, 70);
             this.panel3.TabIndex = 6;
+            // 
+            // panMarkerIsSelected
+            // 
+            this.panMarkerIsSelected.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panMarkerIsSelected.BackgroundImage")));
+            this.panMarkerIsSelected.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panMarkerIsSelected.Location = new System.Drawing.Point(214, 55);
+            this.panMarkerIsSelected.Name = "panMarkerIsSelected";
+            this.panMarkerIsSelected.Size = new System.Drawing.Size(10, 10);
+            this.panMarkerIsSelected.TabIndex = 11;
+            // 
+            // panAddMarkerIndicator
+            // 
+            this.panAddMarkerIndicator.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panAddMarkerIndicator.BackgroundImage")));
+            this.panAddMarkerIndicator.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panAddMarkerIndicator.Location = new System.Drawing.Point(214, 45);
+            this.panAddMarkerIndicator.Name = "panAddMarkerIndicator";
+            this.panAddMarkerIndicator.Size = new System.Drawing.Size(10, 10);
+            this.panAddMarkerIndicator.TabIndex = 6;
+            this.panAddMarkerIndicator.Visible = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
+            this.pictureBox1.Location = new System.Drawing.Point(267, 9);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(2, 36);
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
+            this.pictureBox2.Location = new System.Drawing.Point(275, 7);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(2, 38);
+            this.pictureBox2.TabIndex = 7;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Visible = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
+            this.pictureBox3.Location = new System.Drawing.Point(13, 9);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(2, 36);
+            this.pictureBox3.TabIndex = 8;
+            this.pictureBox3.TabStop = false;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
+            this.pictureBox4.Location = new System.Drawing.Point(523, 9);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(2, 36);
+            this.pictureBox4.TabIndex = 9;
+            this.pictureBox4.TabStop = false;
             // 
             // toolStrip1
             // 
@@ -254,11 +336,12 @@
             // 
             // toolStripButton1
             // 
+            this.toolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(114, 22);
-            this.toolStripButton1.Text = "Apply Colormap";
+            this.toolStripButton1.Size = new System.Drawing.Size(102, 22);
+            this.toolStripButton1.Text = "Use Colormap";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // panel4
@@ -441,8 +524,8 @@
             // 
             // dataGridViewTextBoxColumn1
             // 
-            dataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle28;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewTextBoxColumn1.Frozen = true;
             this.dataGridViewTextBoxColumn1.HeaderText = " ";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
@@ -453,8 +536,8 @@
             // 
             // dataGridViewTextBoxColumn2
             // 
-            dataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle29;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewTextBoxColumn2.HeaderText = "Current Color";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.ReadOnly = true;
@@ -464,8 +547,8 @@
             // 
             // dataGridViewTextBoxColumn3
             // 
-            dataGridViewCellStyle30.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle30;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridViewTextBoxColumn3.HeaderText = "New Color";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -505,6 +588,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.picColorScale)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvColormap)).EndInit();
             this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.panel4.ResumeLayout(false);
@@ -545,14 +632,6 @@
         public System.Windows.Forms.PictureBox panPickerSV;
         private System.Windows.Forms.Panel panel7;
         public System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Index;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cR;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cG;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cB;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cH;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cS;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cV;
         public System.Windows.Forms.DataGridView dgvPickColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
@@ -563,5 +642,19 @@
         public System.Windows.Forms.PictureBox picNewClr;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Panel panAddMarkerIndicator;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Index;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cR;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cG;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cB;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cH;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cS;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cV;
+        public System.Windows.Forms.Panel panMarkerIsSelected;
     }
 }

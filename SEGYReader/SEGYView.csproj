@@ -56,6 +56,9 @@
     <Compile Include="ColormapEditor.Designer.cs">
       <DependentUpon>ColormapEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ColorMarker.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GamaColormapEditor.cs" />
     <Compile Include="GamaFileViewer.cs" />
     <Compile Include="GamaSeismicColor.cs" />
