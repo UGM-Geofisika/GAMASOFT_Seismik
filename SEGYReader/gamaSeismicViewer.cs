@@ -359,6 +359,9 @@ namespace SegyView
 
         public static void Image_ValueOnHover(Point mouse)
         {
+            PicHoverX.Show(); LblHoverX.Show();
+            PicHoverY.Show(); LblHoverY.Show();
+
             // calculate pointer in resized image
             var scaled = default(Point);
             scaled.X = (ImgOriginalSize[0]*_picbox.PointToClient(mouse).X/_picbox.Width);
@@ -407,6 +410,15 @@ namespace SegyView
                     Math.Round((double) (_picbox.PointToClient(mouse).Y + _panelGap.Height + _picbox.Top - with4.Height/2));
             with4.Left = _panelY.Width - with4.Width - 10;
             with4.Invalidate();
+        }
+
+        public static void Image_HideValueOnHover()
+        {
+            PicHoverX.Hide(); LblHoverX.Hide();
+            PicHoverY.Hide(); LblHoverY.Hide();
+
+            PicHoverX.Update(); LblHoverX.Update();
+            PicHoverY.Update(); LblHoverY.Update();
         }
 
         public static void Image_Pan(Point mouse)
