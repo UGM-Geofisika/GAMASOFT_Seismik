@@ -835,8 +835,9 @@
             this.Controls.Add(this.toolStripContainer1);
             this.Controls.Add(this.menuStrip1);
             this.Name = "SegyFrontPage";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SEG-Y SegyView";
+            this.Text = "GAMASoft";
             this.Load += new System.EventHandler(this.SEGYDisplay_Load);
             this.Resize += new System.EventHandler(this.SEGYDisplay_Resize);
             this.menuStrip1.ResumeLayout(false);
