@@ -43,6 +43,9 @@ namespace SegyView
             // prepare colormap
             GamaSeismicColor.Colormap_BlackWhiteRed();
             GamaSeismicColor.UpdateColormapBitmap();
+
+            // set gain value to default
+            ImageWriter.SetGainRangeToDefault(true, true);
         }
 
         // File Open Handler
@@ -287,5 +290,9 @@ namespace SegyView
 
             cboxTraceSelection.DataSource = tracelist;
         }
+
+        
+
+
     }
 }

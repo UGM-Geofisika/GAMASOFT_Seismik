@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Diagnostics;
+using Unplugged.Segy;
 
 namespace SegyView
 {
@@ -137,5 +138,40 @@ namespace SegyView
         {
             FrmClrEdit.Show();
         }
+
+        #region trackLowerGain
+        private void trackLowerGain_MouseUp(object sender, MouseEventArgs e)
+        {
+            ImageWriter.gainRange[0] = ImageWriter.gainRange[0] + (float)trackLowerGain.Value / 10.0f;
+            trackLowerGain.Value = 0;
+
+            GamaSeismicViewer.ShowSeismic(SEGYView.SegyView.GetAllTracesBitmap(SEGYFile4Bmp));
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // set gain value to default
+            ImageWriter.SetGainRangeToDefault(true, false);
+            GamaSeismicViewer.ShowSeismic(SEGYView.SegyView.GetAllTracesBitmap(SEGYFile4Bmp));
+        }
+        #endregion
+
+        #region trackUpperGain
+        private void trackUpperGain_MouseUp(object sender, MouseEventArgs e)
+        {
+            ImageWriter.gainRange[1] = ImageWriter.gainRange[1] + (float)trackUpperGain.Value / 10.0f;
+            trackUpperGain.Value = 0;
+
+            GamaSeismicViewer.ShowSeismic(SEGYView.SegyView.GetAllTracesBitmap(SEGYFile4Bmp));
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            // set gain value to default
+            ImageWriter.SetGainRangeToDefault(false, true);
+            GamaSeismicViewer.ShowSeismic(SEGYView.SegyView.GetAllTracesBitmap(SEGYFile4Bmp));
+        }
+        #endregion
+
     }
 }

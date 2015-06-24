@@ -18,6 +18,8 @@ namespace Unplugged.Segy
     public class ImageWriter
     {
         public static byte[,] cScale = new byte[256, 3];
+        public static float[] gainRange = new float[2]; /* {lowerbound>=0, upperbound>=0} */
+        public static float[] gainArray;
 
         /// <summary>
         /// When true, sample values that are exactly 0.0f will have their alpha component set to 0.
@@ -29,6 +31,23 @@ namespace Unplugged.Segy
         {
             SetNullValuesToTransparent = false;
         }
+
+        #region Custom Methods
+        private void CreateGainArray(int height)
+        {
+            gainArray = new float[height];
+            for (int i = 0; i < height; i++)
+            {
+                gainArray[i] = gainRange[0] + (i - 0) * (gainRange[1] - gainRange[0]) / height;
+            }
+        }
+
+        public static void SetGainRangeToDefault(bool lower, bool upper)
+        {
+            if (lower == true) gainRange[0] = 1;
+            if (upper == true) gainRange[1] = 1;
+        }
+        #endregion
 
 #if !MONO_TOUCH
 
@@ -154,11 +173,14 @@ namespace Unplugged.Segy
             int height = traceList.First().Values.Count;
             var length = components * width * height;
             var bytes = new byte[length];
+
+            CreateGainArray(height); /* create gain factor array */
+
             for (int i = 0; i < width; i++)
                 for (int j = 0; j < height; j++)
                 {
                     var index = components * (j * width + i);
-                    SetColor(bytes, index, range.Min, range.Delta, traceList[i].Values[j], components);
+                    SetColor(bytes, index, range.Min, range.Delta, traceList[i].Values[j]*gainArray[j], components);
                 }
             return new RawBitmap { Bytes = bytes, Width = width, Height = height };
         }
@@ -207,6 +229,10 @@ namespace Unplugged.Segy
                 alpha = byte.MinValue;
             var byteValue = (byte)(byte.MaxValue * (value - valueMin) / valueRange);
 
+            // if byteValue is outside of byte's value range 
+            if ((byte.MaxValue * (value - valueMin) / valueRange) < 0) byteValue = 0;
+            if ((byte.MaxValue * (value - valueMin) / valueRange) > 255) byteValue = 255;
+ 
             if (components == 1)
                 bytes[offset + 0] = byteValue;
             else if (components == 4)
