@@ -33,6 +33,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.sEGYReadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -89,22 +92,22 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.txtHeaderText = new System.Windows.Forms.TextBox();
-            this.dgvFileHeader = new System.Windows.Forms.DataGridView();
-            this.colDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBytePosition = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.dgvTraceHeader = new System.Windows.Forms.DataGridView();
-            this.colTraceDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTraceHeaderValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTraceBytePos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label6 = new System.Windows.Forms.Label();
             this.cboxTraceSelection = new System.Windows.Forms.ComboBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.readerWorker = new System.ComponentModel.BackgroundWorker();
+            this.dgvFileHeader = new System.Windows.Forms.DataGridView();
+            this.colDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBytePosition = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelImage = new SegyView.NoScrollPanel();
             this.picBox1 = new System.Windows.Forms.PictureBox();
+            this.colTraceDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTraceHeaderValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTraceBytePos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -132,9 +135,9 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvFileHeader)).BeginInit();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTraceHeader)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFileHeader)).BeginInit();
             this.panelImage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox1)).BeginInit();
             this.SuspendLayout();
@@ -737,6 +740,7 @@
             // 
             this.txtHeaderText.BackColor = System.Drawing.Color.White;
             this.txtHeaderText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtHeaderText.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtHeaderText.Location = new System.Drawing.Point(0, 0);
             this.txtHeaderText.Multiline = true;
             this.txtHeaderText.Name = "txtHeaderText";
@@ -745,49 +749,6 @@
             this.txtHeaderText.Size = new System.Drawing.Size(386, 512);
             this.txtHeaderText.TabIndex = 0;
             this.txtHeaderText.WordWrap = false;
-            // 
-            // dgvFileHeader
-            // 
-            this.dgvFileHeader.AllowUserToAddRows = false;
-            this.dgvFileHeader.AllowUserToDeleteRows = false;
-            this.dgvFileHeader.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvFileHeader.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dgvFileHeader.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            this.dgvFileHeader.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvFileHeader.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colDesc,
-            this.colValue,
-            this.colBytePosition});
-            this.dgvFileHeader.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvFileHeader.Location = new System.Drawing.Point(0, 0);
-            this.dgvFileHeader.Name = "dgvFileHeader";
-            this.dgvFileHeader.ReadOnly = true;
-            this.dgvFileHeader.RowHeadersWidth = 45;
-            this.dgvFileHeader.Size = new System.Drawing.Size(382, 512);
-            this.dgvFileHeader.TabIndex = 1;
-            // 
-            // colDesc
-            // 
-            this.colDesc.DataPropertyName = "Description";
-            this.colDesc.HeaderText = "Description";
-            this.colDesc.Name = "colDesc";
-            this.colDesc.ReadOnly = true;
-            // 
-            // colValue
-            // 
-            this.colValue.DataPropertyName = "Value";
-            this.colValue.HeaderText = "Value";
-            this.colValue.Name = "colValue";
-            this.colValue.ReadOnly = true;
-            // 
-            // colBytePosition
-            // 
-            this.colBytePosition.DataPropertyName = "BytePosition";
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.colBytePosition.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colBytePosition.HeaderText = "Byte Position";
-            this.colBytePosition.Name = "colBytePosition";
-            this.colBytePosition.ReadOnly = true;
             // 
             // tabPage3
             // 
@@ -820,31 +781,6 @@
             this.dgvTraceHeader.ReadOnly = true;
             this.dgvTraceHeader.Size = new System.Drawing.Size(542, 511);
             this.dgvTraceHeader.TabIndex = 2;
-            // 
-            // colTraceDesc
-            // 
-            this.colTraceDesc.DataPropertyName = "Description";
-            this.colTraceDesc.HeaderText = "Description";
-            this.colTraceDesc.Name = "colTraceDesc";
-            this.colTraceDesc.ReadOnly = true;
-            // 
-            // colTraceHeaderValue
-            // 
-            this.colTraceHeaderValue.DataPropertyName = "Value";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.colTraceHeaderValue.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colTraceHeaderValue.HeaderText = "Value";
-            this.colTraceHeaderValue.Name = "colTraceHeaderValue";
-            this.colTraceHeaderValue.ReadOnly = true;
-            // 
-            // colTraceBytePos
-            // 
-            this.colTraceBytePos.DataPropertyName = "BytePosition";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colTraceBytePos.DefaultCellStyle = dataGridViewCellStyle3;
-            this.colTraceBytePos.HeaderText = "Byte";
-            this.colTraceBytePos.Name = "colTraceBytePos";
-            this.colTraceBytePos.ReadOnly = true;
             // 
             // label6
             // 
@@ -884,6 +820,54 @@
             this.readerWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.readerWorker_DoWork);
             this.readerWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.readerWorker_RunWorkerCompleted);
             // 
+            // dgvFileHeader
+            // 
+            this.dgvFileHeader.AllowUserToAddRows = false;
+            this.dgvFileHeader.AllowUserToDeleteRows = false;
+            this.dgvFileHeader.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvFileHeader.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvFileHeader.BackgroundColor = System.Drawing.Color.WhiteSmoke;
+            this.dgvFileHeader.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvFileHeader.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colDesc,
+            this.colValue,
+            this.colBytePosition});
+            this.dgvFileHeader.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvFileHeader.Location = new System.Drawing.Point(0, 0);
+            this.dgvFileHeader.Name = "dgvFileHeader";
+            this.dgvFileHeader.ReadOnly = true;
+            this.dgvFileHeader.RowHeadersWidth = 45;
+            this.dgvFileHeader.Size = new System.Drawing.Size(382, 512);
+            this.dgvFileHeader.TabIndex = 1;
+            // 
+            // colDesc
+            // 
+            this.colDesc.DataPropertyName = "Description";
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colDesc.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colDesc.HeaderText = "Description";
+            this.colDesc.Name = "colDesc";
+            this.colDesc.ReadOnly = true;
+            // 
+            // colValue
+            // 
+            this.colValue.DataPropertyName = "Value";
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colValue.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colValue.HeaderText = "Value";
+            this.colValue.Name = "colValue";
+            this.colValue.ReadOnly = true;
+            // 
+            // colBytePosition
+            // 
+            this.colBytePosition.DataPropertyName = "BytePosition";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colBytePosition.DefaultCellStyle = dataGridViewCellStyle3;
+            this.colBytePosition.HeaderText = "Byte Position";
+            this.colBytePosition.Name = "colBytePosition";
+            this.colBytePosition.ReadOnly = true;
+            // 
             // panelImage
             // 
             this.panelImage.AutoScroll = true;
@@ -906,6 +890,35 @@
             this.picBox1.MouseLeave += new System.EventHandler(this.picBox1_MouseLeave);
             this.picBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picBox1_MouseMove);
             this.picBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picBox1_MouseUp);
+            // 
+            // colTraceDesc
+            // 
+            this.colTraceDesc.DataPropertyName = "Description";
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colTraceDesc.DefaultCellStyle = dataGridViewCellStyle4;
+            this.colTraceDesc.HeaderText = "Description";
+            this.colTraceDesc.Name = "colTraceDesc";
+            this.colTraceDesc.ReadOnly = true;
+            // 
+            // colTraceHeaderValue
+            // 
+            this.colTraceHeaderValue.DataPropertyName = "Value";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colTraceHeaderValue.DefaultCellStyle = dataGridViewCellStyle5;
+            this.colTraceHeaderValue.HeaderText = "Value";
+            this.colTraceHeaderValue.Name = "colTraceHeaderValue";
+            this.colTraceHeaderValue.ReadOnly = true;
+            // 
+            // colTraceBytePos
+            // 
+            this.colTraceBytePos.DataPropertyName = "BytePosition";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.colTraceBytePos.DefaultCellStyle = dataGridViewCellStyle6;
+            this.colTraceBytePos.HeaderText = "Byte";
+            this.colTraceBytePos.Name = "colTraceBytePos";
+            this.colTraceBytePos.ReadOnly = true;
             // 
             // SegyFrontPage
             // 
@@ -959,10 +972,10 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvFileHeader)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTraceHeader)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFileHeader)).EndInit();
             this.panelImage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picBox1)).EndInit();
             this.ResumeLayout(false);
@@ -1017,10 +1030,6 @@
         internal System.Windows.Forms.Panel Panel1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.TextBox txtHeaderText;
-        private System.Windows.Forms.DataGridView dgvFileHeader;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDesc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colValue;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colBytePosition;
         private System.Windows.Forms.Button XAxisFitWidth;
         private System.Windows.Forms.Button YAxisFitHeight;
         private System.Windows.Forms.Button butZoomFit;
@@ -1035,15 +1044,19 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cboxTraceSelection;
         private System.ComponentModel.BackgroundWorker readerWorker;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTraceDesc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTraceHeaderValue;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTraceBytePos;
         private System.Windows.Forms.TrackBar trackUpperGain;
         private System.Windows.Forms.TrackBar trackLowerGain;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.DataGridView dgvFileHeader;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDesc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBytePosition;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTraceDesc;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTraceHeaderValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTraceBytePos;
 
     }
 }
