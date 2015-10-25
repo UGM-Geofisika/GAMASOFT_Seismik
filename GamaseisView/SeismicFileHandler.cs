@@ -2,9 +2,9 @@
 using System.Drawing;
 using Unplugged.Segy;
 
-namespace SEGYView
+namespace Gamaseis
 {
-    static class SegyView
+    static class SeismicFileHandler
     {
         public static ISegyFile Read(string filename)
         {

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
-using SegyView;
 
-namespace SEGYView
+namespace Gamaseis
 {
     static class Program
     {
@@ -16,7 +13,7 @@ namespace SEGYView
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SegyFrontPage());
+            Application.Run(new FrontPage());
         }
     }
 }

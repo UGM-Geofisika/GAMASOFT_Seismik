@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
+﻿using System.ComponentModel;
 using System.Windows.Forms;
-using System.Text;
 
-namespace SegyView
+namespace Gamaseis
 {
     public class ColorMarker : Panel
     {

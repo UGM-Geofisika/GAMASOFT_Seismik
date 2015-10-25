@@ -1,4 +1,4 @@
-﻿namespace SegyView
+﻿namespace Gamaseis
 {
     internal class SegyTraceHeaderItem
     {

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace SegyView
+namespace Gamaseis
 {
     public class NoScrollPanel : Panel
     {

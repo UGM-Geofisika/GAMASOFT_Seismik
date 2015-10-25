@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using Unplugged.Segy;
 
-namespace SegyView
+namespace Gamaseis
 {
     public partial class ColormapEditor : Form
     {
@@ -28,7 +23,7 @@ namespace SegyView
 
         private void ColormapEditor_Load(object sender, EventArgs e)
         {
-            GamaColormapEditor.InitializeColormapEditor();
+            SeismicColormapEditor.InitializeColormapEditor();
 
             panAddMarkerIndicator.SendToBack();
             pictureBox1.SendToBack();
@@ -45,36 +40,36 @@ namespace SegyView
                     Color[] newColor = new Color[3] { Color.FromArgb(0, 0, 0), Color.FromArgb(255, 255, 255), Color.FromArgb(255, 0, 0) };
                     int[] newIndex = new int[3] { 0, 127, 255 };
 
-                    GamaSeismicColor.CreateColormap(GamaColormapEditor.EditCMap, newColor, newIndex);
-                    GamaColormapEditor.LoadColormapTable(newColor, newIndex);
-                    GamaColormapEditor.UpdateBitmapColormap(GamaColormapEditor.EditCMap);
+                    SeismicColorMap.CreateColormap(SeismicColormapEditor.EditCMap, newColor, newIndex);
+                    SeismicColormapEditor.LoadColormapTable(newColor, newIndex);
+                    SeismicColormapEditor.UpdateBitmapColormap(SeismicColormapEditor.EditCMap);
                     break;
 
                 case 1: // Preset: Blue-White-Red
                     newColor = new Color[3] { Color.FromArgb(0, 0, 255), Color.FromArgb(255, 255, 255), Color.FromArgb(255, 0, 0) };
                     newIndex = new int[3] { 0, 127, 255 };
 
-                    GamaSeismicColor.CreateColormap(GamaColormapEditor.EditCMap, newColor, newIndex);
-                    GamaColormapEditor.LoadColormapTable(newColor, newIndex);
-                    GamaColormapEditor.UpdateBitmapColormap(GamaColormapEditor.EditCMap);
+                    SeismicColorMap.CreateColormap(SeismicColormapEditor.EditCMap, newColor, newIndex);
+                    SeismicColormapEditor.LoadColormapTable(newColor, newIndex);
+                    SeismicColormapEditor.UpdateBitmapColormap(SeismicColormapEditor.EditCMap);
                     break;
 
                 case 2: // Preset: Grayscale
                     newColor = new Color[2] { Color.FromArgb(0, 0, 0), Color.FromArgb(255, 255, 255) };
                     newIndex = new int[2] { 0, 255 };
 
-                    GamaSeismicColor.CreateColormap(GamaColormapEditor.EditCMap, newColor, newIndex);
-                    GamaColormapEditor.LoadColormapTable(newColor, newIndex);
-                    GamaColormapEditor.UpdateBitmapColormap(GamaColormapEditor.EditCMap);
+                    SeismicColorMap.CreateColormap(SeismicColormapEditor.EditCMap, newColor, newIndex);
+                    SeismicColormapEditor.LoadColormapTable(newColor, newIndex);
+                    SeismicColormapEditor.UpdateBitmapColormap(SeismicColormapEditor.EditCMap);
                     break;
 
                 case 3: // Preset: Rainbow
                     newColor = new Color[6] { Color.Red, Color.DarkOrange, Color.Yellow, Color.Lime, Color.Blue, Color.DarkViolet };
                     newIndex = new int[6] { 0, 51, 102, 153, 204, 255 };
 
-                    GamaSeismicColor.CreateColormap(GamaColormapEditor.EditCMap, newColor, newIndex);
-                    GamaColormapEditor.LoadColormapTable(newColor, newIndex);
-                    GamaColormapEditor.UpdateBitmapColormap(GamaColormapEditor.EditCMap);
+                    SeismicColorMap.CreateColormap(SeismicColormapEditor.EditCMap, newColor, newIndex);
+                    SeismicColormapEditor.LoadColormapTable(newColor, newIndex);
+                    SeismicColormapEditor.UpdateBitmapColormap(SeismicColormapEditor.EditCMap);
                     break;
             }
         }
@@ -88,8 +83,8 @@ namespace SegyView
                 if (mouseY < 0) mouseY = 0;
                 if (mouseY > 255) mouseY = 255;
 
-                GamaColormapEditor.LoadSaturationValueFromHue(hueImage.GetPixel(0, mouseY));
-                GamaColormapEditor.UpdateSelectedColor(panPickerSV.PointToScreen(new Point(GamaColormapEditor.PanboxPicker[0].Left + 3, GamaColormapEditor.PanboxPicker[1].Top + 3)));
+                SeismicColormapEditor.LoadSaturationValueFromHue(hueImage.GetPixel(0, mouseY));
+                SeismicColormapEditor.UpdateSelectedColor(panPickerSV.PointToScreen(new Point(SeismicColormapEditor.PanboxPicker[0].Left + 3, SeismicColormapEditor.PanboxPicker[1].Top + 3)));
                 picNewClr.Update(); dgvPickColor.Update();
                 hueImage.Dispose();
             }
@@ -102,8 +97,8 @@ namespace SegyView
             if (mouseY < 0) mouseY = 0;
             if (mouseY > 255) mouseY = 255;
 
-            GamaColormapEditor.LoadSaturationValueFromHue(hueImage.GetPixel(0, mouseY));
-            GamaColormapEditor.UpdateSelectedColor(panPickerSV.PointToScreen(new Point(GamaColormapEditor.PanboxPicker[0].Left + 3, GamaColormapEditor.PanboxPicker[1].Top + 3)));
+            SeismicColormapEditor.LoadSaturationValueFromHue(hueImage.GetPixel(0, mouseY));
+            SeismicColormapEditor.UpdateSelectedColor(panPickerSV.PointToScreen(new Point(SeismicColormapEditor.PanboxPicker[0].Left + 3, SeismicColormapEditor.PanboxPicker[1].Top + 3)));
             picNewClr.Update(); dgvPickColor.Update();
             hueImage.Dispose();
         }
@@ -113,19 +108,19 @@ namespace SegyView
             switch (comboPreset.SelectedIndex)
             {
                 case 0: // Preset: Black-White-Red
-                    GamaSeismicColor.Colormap_BlackWhiteRed(); break;
+                    SeismicColorMap.Colormap_BlackWhiteRed(); break;
                 case 1: // Preset: Blue-White-Red
-                    GamaSeismicColor.Colormap_BlueWhiteRed(); break;
+                    SeismicColorMap.Colormap_BlueWhiteRed(); break;
                 case 2: // Preset: Grayscale
-                    GamaSeismicColor.Colormap_Grayscale(); break;
+                    SeismicColorMap.Colormap_Grayscale(); break;
                 case 3: // Preset: Rainbow
-                    GamaSeismicColor.Colormap_Rainbow(); break;
+                    SeismicColorMap.Colormap_Rainbow(); break;
                 case 4: // Custom Colormap
-                    ImageWriter.cScale = GamaColormapEditor.TempCMap; break;
+                    ImageWriter.cScale = SeismicColormapEditor.TempCMap; break;
             }
 
-            GamaSeismicViewer.ShowSeismic(SEGYView.SegyView.GetAllTracesBitmap(SegyFrontPage.SEGYFile4Bmp));
-            GamaSeismicColor.UpdateColormapBitmap();
+            SeismicViewer.ShowSeismic(SeismicFileHandler.GetAllTracesBitmap(FrontPage.SEGYFile4Bmp));
+            SeismicColorMap.UpdateColormapBitmap();
             ColormapEditor.ActiveForm.Hide();
         }
 
@@ -147,13 +142,13 @@ namespace SegyView
         private void panPickerSV_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
-            { GamaColormapEditor.UpdateSelectedColor(MousePosition); }
+            { SeismicColormapEditor.UpdateSelectedColor(MousePosition); }
         }
 
         private void panPickerSV_Click(object sender, EventArgs e)
         {
             if (((MouseEventArgs)e).Button == MouseButtons.Left)
-            { GamaColormapEditor.UpdateSelectedColor(MousePosition); }
+            { SeismicColormapEditor.UpdateSelectedColor(MousePosition); }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -163,10 +158,10 @@ namespace SegyView
 
         private void button1_Click(object sender, EventArgs e)
         {
-            GamaColormapEditor.UpdateCurrentColor(picNewClr.BackColor);
-            GamaColormapEditor.UpdateColorTableData(picNewClr.BackColor, GamaColormapEditor.IdxSelMarker);
-            GamaColormapEditor.UpdateCustomColormap(picNewClr.BackColor, GamaColormapEditor.IdxSelMarker);
-            GamaColormapEditor.UpdateBitmapColormap(GamaColormapEditor.TempCMap);
+            SeismicColormapEditor.UpdateCurrentColor(picNewClr.BackColor);
+            SeismicColormapEditor.UpdateColorTableData(picNewClr.BackColor, SeismicColormapEditor.IdxSelMarker);
+            SeismicColormapEditor.UpdateCustomColormap(picNewClr.BackColor, SeismicColormapEditor.IdxSelMarker);
+            SeismicColormapEditor.UpdateBitmapColormap(SeismicColormapEditor.TempCMap);
             comboPreset.SelectedIndex = comboPreset.Items.Count - 1;
             picColorScale.Update(); 
             panel6.Hide();
@@ -175,7 +170,7 @@ namespace SegyView
         
         private void picColorScale_MouseMove(object sender, MouseEventArgs e)
         {
-            if (GamaColormapEditor.ButCScale != null)
+            if (SeismicColormapEditor.ButCScale != null)
             {
                 if (picColorScale.PointToClient(MousePosition).X % 2 == 0)
                 {
@@ -205,7 +200,7 @@ namespace SegyView
             Bitmap temp = new Bitmap(picColorScale.BackgroundImage);
             if (ee.Button == MouseButtons.Left)
             {
-                GamaColormapEditor.AddColorMarker(temp.GetPixel(picColorScale.PointToClient(MousePosition).X, 0),
+                SeismicColormapEditor.AddColorMarker(temp.GetPixel(picColorScale.PointToClient(MousePosition).X, 0),
                                                                 (pictureBox2.Left - picColorScale.Parent.Left - 1) / 2);
             }
 

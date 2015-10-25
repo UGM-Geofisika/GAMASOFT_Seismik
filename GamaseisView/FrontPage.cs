@@ -7,16 +7,16 @@ using System.Windows.Forms;
 using Antiufo.Controls;
 using Unplugged.Segy;
 
-namespace SegyView
+namespace Gamaseis
 {
-    public partial class SegyFrontPage : Form
+    public partial class FrontPage : Form
     {
         public static ISegyFile SEGYFile4Bmp;
         private ISegyFile _segyFile;
         // initialize other forms
         public ColormapEditor FrmClrEdit = new ColormapEditor();
 
-        public SegyFrontPage()
+        public FrontPage()
         {
             InitializeComponent();
         }
@@ -27,13 +27,13 @@ namespace SegyView
             toolStrip1.Renderer = Windows7Renderer.Instance;
 
             // initialize classes
-            GamaSeismicViewer.Setup(picBox1, panelX, panelY, panelImage, panelGap);
-            GamaFileViewer.Setup(treeView1);
-            GamaSeismicColor.Setup(picBox1, picColorScale);
-            GamaColormapEditor.Setup(FrmClrEdit, FrmClrEdit.picColorScale, FrmClrEdit.dgvColormap,
-                                     FrmClrEdit.panPickerHue, FrmClrEdit.panPickerSV, FrmClrEdit.picPickerHueLine,
-                                     FrmClrEdit.comboPreset, FrmClrEdit.dgvPickColor, FrmClrEdit.picCurClr,
-                                     FrmClrEdit.picNewClr, FrmClrEdit.panMarkerIsSelected);
+            SeismicViewer.Setup(picBox1, panelX, panelY, panelImage, panelGap);
+            SeismicFileManager.Setup(treeView1);
+            SeismicColorMap.Setup(picBox1, picColorScale);
+            SeismicColormapEditor.Setup(FrmClrEdit, FrmClrEdit.picColorScale, FrmClrEdit.dgvColormap,
+                FrmClrEdit.panPickerHue, FrmClrEdit.panPickerSV, FrmClrEdit.picPickerHueLine,
+                FrmClrEdit.comboPreset, FrmClrEdit.dgvPickColor, FrmClrEdit.picCurClr,
+                FrmClrEdit.picNewClr, FrmClrEdit.panMarkerIsSelected);
             picBox1.MouseWheel += picBox1_MouseWheel;
             treeView1.NodeMouseClick += TreeView_SelectItem;
 
@@ -41,8 +41,8 @@ namespace SegyView
             panSeismicMenu.Enabled = false;
 
             // prepare colormap
-            GamaSeismicColor.Colormap_BlackWhiteRed();
-            GamaSeismicColor.UpdateColormapBitmap();
+            SeismicColorMap.Colormap_BlackWhiteRed();
+            SeismicColorMap.UpdateColormapBitmap();
 
             // set gain value to default
             ImageWriter.SetGainRangeToDefault(true, true);
@@ -55,18 +55,18 @@ namespace SegyView
 
             if (dlgresult != DialogResult.OK)
             {
-                GamaSeismicViewer.SetScrollbarValue();
+                SeismicViewer.SetScrollbarValue();
                 return;
             }
 
             // load selected directory
-            GamaFileViewer.LoadDirectory(openFileDialog1.FileName);
+            SeismicFileManager.LoadDirectory(openFileDialog1.FileName);
 
             // load selected segy file
             readerWorker.RunWorkerAsync(openFileDialog1.FileName);
 
-            GamaFileViewer.fileURLNowOpened = openFileDialog1.FileName;
-            GamaSeismicViewer.SetScrollbarValue();
+            SeismicFileManager.FileUrlNowOpened = openFileDialog1.FileName;
+            SeismicViewer.SetScrollbarValue();
         }
 
         private void ExtractSegyFileHeaderInfo(ISegyFile segy)
@@ -141,10 +141,12 @@ namespace SegyView
                 new SegyTraceHeaderItem("Number of horizontally stacked traces", traceHeaderInfo.Nhs,
                     "33 - 34"),
                 new SegyTraceHeaderItem("Data use.", traceHeaderInfo.Duse, "35 - 36"),
-                new SegyTraceHeaderItem("Distance from source point to receiver group", traceHeaderInfo.Offset, "37 - 40"),
+                new SegyTraceHeaderItem("Distance from source point to receiver group", traceHeaderInfo.Offset,
+                    "37 - 40"),
                 new SegyTraceHeaderItem("Receiver group elevation", traceHeaderInfo.Gelev, "41 - 44"),
                 new SegyTraceHeaderItem("Surface elevation at source", traceHeaderInfo.Selev, "45 - 48"),
-                new SegyTraceHeaderItem("Source depth below surface (positive number)", traceHeaderInfo.Sdepth, "49 - 52"),
+                new SegyTraceHeaderItem("Source depth below surface (positive number)", traceHeaderInfo.Sdepth,
+                    "49 - 52"),
                 new SegyTraceHeaderItem("Datum elevation at receiver group", traceHeaderInfo.Gdel, "53 - 56"),
                 new SegyTraceHeaderItem("Datum elevation at source", traceHeaderInfo.Sdel, "57 - 60"),
                 new SegyTraceHeaderItem("Water depth at source", traceHeaderInfo.Swdep, "61 - 64"),
@@ -166,56 +168,63 @@ namespace SegyView
             var maxtime = tracecount*(timeInterval/1000);
 
             // display seismic section
-            GamaSeismicViewer.ShowSeismic(SEGYView.SegyView.GetAllTracesBitmap(segy), tracecount, maxtime);
-            GamaSeismicViewer.Image_Axis_Update();
+            SeismicViewer.ShowSeismic(SeismicFileHandler.GetAllTracesBitmap(segy), tracecount, maxtime);
+            SeismicViewer.Image_Axis_Update();
 
             panSeismicMenu.Enabled = true;
             panSeismicMenu.Update();
-            lblZoom.Text = String.Concat(GamaSeismicViewer.ZoomFactor, " %");
+            lblZoom.Text = String.Concat(SeismicViewer.ZoomFactor, " %");
             lblZoom.Update();
         }
 
         private void TreeView_SelectItem(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (e.Node.Name.EndsWith(GamaFileViewer.fileExt) & (e.Node.Name != GamaFileViewer.fileURLNowOpened))
+            if (
+                !(e.Node.Name.EndsWith(SeismicFileManager.FileExt) &
+                  (e.Node.Name != SeismicFileManager.FileUrlNowOpened))) return;
+            if (readerWorker.IsBusy)
             {
-                // load selected segy file
-                readerWorker.RunWorkerAsync(e.Node.Name);
-
-                Debug.WriteLine(_segyFile.Traces.Count);
-                Debug.WriteLine(_segyFile.Traces.ToList().First().Values.Count);
-                Debug.Write("Job Number: ");
-                Debug.WriteLine(_segyFile.Header.BinaryHeader.JobNumber);
-                Debug.Write("Sample Interval Reel: ");
-                Debug.WriteLine(_segyFile.Header.BinaryHeader.SampleIntervalReel);
-                Debug.Write("Sample Interval Field: ");
-                Debug.WriteLine(_segyFile.Header.BinaryHeader.SampleIntervalField);
-
-                GamaFileViewer.fileURLNowOpened = e.Node.Name;
+                MessageBox.Show(@"There are unfinished background process in background");
+                return;
             }
+            // load selected segy file
+            readerWorker.RunWorkerAsync(e.Node.Name);
+
+
+            Debug.WriteLine(_segyFile.Traces.Count);
+            Debug.WriteLine(_segyFile.Traces.ToList().First().Values.Count);
+            Debug.Write("Job Number: ");
+            Debug.WriteLine(_segyFile.Header.BinaryHeader.JobNumber);
+            Debug.Write("Sample Interval Reel: ");
+            Debug.WriteLine(_segyFile.Header.BinaryHeader.SampleIntervalReel);
+            Debug.Write("Sample Interval Field: ");
+            Debug.WriteLine(_segyFile.Header.BinaryHeader.SampleIntervalField);
+
+            SeismicFileManager.FileUrlNowOpened = e.Node.Name;
         }
 
         #region seismic view event handler
+
         private void picBox1_MouseDown(object sender, MouseEventArgs e)
         {
             // if left mouse is clicked, activate pan mode
             if (MouseButtons == MouseButtons.Left)
             {
-                GamaSeismicViewer.FPan = true;
-                GamaSeismicViewer.PanStartMouse = panelImage.PointToClient(MousePosition);
+                SeismicViewer.FPan = true;
+                SeismicViewer.PanStartMouse = panelImage.PointToClient(MousePosition);
                 Cursor.Current = Cursors.Hand;
 
                 if (panelImage.HorizontalScroll.Visible)
-                    GamaSeismicViewer.PanStartHScroll = panelImage.HorizontalScroll.Value;
+                    SeismicViewer.PanStartHScroll = panelImage.HorizontalScroll.Value;
                 if (panelImage.VerticalScroll.Visible)
-                    GamaSeismicViewer.PanStartVScroll = panelImage.VerticalScroll.Value;
+                    SeismicViewer.PanStartVScroll = panelImage.VerticalScroll.Value;
             }
         }
 
         private void picBox1_MouseLeave(object sender, EventArgs e)
         {
-            GamaSeismicViewer.GetScrollbarValue();
-            GamaSeismicViewer.Image_HideValueOnHover();
+            SeismicViewer.GetScrollbarValue();
+            SeismicViewer.Image_HideValueOnHover();
         }
 
         private void picBox1_MouseMove(object sender, MouseEventArgs e)
@@ -225,36 +234,37 @@ namespace SegyView
             if (picBox1.Focused == false)
             {
                 picBox1.Focus();
-                GamaSeismicViewer.SetScrollbarValue();
-                GamaSeismicViewer.Image_Axis_Update();
+                SeismicViewer.SetScrollbarValue();
+                SeismicViewer.Image_Axis_Update();
             }
 
-            GamaSeismicViewer.Image_ValueOnHover(MousePosition);
+            SeismicViewer.Image_ValueOnHover(MousePosition);
 
-            if (GamaSeismicViewer.FPan)
+            if (SeismicViewer.FPan)
             {
-                GamaSeismicViewer.Image_Pan(MousePosition);
-                GamaSeismicViewer.Image_Axis_Update();
+                SeismicViewer.Image_Pan(MousePosition);
+                SeismicViewer.Image_Axis_Update();
             }
         }
 
         private void picBox1_MouseUp(object sender, MouseEventArgs e)
         {
-            GamaSeismicViewer.FPan = false;
+            SeismicViewer.FPan = false;
             Cursor.Current = Cursors.Default;
         }
 
         private void panelImage_Scroll(object sender, ScrollEventArgs e)
         {
-            GamaSeismicViewer.Image_Axis_Update();
+            SeismicViewer.Image_Axis_Update();
         }
+
         #endregion
 
         // Reading of SEGY Files, done on a separate thread.
         private void readerWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             var infile = e.Argument as string;
-            e.Result = SEGYView.SegyView.Read(infile);
+            e.Result = SeismicFileHandler.Read(infile);
         }
 
         //Display Header and Seismic Section after reading complete
@@ -290,9 +300,5 @@ namespace SegyView
 
             cboxTraceSelection.DataSource = tracelist;
         }
-
-        
-
-
     }
 }

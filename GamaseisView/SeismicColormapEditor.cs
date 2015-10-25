@@ -5,9 +5,9 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using Unplugged.Segy;
 
-namespace SegyView
+namespace Gamaseis
 {
-    public static class GamaColormapEditor
+    public static class SeismicColormapEditor
     {
         // list for color values
         private static List<Panel> _editCScale = new List<Panel>();
@@ -306,7 +306,7 @@ namespace SegyView
                 }
             }
 
-            GamaSeismicColor.CreateColormap(EditCMap, tempColor, tempIndex);
+            SeismicColorMap.CreateColormap(EditCMap, tempColor, tempIndex);
             LoadColormapTable(tempColor, tempIndex);
             UpdateBitmapColormap(EditCMap);
             DgvColorPick.Parent.Hide();
@@ -356,7 +356,7 @@ namespace SegyView
                 }
             }
 
-            GamaSeismicColor.CreateColormap(EditCMap, tempColor, tempIndex);
+            SeismicColorMap.CreateColormap(EditCMap, tempColor, tempIndex);
             LoadColormapTable(tempColor, tempIndex);
             UpdateBitmapColormap(EditCMap);
             DgvColorPick.Parent.Hide();

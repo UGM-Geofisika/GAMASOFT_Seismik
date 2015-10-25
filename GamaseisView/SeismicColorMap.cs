@@ -3,9 +3,9 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using Unplugged.Segy;
 
-namespace SegyView
+namespace Gamaseis
 {
-    public static class GamaSeismicColor
+    public static class SeismicColorMap
     {
         // obtain amplitude range of seismic data
         //public static double MinA;
@@ -30,7 +30,7 @@ namespace SegyView
             var newIndex = new int[3] {0, 127, 255};
 
             CreateColormap(ImageWriter.cScale, newColor, newIndex);
-            GamaColormapEditor.LoadColormapTable(newColor, newIndex);
+            SeismicColormapEditor.LoadColormapTable(newColor, newIndex);
         }
 
         public static void Colormap_BlueWhiteRed()
@@ -40,7 +40,7 @@ namespace SegyView
             var newIndex = new int[3] {0, 127, 255};
 
             CreateColormap(ImageWriter.cScale, newColor, newIndex);
-            GamaColormapEditor.LoadColormapTable(newColor, newIndex);
+            SeismicColormapEditor.LoadColormapTable(newColor, newIndex);
         }
 
         public static void Colormap_Grayscale()
@@ -49,7 +49,7 @@ namespace SegyView
             var newIndex = new int[2] {0, 255};
 
             CreateColormap(ImageWriter.cScale, newColor, newIndex);
-            GamaColormapEditor.LoadColormapTable(newColor, newIndex);
+            SeismicColormapEditor.LoadColormapTable(newColor, newIndex);
         }
 
         public static void Colormap_Rainbow()
@@ -59,7 +59,7 @@ namespace SegyView
             var newIndex = new int[6] {0, 51, 102, 153, 204, 255};
 
             CreateColormap(ImageWriter.cScale, newColor, newIndex);
-            GamaColormapEditor.LoadColormapTable(newColor, newIndex);
+            SeismicColormapEditor.LoadColormapTable(newColor, newIndex);
         }
 
         // linear color interpolation method
@@ -134,7 +134,7 @@ namespace SegyView
             PicCscale.BackgroundImage = bmpScale;
             PicCscale.Update();
 
-            GamaColormapEditor.TempCMap = ImageWriter.cScale;
+            SeismicColormapEditor.TempCMap = ImageWriter.cScale;
         }
     }
 }

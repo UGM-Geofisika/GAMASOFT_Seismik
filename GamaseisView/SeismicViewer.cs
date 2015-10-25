@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 
-namespace SegyView
+namespace Gamaseis
 {
-    public static class GamaSeismicViewer
+    public static class SeismicViewer
     {
         public static int[] ImgOriginalSize = new int[2];
         public static double ZoomFactor = 100;

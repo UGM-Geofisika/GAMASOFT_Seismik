@@ -1,6 +1,6 @@
-﻿namespace SegyView
+﻿namespace Gamaseis
 {
-    partial class SegyFrontPage
+    partial class FrontPage
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SegyFrontPage));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrontPage));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -103,7 +103,7 @@
             this.colDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colBytePosition = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panelImage = new SegyView.NoScrollPanel();
+            this.panelImage = new NoScrollPanel();
             this.picBox1 = new System.Windows.Forms.PictureBox();
             this.colTraceDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTraceHeaderValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
