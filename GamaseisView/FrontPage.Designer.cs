@@ -58,12 +58,15 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panelSeismicParent = new System.Windows.Forms.Panel();
+            this.panelImage = new Gamaseis.NoScrollPanel();
+            this.picBox1 = new System.Windows.Forms.PictureBox();
             this.panelGap = new System.Windows.Forms.Panel();
             this.Panel3 = new System.Windows.Forms.Panel();
             this.panelY = new System.Windows.Forms.Panel();
             this.Panel1 = new System.Windows.Forms.Panel();
             this.panelX = new System.Windows.Forms.Panel();
             this.panSeismicMenu = new System.Windows.Forms.Panel();
+            this.btnWiener = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.trackUpperGain = new System.Windows.Forms.TrackBar();
             this.button1 = new System.Windows.Forms.Button();
@@ -92,22 +95,21 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.txtHeaderText = new System.Windows.Forms.TextBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.dgvTraceHeader = new System.Windows.Forms.DataGridView();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cboxTraceSelection = new System.Windows.Forms.ComboBox();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.readerWorker = new System.ComponentModel.BackgroundWorker();
             this.dgvFileHeader = new System.Windows.Forms.DataGridView();
             this.colDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colBytePosition = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panelImage = new NoScrollPanel();
-            this.picBox1 = new System.Windows.Forms.PictureBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.dgvTraceHeader = new System.Windows.Forms.DataGridView();
             this.colTraceDesc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTraceHeaderValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTraceBytePos = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cboxTraceSelection = new System.Windows.Forms.ComboBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.readerWorker = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -120,6 +122,8 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panelSeismicParent.SuspendLayout();
+            this.panelImage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picBox1)).BeginInit();
             this.Panel3.SuspendLayout();
             this.Panel1.SuspendLayout();
             this.panSeismicMenu.SuspendLayout();
@@ -135,11 +139,9 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFileHeader)).BeginInit();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTraceHeader)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvFileHeader)).BeginInit();
-            this.panelImage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -336,6 +338,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
@@ -369,6 +372,29 @@
             this.panelSeismicParent.Name = "panelSeismicParent";
             this.panelSeismicParent.Size = new System.Drawing.Size(772, 415);
             this.panelSeismicParent.TabIndex = 0;
+            // 
+            // panelImage
+            // 
+            this.panelImage.AutoScroll = true;
+            this.panelImage.Controls.Add(this.picBox1);
+            this.panelImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelImage.Location = new System.Drawing.Point(54, 45);
+            this.panelImage.Name = "panelImage";
+            this.panelImage.Size = new System.Drawing.Size(718, 370);
+            this.panelImage.TabIndex = 7;
+            this.panelImage.Scroll += new System.Windows.Forms.ScrollEventHandler(this.panelImage_Scroll);
+            // 
+            // picBox1
+            // 
+            this.picBox1.Location = new System.Drawing.Point(0, 0);
+            this.picBox1.Name = "picBox1";
+            this.picBox1.Size = new System.Drawing.Size(161, 120);
+            this.picBox1.TabIndex = 0;
+            this.picBox1.TabStop = false;
+            this.picBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picBox1_MouseDown);
+            this.picBox1.MouseLeave += new System.EventHandler(this.picBox1_MouseLeave);
+            this.picBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picBox1_MouseMove);
+            this.picBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picBox1_MouseUp);
             // 
             // panelGap
             // 
@@ -430,6 +456,7 @@
             // 
             // panSeismicMenu
             // 
+            this.panSeismicMenu.Controls.Add(this.btnWiener);
             this.panSeismicMenu.Controls.Add(this.panel4);
             this.panSeismicMenu.Controls.Add(this.panSeismicColor);
             this.panSeismicMenu.Controls.Add(this.panSeismicZoom);
@@ -438,6 +465,16 @@
             this.panSeismicMenu.Name = "panSeismicMenu";
             this.panSeismicMenu.Size = new System.Drawing.Size(772, 97);
             this.panSeismicMenu.TabIndex = 4;
+            // 
+            // btnWiener
+            // 
+            this.btnWiener.Location = new System.Drawing.Point(692, 20);
+            this.btnWiener.Name = "btnWiener";
+            this.btnWiener.Size = new System.Drawing.Size(75, 49);
+            this.btnWiener.TabIndex = 4;
+            this.btnWiener.Text = "Apply Wiener";
+            this.btnWiener.UseVisualStyleBackColor = true;
+            this.btnWiener.Click += new System.EventHandler(this.btnWiener_Click_1);
             // 
             // panel4
             // 
@@ -750,76 +787,6 @@
             this.txtHeaderText.TabIndex = 0;
             this.txtHeaderText.WordWrap = false;
             // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.dgvTraceHeader);
-            this.tabPage3.Controls.Add(this.label6);
-            this.tabPage3.Controls.Add(this.cboxTraceSelection);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(778, 518);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Trace";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // dgvTraceHeader
-            // 
-            this.dgvTraceHeader.AllowUserToAddRows = false;
-            this.dgvTraceHeader.AllowUserToDeleteRows = false;
-            this.dgvTraceHeader.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvTraceHeader.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvTraceHeader.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            this.dgvTraceHeader.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTraceHeader.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colTraceDesc,
-            this.colTraceHeaderValue,
-            this.colTraceBytePos});
-            this.dgvTraceHeader.Location = new System.Drawing.Point(228, 4);
-            this.dgvTraceHeader.Name = "dgvTraceHeader";
-            this.dgvTraceHeader.ReadOnly = true;
-            this.dgvTraceHeader.Size = new System.Drawing.Size(542, 511);
-            this.dgvTraceHeader.TabIndex = 2;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(23, 4);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(68, 13);
-            this.label6.TabIndex = 1;
-            this.label6.Text = "Select Trace";
-            // 
-            // cboxTraceSelection
-            // 
-            this.cboxTraceSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxTraceSelection.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.cboxTraceSelection.FormattingEnabled = true;
-            this.cboxTraceSelection.Location = new System.Drawing.Point(23, 23);
-            this.cboxTraceSelection.Name = "cboxTraceSelection";
-            this.cboxTraceSelection.Size = new System.Drawing.Size(155, 21);
-            this.cboxTraceSelection.TabIndex = 0;
-            this.cboxTraceSelection.SelectedIndexChanged += new System.EventHandler(this.cboxTraceSelection_SelectedIndexChanged);
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 544);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1037, 22);
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.Filter = "\"SEG-Y Files\"|*.sgy";
-            this.openFileDialog1.RestoreDirectory = true;
-            // 
-            // readerWorker
-            // 
-            this.readerWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.readerWorker_DoWork);
-            this.readerWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.readerWorker_RunWorkerCompleted);
-            // 
             // dgvFileHeader
             // 
             this.dgvFileHeader.AllowUserToAddRows = false;
@@ -868,28 +835,37 @@
             this.colBytePosition.Name = "colBytePosition";
             this.colBytePosition.ReadOnly = true;
             // 
-            // panelImage
+            // tabPage3
             // 
-            this.panelImage.AutoScroll = true;
-            this.panelImage.Controls.Add(this.picBox1);
-            this.panelImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelImage.Location = new System.Drawing.Point(54, 45);
-            this.panelImage.Name = "panelImage";
-            this.panelImage.Size = new System.Drawing.Size(718, 370);
-            this.panelImage.TabIndex = 7;
-            this.panelImage.Scroll += new System.Windows.Forms.ScrollEventHandler(this.panelImage_Scroll);
+            this.tabPage3.Controls.Add(this.dgvTraceHeader);
+            this.tabPage3.Controls.Add(this.label6);
+            this.tabPage3.Controls.Add(this.cboxTraceSelection);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(778, 518);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Trace";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // picBox1
+            // dgvTraceHeader
             // 
-            this.picBox1.Location = new System.Drawing.Point(0, 0);
-            this.picBox1.Name = "picBox1";
-            this.picBox1.Size = new System.Drawing.Size(161, 120);
-            this.picBox1.TabIndex = 0;
-            this.picBox1.TabStop = false;
-            this.picBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picBox1_MouseDown);
-            this.picBox1.MouseLeave += new System.EventHandler(this.picBox1_MouseLeave);
-            this.picBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picBox1_MouseMove);
-            this.picBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.picBox1_MouseUp);
+            this.dgvTraceHeader.AllowUserToAddRows = false;
+            this.dgvTraceHeader.AllowUserToDeleteRows = false;
+            this.dgvTraceHeader.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvTraceHeader.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvTraceHeader.BackgroundColor = System.Drawing.Color.WhiteSmoke;
+            this.dgvTraceHeader.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTraceHeader.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colTraceDesc,
+            this.colTraceHeaderValue,
+            this.colTraceBytePos});
+            this.dgvTraceHeader.Location = new System.Drawing.Point(228, 4);
+            this.dgvTraceHeader.Name = "dgvTraceHeader";
+            this.dgvTraceHeader.ReadOnly = true;
+            this.dgvTraceHeader.Size = new System.Drawing.Size(542, 511);
+            this.dgvTraceHeader.TabIndex = 2;
             // 
             // colTraceDesc
             // 
@@ -920,7 +896,55 @@
             this.colTraceBytePos.Name = "colTraceBytePos";
             this.colTraceBytePos.ReadOnly = true;
             // 
-            // SegyFrontPage
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(23, 4);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(68, 13);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Select Trace";
+            // 
+            // cboxTraceSelection
+            // 
+            this.cboxTraceSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxTraceSelection.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.cboxTraceSelection.FormattingEnabled = true;
+            this.cboxTraceSelection.Location = new System.Drawing.Point(23, 23);
+            this.cboxTraceSelection.Name = "cboxTraceSelection";
+            this.cboxTraceSelection.Size = new System.Drawing.Size(155, 21);
+            this.cboxTraceSelection.TabIndex = 0;
+            this.cboxTraceSelection.SelectedIndexChanged += new System.EventHandler(this.cboxTraceSelection_SelectedIndexChanged);
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(778, 518);
+            this.tabPage4.TabIndex = 4;
+            this.tabPage4.Text = "Processing";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 544);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1037, 22);
+            this.statusStrip1.TabIndex = 1;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.Filter = "\"SEG-Y Files\"|*.sgy";
+            this.openFileDialog1.RestoreDirectory = true;
+            // 
+            // readerWorker
+            // 
+            this.readerWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.readerWorker_DoWork);
+            this.readerWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.readerWorker_RunWorkerCompleted);
+            // 
+            // FrontPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -928,7 +952,7 @@
             this.ClientSize = new System.Drawing.Size(1037, 591);
             this.Controls.Add(this.toolStripContainer1);
             this.Controls.Add(this.menuStrip1);
-            this.Name = "SegyFrontPage";
+            this.Name = "FrontPage";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "GAMASoft";
@@ -952,6 +976,8 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.panelSeismicParent.ResumeLayout(false);
+            this.panelImage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picBox1)).EndInit();
             this.Panel3.ResumeLayout(false);
             this.Panel3.PerformLayout();
             this.Panel1.ResumeLayout(false);
@@ -972,12 +998,10 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFileHeader)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTraceHeader)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvFileHeader)).EndInit();
-            this.panelImage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1057,7 +1081,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colTraceDesc;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTraceHeaderValue;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTraceBytePos;
-
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Button btnWiener;
     }
 }
 

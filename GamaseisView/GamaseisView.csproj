@@ -103,6 +103,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GamaseisProcessing\GamaseisProcessing.csproj">
+      <Project>{8a7f5426-48e3-4e0c-96b1-fe892e18cce1}</Project>
+      <Name>GamaseisProcessing</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Unplugged.Segy\Unplugged.Segy.csproj">
       <Project>{096016a3-c38e-41c0-9853-4c4af2df8782}</Project>
       <Name>Unplugged.Segy</Name>

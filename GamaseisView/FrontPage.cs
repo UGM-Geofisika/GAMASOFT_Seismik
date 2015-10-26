@@ -300,5 +300,14 @@ namespace Gamaseis
 
             cboxTraceSelection.DataSource = tracelist;
         }
+
+        private void btnWiener_Click_1(object sender, EventArgs e)
+        {
+            GamaseisProcessing.Deconvolution.WienerFilter(_segyFile, 0.05f, 0.3f);
+            DisplaySeismicSection(_segyFile, _segyFile.Header.BinaryHeader.NDataPerTraceReel,
+                _segyFile.Header.BinaryHeader.SampleIntervalReel);
+            SEGYFile4Bmp = _segyFile;
+            MessageBox.Show("Done.");
+        }
     }
 }
