@@ -1,6 +1,6 @@
 ﻿namespace Gamaseis
 {
-    partial class Plotting_Form1
+    partial class WigglePlot
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Plotting_Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WigglePlot));
             this.ilPanel1 = new ILNumerics.Drawing.ILPanel();
             this.SuspendLayout();
             // 
@@ -42,19 +42,19 @@
             this.ilPanel1.Name = "ilPanel1";
             this.ilPanel1.Rectangle = ((System.Drawing.RectangleF)(resources.GetObject("ilPanel1.Rectangle")));
             this.ilPanel1.ShowUIControls = false;
-            this.ilPanel1.Size = new System.Drawing.Size(753, 362);
+            this.ilPanel1.Size = new System.Drawing.Size(420, 613);
             this.ilPanel1.TabIndex = 0;
             this.ilPanel1.Timeout = ((uint)(0u));
-            this.ilPanel1.Load += new System.EventHandler(this.ilPanel1_Load);
             // 
-            // Plotting_Form1
+            // WigglePlot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(753, 362);
+            this.ClientSize = new System.Drawing.Size(420, 613);
             this.Controls.Add(this.ilPanel1);
-            this.Name = "Plotting_Form1";
-            this.Text = "Form1";
+            this.Name = "WigglePlot";
+            this.Text = "WigglePlot";
+            this.Load += new System.EventHandler(this.WigglePlot_Load);
             this.ResumeLayout(false);
 
         }
@@ -64,4 +64,3 @@
         private ILNumerics.Drawing.ILPanel ilPanel1;
     }
 }
-

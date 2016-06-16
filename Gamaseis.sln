@@ -23,8 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamaseisView", "GamaseisVie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamaseis", "Gamaseis\Gamaseis.csproj", "{E22741AA-9F3B-4B66-B160-0E35CD94070C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILConsoleTest", "ILConsoleTest\ILConsoleTest.csproj", "{BD7EFDA2-EA29-43BD-90E3-26F8CB340DBE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -133,18 +131,6 @@ Global
 		{E22741AA-9F3B-4B66-B160-0E35CD94070C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{E22741AA-9F3B-4B66-B160-0E35CD94070C}.Release|x86.ActiveCfg = Release|Any CPU
 		{E22741AA-9F3B-4B66-B160-0E35CD94070C}.Release|x86.Build.0 = Release|Any CPU
-		{BD7EFDA2-EA29-43BD-90E3-26F8CB340DBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BD7EFDA2-EA29-43BD-90E3-26F8CB340DBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BD7EFDA2-EA29-43BD-90E3-26F8CB340DBE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{BD7EFDA2-EA29-43BD-90E3-26F8CB340DBE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{BD7EFDA2-EA29-43BD-90E3-26F8CB340DBE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{BD7EFDA2-EA29-43BD-90E3-26F8CB340DBE}.Debug|x86.Build.0 = Debug|Any CPU
-		{BD7EFDA2-EA29-43BD-90E3-26F8CB340DBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD7EFDA2-EA29-43BD-90E3-26F8CB340DBE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BD7EFDA2-EA29-43BD-90E3-26F8CB340DBE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{BD7EFDA2-EA29-43BD-90E3-26F8CB340DBE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{BD7EFDA2-EA29-43BD-90E3-26F8CB340DBE}.Release|x86.ActiveCfg = Release|Any CPU
-		{BD7EFDA2-EA29-43BD-90E3-26F8CB340DBE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -156,6 +142,5 @@ Global
 		{5FB4FF59-8350-4596-B3D0-0EF11FA6BCD4} = {85FC0DA3-C0B7-4A54-AA26-B8A3EDA127DF}
 		{A888F8BC-C046-4A45-8001-10C8C9FAB3AE} = {85FC0DA3-C0B7-4A54-AA26-B8A3EDA127DF}
 		{1904A41B-D1B8-40E5-ADBB-728DDCF7C816} = {85FC0DA3-C0B7-4A54-AA26-B8A3EDA127DF}
-		{E22741AA-9F3B-4B66-B160-0E35CD94070C} = {85FC0DA3-C0B7-4A54-AA26-B8A3EDA127DF}
 	EndGlobalSection
 EndGlobal
