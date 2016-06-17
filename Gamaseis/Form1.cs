@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
@@ -15,8 +16,22 @@ namespace Gamaseis
 
         private void plotTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           var test = new WigglePlot{MdiParent = this};
-            test.Show();
+            // get the selected listbox items
+            var segy = listBoxFiles.SelectedItem as SegyContainer;
+            if (segy == null)
+            {
+                Debug.WriteLine("Null detected, returning..");
+                return;
+            }
+            // grab the requested shots
+            var myShots = new ShotGather();
+            var myTraces = segy.Data.Traces.Where(trace => trace.Header.Fldr == 1).ToList();
+            myShots.InitializeTraces(myTraces);
+
+            var gathers = new List<ShotGather> {myShots};
+            var wigglePlot = new WigglePlot(gathers) {};
+            wigglePlot.Plot();
+            wigglePlot.Show();
         }
 
         private void addFilesToolStripMenuItem_Click(object sender, EventArgs e)

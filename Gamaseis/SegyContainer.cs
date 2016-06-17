@@ -7,15 +7,19 @@ using Unplugged.Segy;
 
 namespace Gamaseis
 {
-    class SegyContainer
+    public class SegyContainer
     {
         public string FileName { get; set; }
         public ISegyFile Data { get; set; }
     }
 
-    class ShotGather
+    public class ShotGather
     {
-        public int[] Index;
-        public IEnumerable<ITrace> Traces;
+        public IList<ITrace> Traces;
+
+        public void InitializeTraces(IEnumerable<ITrace> trace)
+        {
+            Traces = trace as List<ITrace>;
+        }
     }
 }

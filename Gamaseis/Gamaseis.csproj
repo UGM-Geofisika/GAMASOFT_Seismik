@@ -59,6 +59,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="ILNumerics_deploy\ILNHelper.cs" />
+    <Compile Include="IPlottingForm.cs" />
     <Compile Include="Plotting Form1.cs">
       <SubType>Form</SubType>
     </Compile>
