@@ -60,6 +60,7 @@
     </Compile>
     <Compile Include="ILNumerics_deploy\ILNHelper.cs" />
     <Compile Include="IPlottingForm.cs" />
+    <Compile Include="PlotFactory.cs" />
     <Compile Include="Plotting Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,11 +76,11 @@
     <Compile Include="Seismic_Plot.Designer.cs">
       <DependentUpon>Seismic_Plot.cs</DependentUpon>
     </Compile>
-    <Compile Include="WigglePlot.cs">
+    <Compile Include="GatherPlot.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WigglePlot.Designer.cs">
-      <DependentUpon>WigglePlot.cs</DependentUpon>
+    <Compile Include="GatherPlot.Designer.cs">
+      <DependentUpon>GatherPlot.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -100,8 +101,8 @@
     <EmbeddedResource Include="Seismic_Plot.resx">
       <DependentUpon>Seismic_Plot.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WigglePlot.resx">
-      <DependentUpon>WigglePlot.cs</DependentUpon>
+    <EmbeddedResource Include="GatherPlot.resx">
+      <DependentUpon>GatherPlot.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="ILNumerics_deploy\ILNImports1.targets" />
     <None Include="ILNumerics_deploy\ILNImports2.targets" />

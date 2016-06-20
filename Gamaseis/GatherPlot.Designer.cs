@@ -1,6 +1,6 @@
 ﻿namespace Gamaseis
 {
-    partial class WigglePlot
+    partial class GatherPlot
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WigglePlot));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GatherPlot));
             this.ilPanel1 = new ILNumerics.Drawing.ILPanel();
             this.SuspendLayout();
             // 
