@@ -22,10 +22,9 @@ namespace Gamaseis
         }
         public void Plot()
         {
-            var cube = PlotFactory.BuildDefaultCube();
-            cube.BuildSeismicPlot(Shots[0],_type);
-            cube.SetYAxisOnTop();
+            var cube = PlotFactory.BuildSeismicPlot(Shots[0], _type,"Time (ms)","Offset (m)");
             ilPanel1.Scene.Add(cube);
+            Text = @"Gather Plot";
         }
         public void Update(IEnumerable<ShotGather> shots)
         {

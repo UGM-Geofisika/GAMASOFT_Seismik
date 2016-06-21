@@ -29,7 +29,7 @@ namespace Gamaseis
             myShots.InitializeTraces(myTraces);
 
             var gathers = new List<ShotGather> {myShots};
-            var wigglePlot = new GatherPlot(gathers,PlotType.Density);
+            var wigglePlot = new GatherPlot(gathers,PlotType.Fk) {};
             wigglePlot.Plot();
             wigglePlot.Show();
         }

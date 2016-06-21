@@ -42,17 +42,17 @@
             this.ilPanel1.Name = "ilPanel1";
             this.ilPanel1.Rectangle = ((System.Drawing.RectangleF)(resources.GetObject("ilPanel1.Rectangle")));
             this.ilPanel1.ShowUIControls = false;
-            this.ilPanel1.Size = new System.Drawing.Size(419, 567);
+            this.ilPanel1.Size = new System.Drawing.Size(590, 699);
             this.ilPanel1.TabIndex = 0;
             this.ilPanel1.Timeout = ((uint)(0u));
             // 
-            // WigglePlot
+            // GatherPlot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(419, 567);
+            this.ClientSize = new System.Drawing.Size(590, 699);
             this.Controls.Add(this.ilPanel1);
-            this.Name = "WigglePlot";
+            this.Name = "GatherPlot";
             this.Text = "WigglePlot";
             this.ResumeLayout(false);
 
