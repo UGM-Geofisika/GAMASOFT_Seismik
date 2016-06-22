@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using ILNumerics;
 using ILNumerics.Drawing;
 using ILNumerics.Drawing.Plotting;
@@ -11,7 +12,7 @@ namespace Gamaseis
 {
     public static class PlotFactory
     {
-        public static ILPlotCube BuildSeismicPlot(ShotGather shot, PlotType type, string xtitle, string ytitle)
+        public static ILPlotCube BuildSeismicPlot(ShotGather shot, PlotType type, string xtitle, string ytitle, Colormaps cmap = Colormaps.Jet)
         {
             var cube = BuildDefaultCube();
             switch (type)
@@ -19,14 +20,15 @@ namespace Gamaseis
                 case PlotType.Wiggle:
                     WigglePlot(shot, cube);
                     break;
-                case PlotType.Density:
-                    DensityPlot(shot, cube);
+                case PlotType.DensityGray:
+                case PlotType.DensityColor:
+                    DensityPlot(shot, cube, cmap);
                     break;
                 case PlotType.Fk:
-                    FkPlot(shot, cube);
+                    FkPlot(shot, cube, cmap);
                     break;
                 case PlotType.Fx:
-                    FxPlot(shot, cube);
+                    FxPlot(shot, cube, cmap);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -39,6 +41,29 @@ namespace Gamaseis
             return cube;
         }
 
+        public static ILPlotCube BuildGeometryPlotInfo(ShotGather shot, PlotType type, string xtitle, string ytitle)
+        {
+            var cube = BuildDefaultCube();
+            switch (type)
+            {
+                case PlotType.SourceElevationInfo:
+                    SourceElevationPlot(cube, shot);
+                    break;
+                case PlotType.ReceiverElevationInfo:
+                    ReceiverElevationPlot(cube, shot);
+                    break;
+                case PlotType.TracePerGatherInfo:
+                    TracePerGatherPlot(cube, shot);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+
+            cube.Axes.YAxis.Label.Text = ytitle;
+            cube.Axes.XAxis.Label.Text = xtitle;
+
+            return cube;
+        }
 
         private static ILPlotCube BuildDefaultCube()
         {
@@ -72,7 +97,33 @@ namespace Gamaseis
             };
         }
 
-        private static void FxPlot(ShotGather shot, ILPlotCube cube)
+        private static void SourceElevationPlot(ILPlotCube cube, ShotGather shots)
+        {
+            ILArray<float> sourceElev = shots.Traces.Select(trace => trace.Header.Selev).Select(dummy => (float) dummy).ToArray();
+            var plot = new ILLinePlot(sourceElev);
+            cube.Add(plot);
+        }
+
+        private static void ReceiverElevationPlot(ILPlotCube cube, ShotGather shots)
+        {
+            ILArray<float> receiverElev =
+                shots.Traces.Select(trace => trace.Header.Selev).Select(x => (float) x).ToArray();
+            var plot = new ILLinePlot(receiverElev);
+            cube.Add(plot);
+        }
+
+        private static void TracePerGatherPlot(ILPlotCube cube, ShotGather shot)
+        {
+            ILArray<int> shotnumber = shot.Traces.Select(trace => trace.Header.Fldr).Distinct().ToArray();
+            ILArray<int> countsPerGather = shotnumber.Select(i => shot.Traces.Count(trace => trace.Header.Fldr == i)).ToArray();
+            //var plot2 = new ILBarPlot()
+            var plot = new ILLinePlot(ILMath.tosingle(shotnumber),ILMath.tosingle(countsPerGather));
+            plot.Marker.Style = MarkerStyle.Dot;
+            plot.Line.DashStyle = DashStyle.Dashed;
+            cube.Add(plot);
+        }
+
+        private static void FxPlot(ShotGather shot, ILPlotCube cube, Colormaps cmap)
         {
             ILArray<float> inArray = ILMath.zeros<float>(shot.Traces[0].Values.Count, shot.Traces.Count);
 
@@ -82,69 +133,107 @@ namespace Gamaseis
                 inArray[":", i] = fval;
             }
 
+            // Perform 1D FFT and took only until positive frequency nyquist
             ILArray<float> fx = ILMath.abs(ILMath.fft(inArray, 0))[ILMath.r(0, ILMath.end / 2 + 1), ILMath.full];
-            var surf = new ILSurface(fx.T, colormap: Colormaps.Jet);
+            ILArray<float> offset = CreateOffsetArray(shot);
+            ILArray<float> freqs = CreateFreqArray(shot, fx.Size[0]);
+            var surf = new ILSurface(fx.T, freqs,offset, colormap: cmap);
             surf.Wireframe.Visible = false;
             cube.Add(surf);
         }
 
-        private static void FkPlot(ShotGather shot, ILPlotCube cube)
+        private static void FkPlot(ShotGather shot, ILPlotCube cube, Colormaps cmap)
         {
-            ILArray<float> inArray = ILMath.zeros<float>(11, 11);
+            ILArray<float> inArray = ILMath.zeros<float>(shot.Traces[0].Values.Count, shot.Traces.Count);
 
-            for (int i = 0; i < inArray.Size[1]; i++)
+            for (var i = 0; i < shot.Traces.Count; i++)
             {
-                inArray[":", i] = i;
+                ILArray<float> fval = shot.Traces[i].Values.ToArray();
+                inArray[":", i] = fval;
             }
-            Debug.WriteLine(inArray);
+
+            // Perform 2D FFT and took only until positive frequency nyquist
+            ILArray<float> fk = ILMath.abs(ILMath.fft2(inArray))[ILMath.r(0, ILMath.end / 2+1), ILMath.full];
+            ILArray<float> fkShifted = FftShift(fk);
+            ILArray<float> waveNumber = CreateWaveNumberArray(shot, fkShifted.Size[1]);
+            ILArray<float> freqs = CreateFreqArray(shot, fkShifted.Size[0]);
+            
+            var surf = new ILSurface(fkShifted.T,freqs,waveNumber, colormap:cmap);
+            surf.Wireframe.Visible = false;
+            cube.Add(surf);
+
+            //cube.Axes.YAxis.ScaleLabel.
         }
 
-        //        private static void FkPlot(ShotGather shot, ILPlotCube cube)
-        //        {
-        ////            ILArray<float> fk = ILMath.zeros<float>(shot.Traces[0].Values.Count, shot.Traces.Count);
-        ////
-        ////            for (var i = 0; i < shot.Traces.Count; i++)
-        ////            {
-        ////                ILArray<float> fval = shot.Traces[i].Values.ToArray();
-        ////                fk[":", i] = fval;
-        ////            }
-        //
-        //            // Dummy
-        //            ILArray<float> inArray = ILMath.zeros<float>(11, 11);
-        //            inArray[0, ":"] = 1.00f;
-        //
-        //            Debug.WriteLine("Fk");
-        //            Debug.WriteLine(inArray);
-        //
-        //            ILArray<float> fk = ILMath.abs(ILMath.fft2(inArray))[ILMath.r(0, ILMath.end/2), ILMath.full];
-        //            Debug.WriteLine(fk[ILMath.full, ILMath.r(ILMath.end / 2 + 1, ILMath.end)]);
-        //            //Now we do swapping so the zero wavenumber is at center
-        //            ILArray<float> result = ILMath.zeros<float>(fk.Size[0],fk.Size[1]);
-        //            
-        //
-        ////            Debug.WriteLine("Result of FFT2D, Shifted to center");
-        ////            result[ILMath.full, ILMath.r(0, ILMath.end/2)] = fk[ILMath.full, ILMath.r(ILMath.end/2 + 1, ILMath.end)];
-        ////            result[ILMath.full, ILMath.r(ILMath.end/2+1, ILMath.end)] = fk[ILMath.full, ILMath.r(0, ILMath.end/2)];
-        ////            Debug.WriteLine(result);
-        ////
-        ////            var surf = new ILSurface(result.T, colormap: Colormaps.Jet);
-        ////            surf.Wireframe.Visible = false;
-        ////            cube.Add(surf);
-        //        }
+        private static ILRetArray<float> FftShift(ILInArray<float> inArray)
+        {
+            using (ILScope.Enter(inArray))
+            {
+                if (inArray.IsMatrix)
+                {
+                    ILArray<float> fftShifted = ILMath.zeros<float>(inArray.Size[0], inArray.Size[1]);
+                    // If the vector column length is even, we swapped equally
+                    if (inArray.Size[1] %2 == 0)
+                    {
+                        fftShifted[ILMath.full, ILMath.r(0, ILMath.end/2)] =
+                            inArray[ILMath.full, ILMath.r(ILMath.end/2 + 1, ILMath.end)];
+                        fftShifted[ILMath.full, ILMath.r(ILMath.end/2 + 1, ILMath.end)] =
+                            inArray[ILMath.full, ILMath.r(0, ILMath.end/2)];
+                    }
 
-        private static void DensityPlot(ShotGather shot, ILPlotCube cube)
+                    // If the vector column length is odd, we put the first array in the center
+                    else
+                    {
+                        fftShifted[ILMath.full, ILMath.r(0, ILMath.end/2 - 1)] =
+                            inArray[ILMath.full, ILMath.r(ILMath.end/2 + 1, ILMath.end)];
+                        fftShifted[ILMath.full, ILMath.r(ILMath.end/2, ILMath.end)] =
+                            inArray[ILMath.full, ILMath.r(0, ILMath.end/2)];
+                    }
+
+                    return fftShifted;
+                }
+                else
+                {
+                    Debug.WriteLine("It is a vector");
+                    ILArray<float> fftShifted = ILMath.zeros<float>(inArray.Size[0]);
+
+                    // If the length is even, we swapped equally
+                    if (inArray.Size[1] % 2 == 0)
+                    {
+                        fftShifted[ILMath.r(0, ILMath.end / 2)] =
+                            inArray[ILMath.r(ILMath.end / 2 + 1, ILMath.end)];
+                        fftShifted[ILMath.r(ILMath.end / 2 + 1, ILMath.end)] =
+                            inArray[ILMath.r(0, ILMath.end / 2)];
+                    }
+
+                    // If the length is odd, we put the first array in the center
+                    else
+                    {
+                        fftShifted[ILMath.r(0, ILMath.end / 2 - 1)] =
+                            inArray[ILMath.r(ILMath.end / 2 + 1, ILMath.end)];
+                        fftShifted[ILMath.r(ILMath.end / 2, ILMath.end)] =
+                            inArray[ILMath.r(0, ILMath.end / 2)];
+                    }
+
+                    return fftShifted;
+
+
+                }
+            }
+        } 
+        private static void DensityPlot(ShotGather shot, ILPlotCube cube, Colormaps cmap)
         {
             var arr = shot.Traces.Select(trace => trace.Values.ToArray()).ToList();
             ILArray<float> ilArr = CreateRectangularArray(arr);
 
             // Y- the offset
-            IList<float> listOffset =
-                shot.Traces.Select(trace => trace.Header.Offset).Select(dummy => (float) dummy).ToList();
-            ILArray<float> offset = listOffset.ToArray();
+            ILArray<float> offset = CreateOffsetArray(shot);
             var duration = shot.Traces[0].Header.Dt/1000f*shot.Traces[0].Header.SampleCount;
+
+            // X- the time
             ILArray<float> time = ILMath.linspace<float>(0, duration, shot.Traces[0].Header.SampleCount);
 
-            var surf = new ILSurface(ilArr.T, time, offset, colormap: Colormaps.Gray);
+            var surf = new ILSurface(ilArr.T, time, offset, colormap: cmap);
             surf.Wireframe.Visible = false;
             surf.DataRange = new Tuple<float, float>(-1.8f, 1.8f);
 
@@ -187,6 +276,47 @@ namespace Gamaseis
             return ret;
         }
 
+        private static ILRetArray<float> CreateOffsetArray(ShotGather shot)
+        {
+            using (ILScope.Enter())
+            {
+                // Y- the offset
+                IList<float> listOffset =
+                    shot.Traces.Select(trace => trace.Header.Offset).Select(dummy => (float)dummy).ToList();
+                ILArray<float> offset = listOffset.ToArray();
+                return offset;
+            }
+        }
+
+        private static ILRetArray<float> CreateFreqArray(ShotGather shot, int n)
+        {
+            using (ILScope.Enter())
+            {
+                var dt = shot.Traces[0].Header.Dt; //in microseconds
+                var nyquist = 0.5/(dt/10e6);
+                ILArray<float> freqs = ILMath.linspace<float>(0, nyquist, n);
+                return freqs;
+            }
+        }
+        private static ILRetArray<float> CreateWaveNumberArray(ShotGather shot, int n)
+        {
+            using (ILScope.Enter())
+            {
+                var dx = shot.Traces[0].Header.Offset;
+                var nyquist = 0.5/dx;
+                ILArray<float> waveNumber = ILMath.zeros<float>(1,n);
+                Debug.WriteLine(waveNumber);
+                ILArray<float> positiveWn = ILMath.linspace<float>(0, nyquist, n/2 + 1);
+                Debug.WriteLine(positiveWn);
+                ILArray<float> negativeWn = ILMath.linspace<float>(-nyquist, 0, n/2 + 1);
+                Debug.WriteLine(negativeWn);
+                waveNumber[ILMath.r(0,ILMath.end/2+1)] =
+                positiveWn;
+                waveNumber[ILMath.r(ILMath.end/2 + 2, ILMath.end)] = negativeWn[ILMath.r(0, ILMath.end - 2)];
+                Debug.WriteLine(waveNumber);
+                return ILMath.sort(waveNumber);
+            }
+        }
         private static void SetYAxisOnTop(ILPlotCube cube)
         {
             if (cube == null) return;
@@ -204,8 +334,12 @@ namespace Gamaseis
     public enum PlotType
     {
         Wiggle,
-        Density,
+        DensityGray,
+        DensityColor,
         Fx,
-        Fk
+        Fk,
+        SourceElevationInfo,
+        ReceiverElevationInfo,
+        TracePerGatherInfo,
     }
 }

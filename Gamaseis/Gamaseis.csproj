@@ -67,6 +67,7 @@
     <Compile Include="Plotting Form1.Designer.cs">
       <DependentUpon>Plotting Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="PreProcessing.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SegyContainer.cs" />
@@ -76,11 +77,11 @@
     <Compile Include="Seismic_Plot.Designer.cs">
       <DependentUpon>Seismic_Plot.cs</DependentUpon>
     </Compile>
-    <Compile Include="GatherPlot.cs">
+    <Compile Include="SeismicPlot.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GatherPlot.Designer.cs">
-      <DependentUpon>GatherPlot.cs</DependentUpon>
+    <Compile Include="SeismicPlot.Designer.cs">
+      <DependentUpon>SeismicPlot.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -101,8 +102,8 @@
     <EmbeddedResource Include="Seismic_Plot.resx">
       <DependentUpon>Seismic_Plot.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GatherPlot.resx">
-      <DependentUpon>GatherPlot.cs</DependentUpon>
+    <EmbeddedResource Include="SeismicPlot.resx">
+      <DependentUpon>SeismicPlot.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="ILNumerics_deploy\ILNImports1.targets" />
     <None Include="ILNumerics_deploy\ILNImports2.targets" />
