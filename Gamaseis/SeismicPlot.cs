@@ -53,6 +53,10 @@ namespace Gamaseis
                     Text = @"Number of traces per shot";
                     cube = PlotFactory.BuildGeometryPlotInfo(Shots[0], _type, "Shot Number", "Number of traces");
                     break;
+                case PlotType.VelocityAnalysis:
+                    Text = @"Velocity Analysis";
+                    cube = PlotFactory.BuildSeismicPlot(Shots[0], _type, "Time", "Velocity");
+                    break;
 
                 default:
                     throw new ArgumentOutOfRangeException();

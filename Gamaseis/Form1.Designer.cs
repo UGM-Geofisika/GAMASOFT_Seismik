@@ -33,6 +33,7 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.preProcessingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.amplitudeCorrectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mdiClientController1 = new Slusser.Components.MdiClientController();
             this.addFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.listBoxFiles = new System.Windows.Forms.ListBox();
@@ -45,7 +46,7 @@
             this.tsbSourceElev = new System.Windows.Forms.ToolStripButton();
             this.tsbReceiverElev = new System.Windows.Forms.ToolStripButton();
             this.tsbTracePerGather = new System.Windows.Forms.ToolStripButton();
-            this.amplitudeCorrectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -84,6 +85,13 @@
             this.preProcessingToolStripMenuItem.Size = new System.Drawing.Size(96, 20);
             this.preProcessingToolStripMenuItem.Text = "Pre Processing";
             // 
+            // amplitudeCorrectionToolStripMenuItem
+            // 
+            this.amplitudeCorrectionToolStripMenuItem.Name = "amplitudeCorrectionToolStripMenuItem";
+            this.amplitudeCorrectionToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.amplitudeCorrectionToolStripMenuItem.Text = "Amplitude Correction";
+            this.amplitudeCorrectionToolStripMenuItem.Click += new System.EventHandler(this.amplitudeCorrectionToolStripMenuItem_Click);
+            // 
             // mdiClientController1
             // 
             this.mdiClientController1.BackColor = System.Drawing.Color.White;
@@ -112,7 +120,8 @@
             this.tsbPlotFk,
             this.tsbSourceElev,
             this.tsbReceiverElev,
-            this.tsbTracePerGather});
+            this.tsbTracePerGather,
+            this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1094, 25);
@@ -191,12 +200,14 @@
             this.tsbTracePerGather.Text = "Traces per gather";
             this.tsbTracePerGather.Click += new System.EventHandler(this.tsbTracePerGather_Click);
             // 
-            // amplitudeCorrectionToolStripMenuItem
+            // toolStripButton1
             // 
-            this.amplitudeCorrectionToolStripMenuItem.Name = "amplitudeCorrectionToolStripMenuItem";
-            this.amplitudeCorrectionToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.amplitudeCorrectionToolStripMenuItem.Text = "Amplitude Correction";
-            this.amplitudeCorrectionToolStripMenuItem.Click += new System.EventHandler(this.amplitudeCorrectionToolStripMenuItem_Click);
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(114, 22);
+            this.toolStripButton1.Text = "Velocity Analysis";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // Form1
             // 
@@ -239,6 +250,7 @@
         private System.Windows.Forms.ToolStripButton tsbReceiverElev;
         private System.Windows.Forms.ToolStripButton tsbTracePerGather;
         private System.Windows.Forms.ToolStripMenuItem amplitudeCorrectionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }
 

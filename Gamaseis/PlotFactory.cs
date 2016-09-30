@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using ILNumerics;
@@ -30,6 +31,10 @@ namespace Gamaseis
                 case PlotType.Fx:
                     FxPlot(shot, cube, cmap);
                     break;
+                case PlotType.VelocityAnalysis:
+                    DemoVelocityAnalysis(shot,cube,cmap);
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -225,7 +230,7 @@ namespace Gamaseis
         {
             var arr = shot.Traces.Select(trace => trace.Values.ToArray()).ToList();
             ILArray<float> ilArr = CreateRectangularArray(arr);
-
+           
             // Y- the offset
             ILArray<float> offset = CreateOffsetArray(shot);
             var duration = shot.Traces[0].Header.Dt/1000f*shot.Traces[0].Header.SampleCount;
@@ -236,6 +241,27 @@ namespace Gamaseis
             var surf = new ILSurface(ilArr.T, time, offset, colormap: cmap);
             surf.Wireframe.Visible = false;
             surf.DataRange = new Tuple<float, float>(-1.8f, 1.8f);
+
+            cube.Add(surf);
+        }
+
+        private static void DemoVelocityAnalysis(ShotGather shot, ILPlotCube cube, Colormaps cmap)
+        {
+            var minVelocity = 1000f;
+            var maxVelocity = 2000f;
+            var velocityStep = 100;
+            var result = VelocityAnalysis.PerformVelocityAnalysis(shot, minVelocity, maxVelocity, velocityStep, 200f);
+            ILArray<float> ilArr = result;
+
+            // Y- the offset
+            ILArray<float> offset = ILMath.linspace<float>(minVelocity, maxVelocity, (int) (maxVelocity-minVelocity)/velocityStep);
+            var duration = shot.Traces[0].Header.Dt / 1000f * shot.Traces[0].Header.SampleCount;
+
+            // X- the time
+            ILArray<float> time = ILMath.linspace<float>(0, duration, shot.Traces[0].Header.SampleCount);
+
+            var surf = new ILSurface(ilArr.T,time,offset,colormap:cmap);
+            surf.Wireframe.Visible = false;
 
             cube.Add(surf);
         }
@@ -254,7 +280,7 @@ namespace Gamaseis
             }
         }
 
-        private static T[,] CreateRectangularArray<T>(IList<T[]> arrays)
+        public static T[,] CreateRectangularArray<T>(IList<T[]> arrays)
         {
             // TODO: Validation and special-casing for arrays.Count == 0
             // thank you John Skeet
@@ -275,6 +301,8 @@ namespace Gamaseis
             }
             return ret;
         }
+
+       
 
         private static ILRetArray<float> CreateOffsetArray(ShotGather shot)
         {
@@ -341,5 +369,6 @@ namespace Gamaseis
         SourceElevationInfo,
         ReceiverElevationInfo,
         TracePerGatherInfo,
+        VelocityAnalysis
     }
 }
