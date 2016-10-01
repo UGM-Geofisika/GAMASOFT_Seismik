@@ -57,6 +57,10 @@ namespace Gamaseis
                     Text = @"Velocity Analysis";
                     cube = PlotFactory.BuildSeismicPlot(Shots[0], _type, "Time", "Velocity");
                     break;
+                case PlotType.NmoPlot:
+                    Text = @"NMO Correction";
+                    cube = PlotFactory.BuildSeismicPlot(Shots[0], _type, "Time (ms)", "Offset (m)", Colormaps.Gray);
+                    break;
 
                 default:
                     throw new ArgumentOutOfRangeException();

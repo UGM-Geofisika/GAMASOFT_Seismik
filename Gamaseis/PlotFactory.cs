@@ -34,6 +34,9 @@ namespace Gamaseis
                 case PlotType.VelocityAnalysis:
                     DemoVelocityAnalysis(shot,cube,cmap);
                     break;
+                case PlotType.NmoPlot:
+                    NmoPlot(shot, cube, cmap);
+                    break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -247,10 +250,10 @@ namespace Gamaseis
 
         private static void DemoVelocityAnalysis(ShotGather shot, ILPlotCube cube, Colormaps cmap)
         {
-            var minVelocity = 1000f;
-            var maxVelocity = 2000f;
-            var velocityStep = 100;
-            var result = VelocityAnalysis.PerformVelocityAnalysis(shot, minVelocity, maxVelocity, velocityStep, 200f);
+            var minVelocity = 1500f;
+            var maxVelocity = 3000f;
+            var velocityStep = 25;
+            var result = VelocityAnalysis.PerformVelocityAnalysis(shot, minVelocity, maxVelocity, velocityStep, 50f);
             ILArray<float> ilArr = result;
 
             // Y- the offset
@@ -262,6 +265,33 @@ namespace Gamaseis
 
             var surf = new ILSurface(ilArr.T,time,offset,colormap:cmap);
             surf.Wireframe.Visible = false;
+
+            cube.Add(surf);
+        }
+
+        private static void NmoPlot(ShotGather inShot, ILPlotCube cube, Colormaps cmap)
+        {
+            var velanPicks = new float[2, 2];
+            velanPicks[0, 0] = 0.7f;
+            velanPicks[1, 0] = 1700f;
+            velanPicks[0, 1] = 2.4f;
+            velanPicks[1, 1] = 2900f;
+
+            var shot = NormalMoveOut.PerformNormalMoveOut(inShot, velanPicks);
+
+            var arr = shot.Traces.Select(trace => trace.Values.ToArray()).ToList();
+            ILArray<float> ilArr = CreateRectangularArray(arr);
+
+            // Y- the offset
+            ILArray<float> offset = CreateOffsetArray(shot);
+            var duration = shot.Traces[0].Header.Dt / 1000f * shot.Traces[0].Header.SampleCount;
+
+            // X- the time
+            ILArray<float> time = ILMath.linspace<float>(0, duration, shot.Traces[0].Header.SampleCount);
+
+            var surf = new ILSurface(ilArr.T, time, offset, colormap: cmap);
+            surf.Wireframe.Visible = false;
+            surf.DataRange = new Tuple<float, float>(-1.8f, 1.8f);
 
             cube.Add(surf);
         }
@@ -369,6 +399,7 @@ namespace Gamaseis
         SourceElevationInfo,
         ReceiverElevationInfo,
         TracePerGatherInfo,
-        VelocityAnalysis
+        VelocityAnalysis,
+        NmoPlot
     }
 }

@@ -248,5 +248,27 @@ namespace Gamaseis
             plot.Plot();
             plot.Show();
         }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            Debug.Write("Clicked: ");
+            Debug.WriteLine((sender as ToolStripButton).Name);
+            // get the selected listbox items
+            var segy = listBoxFiles.SelectedItem as SegyContainer;
+            if (segy == null)
+            {
+                Debug.WriteLine("Null detected, returning..");
+                return;
+            }
+            // grab the requested shots
+            var myShots = new ShotGather();
+            var myTraces = segy.Data.Traces.Where(trace => trace.Header.Fldr == 1).ToList();
+            myShots.InitializeTraces(myTraces);
+
+            var gathers = new List<ShotGather> { myShots };
+            var NmoPlot = new SeismicPlot(gathers, PlotType.NmoPlot) { };
+            NmoPlot.Plot();
+            NmoPlot.Show();
+        }
     }
 }
