@@ -125,6 +125,13 @@ namespace Gamaseis
 
     public static class NormalMoveOut
     {
+        /// <summary>
+        /// Perform Normal Move Out calculation to correct different offset in shot gather
+        /// </summary>
+        /// <param name="dataGather"></param>
+        /// <param name="velanPick">2 x N array derived from </param>
+        /// <param name="nmoStrechingLimit"></param>
+        /// <returns></returns>
         public static ShotGather PerformNormalMoveOut(ShotGather dataGather, float[,] velanPick,
             float nmoStrechingLimit = 1f)
         {
@@ -293,6 +300,30 @@ namespace Gamaseis
                 break;
             }
             return outputIndex;
+        }
+    }
+
+    public static class Stacking
+    {
+        public static ShotGather PerformStack(ShotGather dataGather, string method = "average")
+        {
+            var npts = dataGather.Traces[0].Values.Count;
+            var ntrace = dataGather.Traces.Count;
+            var outputGather = new ShotGather();
+            outputGather.InitializeTraces(new List<ITrace>(new ITrace[npts]));
+            outputGather.Traces[0] = dataGather.Traces[0];
+
+            for (int i = 0; i < npts; i++)
+            {
+                outputGather.Traces[0].Values[i] = 0f;
+                for (int j = 0; j < ntrace; j++)
+                {
+                    outputGather.Traces[0].Values[i] += dataGather.Traces[j].Values[i]/ntrace;
+                }
+            }
+
+            //offset correction
+            return outputGather;
         }
     }
 }

@@ -270,5 +270,56 @@ namespace Gamaseis
             NmoPlot.Plot();
             NmoPlot.Show();
         }
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            Debug.Write("Clicked: ");
+            Debug.WriteLine((sender as ToolStripButton).Name);
+            // get the selected listbox items
+            var segy = listBoxFiles.SelectedItem as SegyContainer;
+            if (segy == null)
+            {
+                Debug.WriteLine("Null detected, returning..");
+                return;
+            }
+            // grab the requested shots
+            var myShots = new ShotGather();
+            var myTraces = segy.Data.Traces.Where(trace => trace.Header.Fldr == 1).ToList();
+            myShots.InitializeTraces(myTraces);
+
+            var gathers = new List<ShotGather> { myShots };
+            var stackPlot = new SeismicPlot(gathers, PlotType.Stack) { };
+            stackPlot.Plot();
+            stackPlot.Show();
+        }
+
+        private void mutingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // get the selected listbox items
+            var segy = listBoxFiles.SelectedItem as SegyContainer;
+            if (segy == null)
+            {
+                Debug.WriteLine("Null detected, returning..");
+                return;
+            }
+            // grab the requested shots
+            var myShots = new ShotGather();
+            var myTraces = segy.Data.Traces.Where(trace => trace.Header.Fldr == 1).ToList();
+            myShots.InitializeTraces(myTraces);
+            
+            var coordinate = new float[2,2];
+            coordinate[0, 0] = 0.100f; //time
+            coordinate[1, 0] = 50f; //offset
+            coordinate[0, 1] = 2.6f; //time
+            coordinate[1, 1] = 3100f; //offset
+
+            PreProcessing.Muting(myShots,coordinate);
+            //PreProcessing.TimePowerCorrection(myShots,0.0000000005f);
+
+            var gathers = new List<ShotGather> { myShots };
+            var densityPlot = new SeismicPlot(gathers, PlotType.DensityGray) { };
+            densityPlot.Plot();
+            densityPlot.Show();
+        }
     }
 }

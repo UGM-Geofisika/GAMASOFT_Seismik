@@ -61,6 +61,10 @@ namespace Gamaseis
                     Text = @"NMO Correction";
                     cube = PlotFactory.BuildSeismicPlot(Shots[0], _type, "Time (ms)", "Offset (m)", Colormaps.Gray);
                     break;
+                case PlotType.Stack:
+                    Text = @"Stacking";
+                    cube = PlotFactory.BuildSeismicPlot(Shots[0], _type, "Time (ms)", "Offset (m)");
+                    break;
 
                 default:
                     throw new ArgumentOutOfRangeException();

@@ -48,6 +48,8 @@
             this.tsbTracePerGather = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.mutingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -81,7 +83,8 @@
             // preProcessingToolStripMenuItem
             // 
             this.preProcessingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.amplitudeCorrectionToolStripMenuItem});
+            this.amplitudeCorrectionToolStripMenuItem,
+            this.mutingToolStripMenuItem});
             this.preProcessingToolStripMenuItem.Name = "preProcessingToolStripMenuItem";
             this.preProcessingToolStripMenuItem.Size = new System.Drawing.Size(96, 20);
             this.preProcessingToolStripMenuItem.Text = "Pre Processing";
@@ -123,7 +126,8 @@
             this.tsbReceiverElev,
             this.tsbTracePerGather,
             this.toolStripButton1,
-            this.toolStripButton2});
+            this.toolStripButton2,
+            this.toolStripButton3});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1094, 25);
@@ -220,6 +224,22 @@
             this.toolStripButton2.Text = "NMO Correction";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(55, 22);
+            this.toolStripButton3.Text = "Stack";
+            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
+            // 
+            // mutingToolStripMenuItem
+            // 
+            this.mutingToolStripMenuItem.Name = "mutingToolStripMenuItem";
+            this.mutingToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.mutingToolStripMenuItem.Text = "Muting";
+            this.mutingToolStripMenuItem.Click += new System.EventHandler(this.mutingToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -263,6 +283,8 @@
         private System.Windows.Forms.ToolStripMenuItem amplitudeCorrectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripMenuItem mutingToolStripMenuItem;
     }
 }
 

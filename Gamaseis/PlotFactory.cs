@@ -37,6 +37,9 @@ namespace Gamaseis
                 case PlotType.NmoPlot:
                     NmoPlot(shot, cube, cmap);
                     break;
+                case PlotType.Stack:
+                    StackPlot(shot, cube);
+                    break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -295,6 +298,18 @@ namespace Gamaseis
 
             cube.Add(surf);
         }
+        private static void StackPlot(ShotGather inShot, ILPlotCube cube)
+        {
+            var shot = Stacking.PerformStack(inShot);
+
+            var fval = shot.Traces[0].Values.ToArray();
+            ILArray<float> traceData = fval;
+            traceData *= shot.Traces[0].Header.Offset;
+            traceData += shot.Traces[0].Header.Offset;
+            var linePlot = new ILLinePlot(traceData);
+            linePlot.Line.Color = Color.Blue;
+            cube.Add(linePlot);
+        }
 
         private static void WigglePlot(ShotGather shot, ILPlotCube cube)
         {
@@ -400,6 +415,7 @@ namespace Gamaseis
         ReceiverElevationInfo,
         TracePerGatherInfo,
         VelocityAnalysis,
-        NmoPlot
+        NmoPlot,
+        Stack
     }
 }
