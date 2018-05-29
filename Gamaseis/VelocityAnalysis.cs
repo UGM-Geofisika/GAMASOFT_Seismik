@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using ILNumerics_Licensing;
 using Unplugged.Segy;
 
 namespace Gamaseis
